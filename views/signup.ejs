@@ -1,0 +1,42 @@
+<% include ./header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <div class="spacer"></div>
+            <div class="card card-default">
+                <div class="card-header">
+                    <i class="fa fa-user"></i> Rekisteröidy
+                </div>
+                <div class="card-body">
+
+                    <!-- show any messages that come back with authentication -->
+                    <% if (message.length > 0) { %>
+                        <div class="alert alert-danger"><%= message %></div>
+                    <% } %>
+                
+                    <!-- LOGIN FORM -->
+                    <form action="/signup" method="post">
+                        <div class="form-group">
+                            <label>Sähköposti</label>
+                            <input type="text" class="form-control" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label>Salasana</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                
+                        <button type="submit" class="btn btn-success btn-lg">Rekisteröidy</button>
+                    </form>
+                
+                    <hr>
+                
+                    <p>Oletko jo rekisteröitynyt? <a href="/login">Kirjaudu</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<% include ./footer %>
