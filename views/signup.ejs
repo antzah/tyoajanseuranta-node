@@ -18,12 +18,16 @@
                     <!-- LOGIN FORM -->
                     <form action="/signup" method="post">
                         <div class="form-group">
+                            <label>Nimi</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="form-group">
                             <label>Sähköposti</label>
-                            <input type="text" class="form-control" name="email">
+                            <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="form-group">
                             <label>Salasana</label>
-                            <input type="password" class="form-control" name="password">
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                 
                         <button type="submit" class="btn btn-success btn-lg">Rekisteröidy</button>

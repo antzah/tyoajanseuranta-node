@@ -20,6 +20,8 @@ mongoose.connect(configDB.url, {
     useMongoClient: true
 });
 
+require('./config/passport')(passport); 
+
 app.use(morgan('dev'));
 app.use(cookieParser()); 
 
