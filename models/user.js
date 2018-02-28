@@ -9,11 +9,11 @@ var userSchema = mongoose.Schema({
     },
 });
 
-userSchema.methods.generateHash = password => {
+userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-userSchema.methods.validPassword = password => {
+userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
