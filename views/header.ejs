@@ -26,18 +26,32 @@
                         <!-- Authentication Links -->
                         <!-- <li><a class="nav-link" href="{{ route('login') }}">Kirjaudu</a></li>
                         <li><a class="nav-link" href="{{ route('register') }}">Rekisteröidy</a></li> -->
-                        <li><a class="nav-link" href="/">Kalenteri</a></li>
-                        <li><a class="nav-link" href="/raportit">Raportit</a></li>
-                        <li class="navbar-desktop-divider"></li>
+                        <% if (isLoggedIn) { %>
+                            <li><a class="nav-link" href="/">Kalenteri</a></li>
+                            <li><a class="nav-link" href="/raportit">Raportit</a></li>
+                            <li class="navbar-desktop-divider"></li>
+                        <% } %>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               <%= name %> <span class="caret"></span>
+                                <%= name %>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/logout">
-                                    Kirjaudu ulos
-                                </a>
-                            </div>
+                            <% if (!isLoggedIn) { %>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/login">
+                                        Kirjaudu sisään
+                                    </a>
+                                    <a class="dropdown-item" href="/signup">
+                                        Rekisteröidy
+                                    </a>
+                                </div>
+                            <% } %>
+                            <% if (isLoggedIn) { %>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/logout">
+                                        Kirjaudu ulos
+                                    </a>
+                                </div>
+                            <% } %>
                         </li>
                     </ul>
                 </div>

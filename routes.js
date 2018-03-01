@@ -1,23 +1,11 @@
 module.exports = (app, passport) => {
     app.get('/', isLoggedIn, (req, res) => {
-        res.render('index.ejs', {user: "Anssi"}); 
+        res.render('index.ejs'); 
     });
 
     /**
      * Login, logout, signup
      */
-
-    function variablesHelper(req, res, next) {
-        if (req.isAuthenticated()){
-            res.locals.name = req.user.local.name;
-        }
-
-        res.locals.name = "Vieras";
-
-        next();
-    }
-
-    app.use(variablesHelper);
 
     app.get('/login', (req, res) => {
         res.render('login.ejs', { message: req.flash('loginMessage') }); 

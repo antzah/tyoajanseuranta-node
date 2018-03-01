@@ -45,6 +45,21 @@ app.use(flash());
 
 app.use(express.static('public'));
 
+function variablesHelper(req, res, next) {
+    // console.log(req);
+    if (req.isAuthenticated()){
+        res.locals.name = req.user.local.name;
+        res.locals.isLoggedIn = true;
+    } else {
+        res.locals.name = "Vieras";
+        res.locals.isLoggedIn = false;
+    }
+
+    next();
+}
+
+app.use(variablesHelper);
+
 require('./routes.js')(app, passport);
 
 app.listen(port);
