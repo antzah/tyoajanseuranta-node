@@ -19,7 +19,7 @@ module.exports = (app, passport) => {
 
     app.get('/logout', function(req, res){
         req.logout();
-        res.redirect('/');
+        res.redirect('/login');
     });
 
     app.get('/signup', (req, res) => {
