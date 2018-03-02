@@ -46,14 +46,10 @@ app.use(flash());
 app.use(express.static('public'));
 
 function variablesHelper(req, res, next) {
-    // console.log(req);
-    if (req.isAuthenticated()){
-        res.locals.name = req.user.local.name;
-        res.locals.isLoggedIn = true;
-    } else {
-        res.locals.name = "Vieras";
-        res.locals.isLoggedIn = false;
-    }
+    var rl = res.locals;
+    
+    rl.name = (req.isAuthenticated()) ? req.user.local.name : "Vieras";
+    rl.isLoggedIn = req.isAuthenticated();
 
     next();
 }
