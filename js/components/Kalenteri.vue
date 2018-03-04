@@ -45,12 +45,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 quarters" v-bind:class="{clicked: this.clicks == 1}">
                         <vartti 
                             v-for="quarter in quarters" 
                             :key="quarter.id"
                             :clicks="clicks"
                             :painted="quarter.painted"
+                            :hovered="quarter.hovered"
                             :id="quarter.id"
                             v-tooltip="getTime(quarter.id)"
                         />
@@ -79,12 +80,20 @@ function emptyDaysBeforeStart(month, year) {
     return weekday - 1;
 }
 
+function returnSmallerAndBiggerId(firstId, secondId) {   
+    var smallerId = (firstId < secondId) ? firstId : secondId;
+    var biggerId = (secondId > firstId) ? secondId : firstId; 
+
+    return [smallerId, biggerId];
+}
+
 var quarters = [];
 
 for (var i = 0; i < 96; i++) {
     quarters.push({
         "id": i,
-        "painted": false
+        "painted": false,
+        "hovered": false
     })
 }
 
@@ -170,10 +179,23 @@ export default {
     created() {
     },
     mounted() {
-        this.$on('selectDay', (day) => {
-            this.selectedDate = moment(new Date(this.selectedYear, this.selectedMonth, day));
-            this.refresh();
+        this.$on("quarterHovered", id => {
+            if (this.clicks == 1) {
+                this.secondClickedQuarter = id;
+                var sortedQuarters = returnSmallerAndBiggerId(this.firstClickedQuarter, this.secondClickedQuarter);
+                var smallerId = sortedQuarters[0], biggerId = sortedQuarters[1];
+
+                for (var i = 0; i < this.quarters.length; i++) {
+                    this.quarters[i].hovered = (i > smallerId && i < biggerId) ? true: false;
+                }
+            }
         });
+
+        this.$on("quarterExited", id => {
+            for (var i = 0; i < this.quarters.length; i++) {
+                this.quarters[i].hovered = false;
+            }
+        })
 
         this.$on('quarterClicked', id => {
             if (this.clicks == 0) {
@@ -181,12 +203,22 @@ export default {
                 this.firstClickedQuarter = id;
                 this.clicks++;
             } else if (this.clicks == 1 && this.deleting) {
+                this.secondClickedQuarter = id;            
+                
+                var sortedQuarters = returnSmallerAndBiggerId(this.firstClickedQuarter, this.secondClickedQuarter);
+                var smallerId = sortedQuarters[0], biggerId = sortedQuarters[1];
 
+                for (var i = smallerId; i <= biggerId; i++) {
+                    this.quarters[i].painted = false;
+                }
+
+                this.clicks = 0;
+                this.deleting = false;
             } else if (this.clicks == 1) {
                 this.secondClickedQuarter = id;            
                 
-                var smallerId = (this.firstClickedQuarter < this.secondClickedQuarter) ? this.firstClickedQuarter : this.secondClickedQuarter;
-                var biggerId = (this.secondClickedQuarter > this.firstClickedQuarter) ? this.secondClickedQuarter : this.firstClickedQuarter; 
+                var sortedQuarters = returnSmallerAndBiggerId(this.firstClickedQuarter, this.secondClickedQuarter);
+                var smallerId = sortedQuarters[0], biggerId = sortedQuarters[1];
 
                 for (var i = smallerId; i <= biggerId; i++) {
                     this.quarters[i].painted = true;

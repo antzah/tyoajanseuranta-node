@@ -15,6 +15,8 @@ Vue.use(Tooltip, {
     class: 'tas-tooltip'
 });
 
-const app = new Vue({
-    el: '#app'
-});
+if (document.querySelector("#app")) {
+    const app = new Vue({
+        el: '#app'
+    });
+}

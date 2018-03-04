@@ -1,9 +1,10 @@
 <template>
     <div 
         class="quarterHour" 
-        v-bind:class="{ painted }"
-        @mouseover="shouldPaint"
+        v-bind:class="{ painted, hovered }"
+        @mouseover="quarterHovered(id)"
         @click="quarterClicked(id)"
+        @mouseleave="quarterExited(id)"
     >
     </div>
 </template>
@@ -12,16 +13,19 @@
     export default {
         props: [
             "painted", 
-            "isMouseDown", 
+            "hovered",
             "id", 
             "clicks"
         ],
         methods: {
-            shouldPaint: function() {
-                if (this.isMouseDown) this.painted = !this.painted;
+            quarterHovered(id) {
+                this.$parent.$emit("quarterHovered", id);
             },
-            quarterClicked(quarter) {
-                this.$parent.$emit('quarterClicked', quarter);
+            quarterClicked(id) {
+                this.$parent.$emit('quarterClicked', id);
+            },
+            quarterExited(id) {
+                this.$parent.$emit('quarterExited', id);
             },
         },
         data: function() {

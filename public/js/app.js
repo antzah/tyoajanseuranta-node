@@ -30147,9 +30147,11 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_directive_tooltip___default.a, {
     class: 'tas-tooltip'
 });
 
-var app = new Vue({
-    el: '#app'
-});
+if (document.querySelector("#app")) {
+    var app = new Vue({
+        el: '#app'
+    });
+}
 
 /***/ }),
 /* 135 */
@@ -66536,6 +66538,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -66547,12 +66550,20 @@ function emptyDaysBeforeStart(month, year) {
     return weekday - 1;
 }
 
+function returnSmallerAndBiggerId(firstId, secondId) {
+    var smallerId = firstId < secondId ? firstId : secondId;
+    var biggerId = secondId > firstId ? secondId : firstId;
+
+    return [smallerId, biggerId];
+}
+
 var quarters = [];
 
 for (var i = 0; i < 96; i++) {
     quarters.push({
         "id": i,
-        "painted": false
+        "painted": false,
+        "hovered": false
     });
 }
 
@@ -66639,9 +66650,23 @@ for (var i = 0; i < 96; i++) {
     mounted: function mounted() {
         var _this = this;
 
-        this.$on('selectDay', function (day) {
-            _this.selectedDate = moment(new Date(_this.selectedYear, _this.selectedMonth, day));
-            _this.refresh();
+        this.$on("quarterHovered", function (id) {
+            if (_this.clicks == 1) {
+                _this.secondClickedQuarter = id;
+                var sortedQuarters = returnSmallerAndBiggerId(_this.firstClickedQuarter, _this.secondClickedQuarter);
+                var smallerId = sortedQuarters[0],
+                    biggerId = sortedQuarters[1];
+
+                for (var i = 0; i < _this.quarters.length; i++) {
+                    _this.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
+                }
+            }
+        });
+
+        this.$on("quarterExited", function (id) {
+            for (var i = 0; i < _this.quarters.length; i++) {
+                _this.quarters[i].hovered = false;
+            }
         });
 
         this.$on('quarterClicked', function (id) {
@@ -66649,11 +66674,25 @@ for (var i = 0; i < 96; i++) {
                 _this.quarters[id].painted = true;
                 _this.firstClickedQuarter = id;
                 _this.clicks++;
-            } else if (_this.clicks == 1 && _this.deleting) {} else if (_this.clicks == 1) {
+            } else if (_this.clicks == 1 && _this.deleting) {
                 _this.secondClickedQuarter = id;
 
-                var smallerId = _this.firstClickedQuarter < _this.secondClickedQuarter ? _this.firstClickedQuarter : _this.secondClickedQuarter;
-                var biggerId = _this.secondClickedQuarter > _this.firstClickedQuarter ? _this.secondClickedQuarter : _this.firstClickedQuarter;
+                var sortedQuarters = returnSmallerAndBiggerId(_this.firstClickedQuarter, _this.secondClickedQuarter);
+                var smallerId = sortedQuarters[0],
+                    biggerId = sortedQuarters[1];
+
+                for (var i = smallerId; i <= biggerId; i++) {
+                    _this.quarters[i].painted = false;
+                }
+
+                _this.clicks = 0;
+                _this.deleting = false;
+            } else if (_this.clicks == 1) {
+                _this.secondClickedQuarter = id;
+
+                var sortedQuarters = returnSmallerAndBiggerId(_this.firstClickedQuarter, _this.secondClickedQuarter);
+                var smallerId = sortedQuarters[0],
+                    biggerId = sortedQuarters[1];
 
                 for (var i = smallerId; i <= biggerId; i++) {
                     _this.quarters[i].painted = true;
@@ -66833,15 +66872,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["painted", "isMouseDown", "id", "clicks"],
+    props: ["painted", "hovered", "id", "clicks"],
     methods: {
-        shouldPaint: function shouldPaint() {
-            if (this.isMouseDown) this.painted = !this.painted;
+        quarterHovered: function quarterHovered(id) {
+            this.$parent.$emit("quarterHovered", id);
         },
-        quarterClicked: function quarterClicked(quarter) {
-            this.$parent.$emit('quarterClicked', quarter);
+        quarterClicked: function quarterClicked(id) {
+            this.$parent.$emit('quarterClicked', id);
+        },
+        quarterExited: function quarterExited(id) {
+            this.$parent.$emit('quarterExited', id);
         }
     },
     data: function data() {
@@ -66861,11 +66904,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", {
     staticClass: "quarterHour",
-    class: { painted: _vm.painted },
+    class: { painted: _vm.painted, hovered: _vm.hovered },
     on: {
-      mouseover: _vm.shouldPaint,
+      mouseover: function($event) {
+        _vm.quarterHovered(_vm.id)
+      },
       click: function($event) {
         _vm.quarterClicked(_vm.id)
+      },
+      mouseleave: function($event) {
+        _vm.quarterExited(_vm.id)
       }
     }
   })
@@ -66985,7 +67033,10 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "col-12" },
+            {
+              staticClass: "col-12 quarters",
+              class: { clicked: this.clicks == 1 }
+            },
             _vm._l(_vm.quarters, function(quarter) {
               return _c("vartti", {
                 directives: [
@@ -67000,6 +67051,7 @@ var render = function() {
                 attrs: {
                   clicks: _vm.clicks,
                   painted: quarter.painted,
+                  hovered: quarter.hovered,
                   id: quarter.id
                 }
               })
