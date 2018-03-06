@@ -66539,6 +66539,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -66563,7 +66568,8 @@ for (var i = 0; i < 96; i++) {
     quarters.push({
         "id": i,
         "painted": false,
-        "hovered": false
+        "hovered": false,
+        "deleting": false
     });
 }
 
@@ -66650,6 +66656,11 @@ for (var i = 0; i < 96; i++) {
     mounted: function mounted() {
         var _this = this;
 
+        this.$on('selectDay', function (day) {
+            _this.selectedDate = moment(new Date(_this.selectedYear, _this.selectedMonth, day));
+            _this.refresh();
+        });
+
         this.$on("quarterHovered", function (id) {
             if (_this.clicks == 1) {
                 _this.secondClickedQuarter = id;
@@ -66659,6 +66670,7 @@ for (var i = 0; i < 96; i++) {
 
                 for (var i = 0; i < _this.quarters.length; i++) {
                     _this.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
+                    _this.quarters[i].deleting = i >= smallerId && i <= biggerId && _this.deleting ? true : false;
                 }
             }
         });
@@ -66666,12 +66678,14 @@ for (var i = 0; i < 96; i++) {
         this.$on("quarterExited", function (id) {
             for (var i = 0; i < _this.quarters.length; i++) {
                 _this.quarters[i].hovered = false;
+                _this.quarters[i].deleting = false;
             }
         });
 
         this.$on('quarterClicked', function (id) {
             if (_this.clicks == 0) {
                 _this.quarters[id].painted = true;
+                _this.quarters[id].deleting = _this.deleting ? true : false;
                 _this.firstClickedQuarter = id;
                 _this.clicks++;
             } else if (_this.clicks == 1 && _this.deleting) {
@@ -66683,6 +66697,8 @@ for (var i = 0; i < 96; i++) {
 
                 for (var i = smallerId; i <= biggerId; i++) {
                     _this.quarters[i].painted = false;
+                    _this.quarters[i].deleting = false;
+                    _this.quarters[i].hovered = false;
                 }
 
                 _this.clicks = 0;
@@ -66875,7 +66891,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["painted", "hovered", "id", "clicks"],
+    props: ["painted", "hovered", "deleting", "id", "clicks"],
     methods: {
         quarterHovered: function quarterHovered(id) {
             this.$parent.$emit("quarterHovered", id);
@@ -66904,7 +66920,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", {
     staticClass: "quarterHour",
-    class: { painted: _vm.painted, hovered: _vm.hovered },
+    class: {
+      painted: _vm.painted,
+      hovered: _vm.hovered,
+      deleting: _vm.deleting
+    },
     on: {
       mouseover: function($event) {
         _vm.quarterHovered(_vm.id)
@@ -66937,7 +66957,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-3 col-md-4 col-12" }, [
+    _c("div", { staticClass: "col-lg-3 col-12" }, [
       _c("div", { staticClass: "calendar" }, [
         _c("div", { staticClass: "month title" }, [
           _c(
@@ -66957,32 +66977,36 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "days" },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._l(_vm.emptyDaysBeforeStart, function(n) {
-              return _c("paiva", { key: n, attrs: { "day-number": "0" } })
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.daysInSelectedMonth, function(n) {
-              return _c("paiva", {
-                key: n + 100,
-                attrs: {
-                  "day-number": n,
-                  "is-selected-date": n == _vm.selectedDay
-                }
-              })
-            })
-          ],
-          2
-        )
+        _c("div", { staticClass: "days" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-12" },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._l(_vm.emptyDaysBeforeStart, function(n) {
+                  return _c("paiva", { key: n, attrs: { "day-number": "0" } })
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.daysInSelectedMonth, function(n) {
+                  return _c("paiva", {
+                    key: n + 100,
+                    attrs: {
+                      "day-number": n,
+                      "is-selected-date": n == _vm.selectedDay
+                    }
+                  })
+                })
+              ],
+              2
+            )
+          ])
+        ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-9 col-md-8 col-12" }, [
+    _c("div", { staticClass: "col-lg-9 col-12" }, [
       _c("div", { staticClass: "selectedDayContainer" }, [
         _c("h3", [
           _vm._v(
@@ -67052,6 +67076,7 @@ var render = function() {
                   clicks: _vm.clicks,
                   painted: quarter.painted,
                   hovered: quarter.hovered,
+                  deleting: quarter.deleting,
                   id: quarter.id
                 }
               })

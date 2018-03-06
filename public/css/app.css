@@ -10297,7 +10297,8 @@ h5,
   background: #5fc75f;
 }
 
-.quarterHour.painted {
+.quarterHour.painted,
+.quarterHour.hovered {
   background: #4db14d;
 }
 
@@ -10305,7 +10306,8 @@ h5,
   background: orange;
 }
 
-.quarterHour.hovered {
+.quarterHour.deleting,
+.quarterHour.deleting.painted:hover {
   background: red;
 }
 
@@ -10337,5 +10339,9 @@ h5,
   border-radius: 2px;
   padding: 4px 8px;
   font-size: 12px;
+}
+
+.days {
+  margin-bottom: 32px;
 }
 

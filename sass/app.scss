@@ -216,7 +216,8 @@ h1, h2, h3, h4, h5,
   background: rgb(95, 199, 95);
 }
 
-.quarterHour.painted {
+.quarterHour.painted,
+.quarterHour.hovered {
   background: rgb(77, 177, 77);
 }
 
@@ -224,7 +225,7 @@ h1, h2, h3, h4, h5,
   background: orange;
 }
 
-.quarterHour.hovered {
+.quarterHour.deleting, .quarterHour.deleting.painted:hover {
   background: red;
 }
 
@@ -255,4 +256,8 @@ h1, h2, h3, h4, h5,
   border-radius: 2px;
   padding: 4px 8px;
   font-size: 12px;
+}
+
+.days {
+  margin-bottom: 32px;
 }

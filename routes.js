@@ -31,6 +31,13 @@ module.exports = (app, passport) => {
         failureRedirect: '/signup', 
         failureFlash: true
     }));
+
+    /**
+     * App logic
+     */
+    app.post("/calendar", isAuthenticated, (req, res) => {
+        console.log("Allowed, req: ", req);
+    })
 };
 
 function isLoggedIn(req, res, next) {
@@ -39,4 +46,10 @@ function isLoggedIn(req, res, next) {
     }
 
     res.redirect('/login');
+}
+
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) return next();
+
+    res.send("Not allowed. Plz login.");
 }

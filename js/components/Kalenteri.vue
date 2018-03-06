@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-lg-3 col-md-4 col-12">
+        <div class="col-lg-3 col-12">
             <div class="calendar">
                 <div class="month title">
                     <button @click="minusMonth" class="btn float-left"><i class="fas fa-caret-left"></i></button> 
@@ -8,30 +8,34 @@
                     <button @click="plusMonth" class="btn  float-right"><i class="fas fa-caret-right"></i></button> 
                 </div>
                 <div class="days">
-                    <div class="weekdays">
-                        <div class="day-of-the-week">MA</div>
-                        <div class="day-of-the-week">TI</div>
-                        <div class="day-of-the-week">KE</div>
-                        <div class="day-of-the-week">TO</div>
-                        <div class="day-of-the-week">PE</div>
-                        <div class="day-of-the-week">LA</div>
-                        <div class="day-of-the-week">SU</div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="weekdays">
+                                <div class="day-of-the-week">MA</div>
+                                <div class="day-of-the-week">TI</div>
+                                <div class="day-of-the-week">KE</div>
+                                <div class="day-of-the-week">TO</div>
+                                <div class="day-of-the-week">PE</div>
+                                <div class="day-of-the-week">LA</div>
+                                <div class="day-of-the-week">SU</div>
+                            </div>
+                            <paiva 
+                                v-for="n in emptyDaysBeforeStart" 
+                                :key="n" 
+                                day-number=0
+                            />
+                            <paiva 
+                                v-for="n in daysInSelectedMonth" 
+                                :key="n+100" 
+                                :day-number="n"
+                                :is-selected-date="n == selectedDay"
+                            />
+                        </div>
                     </div>
-                    <paiva 
-                        v-for="n in emptyDaysBeforeStart" 
-                        :key="n" 
-                        day-number=0
-                    />
-                    <paiva 
-                        v-for="n in daysInSelectedMonth" 
-                        :key="n+100" 
-                        :day-number="n"
-                        :is-selected-date="n == selectedDay"
-                    />
                 </div>
             </div>
         </div>
-        <div class="col-lg-9 col-md-8 col-12">
+        <div class="col-lg-9 col-12">
             <div class="selectedDayContainer">
                 <h3>{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                 <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
@@ -52,6 +56,7 @@
                             :clicks="clicks"
                             :painted="quarter.painted"
                             :hovered="quarter.hovered"
+                            :deleting="quarter.deleting"
                             :id="quarter.id"
                             v-tooltip="getTime(quarter.id)"
                         />
@@ -93,7 +98,8 @@ for (var i = 0; i < 96; i++) {
     quarters.push({
         "id": i,
         "painted": false,
-        "hovered": false
+        "hovered": false,
+        "deleting": false
     })
 }
 
@@ -179,6 +185,11 @@ export default {
     created() {
     },
     mounted() {
+        this.$on('selectDay', (day) => {
+            this.selectedDate = moment(new Date(this.selectedYear, this.selectedMonth, day));
+            this.refresh();
+        });
+
         this.$on("quarterHovered", id => {
             if (this.clicks == 1) {
                 this.secondClickedQuarter = id;
@@ -187,6 +198,7 @@ export default {
 
                 for (var i = 0; i < this.quarters.length; i++) {
                     this.quarters[i].hovered = (i > smallerId && i < biggerId) ? true: false;
+                    this.quarters[i].deleting = ( (i >= smallerId && i <= biggerId) && this.deleting) ? true: false;
                 }
             }
         });
@@ -194,12 +206,14 @@ export default {
         this.$on("quarterExited", id => {
             for (var i = 0; i < this.quarters.length; i++) {
                 this.quarters[i].hovered = false;
+                this.quarters[i].deleting = false;
             }
         })
 
         this.$on('quarterClicked', id => {
             if (this.clicks == 0) {
                 this.quarters[id].painted = true;
+                this.quarters[id].deleting = (this.deleting) ? true : false;
                 this.firstClickedQuarter = id;
                 this.clicks++;
             } else if (this.clicks == 1 && this.deleting) {
@@ -210,6 +224,8 @@ export default {
 
                 for (var i = smallerId; i <= biggerId; i++) {
                     this.quarters[i].painted = false;
+                    this.quarters[i].deleting = false;
+                    this.quarters[i].hovered = false;
                 }
 
                 this.clicks = 0;

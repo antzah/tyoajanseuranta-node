@@ -1,7 +1,7 @@
 <template>
     <div 
         class="quarterHour" 
-        v-bind:class="{ painted, hovered }"
+        v-bind:class="{ painted, hovered, deleting }"
         @mouseover="quarterHovered(id)"
         @click="quarterClicked(id)"
         @mouseleave="quarterExited(id)"
@@ -14,6 +14,7 @@
         props: [
             "painted", 
             "hovered",
+            "deleting",
             "id", 
             "clicks"
         ],

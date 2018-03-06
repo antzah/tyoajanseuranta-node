@@ -12,6 +12,7 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
 var configDB = require('./config/database.js');
+var secrets = require('./config/secrets.js');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url, {
@@ -34,7 +35,7 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs'); 
 
 app.use(session({ 
-    secret: 'jebulibebuli',
+    secret: secrets.secret,
     resave: true,
     saveUninitialized: true
 }));

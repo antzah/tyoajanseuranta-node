@@ -45,3 +45,19 @@
     </nav>
 
     <div class="spacer"></div>
+
+    <div class="container">
+
+        <a class="btn btn-success" href="#" onclick="axios.post('/calendar', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });">Asd</a>
+    </div>
+
+    <div class="spacer"></div>
