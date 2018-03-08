@@ -43,7 +43,7 @@ module.exports = (app, passport) => {
      * App logic
      */
     app.post("/calendar", isAuthenticated, (req, res) => {
-        let dayStart = moment(req.body.day).hour(0).minute(59).second(59),
+        let dayStart = moment(req.body.day).hour(0).minute(0).second(0),
             dayEnd = moment(req.body.day).hour(23).minute(59).second(59);
 
         Paiva.findOneAndUpdate({
@@ -63,6 +63,39 @@ module.exports = (app, passport) => {
 
             res.send("OK");
         });
+    });
+    
+    app.get("/quarters", isAuthenticated, (req, res) => {
+        if (!req.query.selectedDate){
+            res.status(500).send({ error: 'No day parameter provided.' });
+        } else {
+            let dayStart = moment(req.query.selectedDate).hour(0).minute(0).second(0),
+                dayEnd = moment(req.query.selectedDate).hour(23).minute(59).second(59);
+    
+            Paiva.findOne({
+                user: req.user.id,
+                day: {
+                    $gte: dayStart,
+                    $lt: dayEnd
+                }
+            }, (err, paiva) => {
+                if (err) res.status(500).send({ error: 'Something failed!' });
+                if (paiva) {
+                    res.json(paiva.quarters);
+                } else {
+                    var quarters = [];
+
+                    for (var i = 0; i < 96; i++) {
+                        quarters.push({
+                            "qId": i,
+                            "painted": false
+                        })
+                    }
+
+                    res.json(quarters);
+                }
+            })
+        }
     })
 
     /**

@@ -55,8 +55,8 @@
                             :key="quarter.qId"
                             :clicks="clicks"
                             :painted="quarter.painted"
-                            :hovered="quarter.hovered"
-                            :deleting="quarter.deleting"
+                            :hovered="(quarter.hovered) ? quarter.hovered : false"
+                            :deleting="(quarter.deleting) ? quarter.deleting : false"
                             :id="quarter.qId"
                             v-tooltip="getTime(quarter.qId)"
                         />
@@ -97,9 +97,7 @@ var quarters = [];
 for (var i = 0; i < 96; i++) {
     quarters.push({
         "qId": i,
-        "painted": false,
-        "hovered": false,
-        "deleting": false
+        "painted": false
     })
 }
 
@@ -122,16 +120,48 @@ export default {
             "firstClickedQuarter": 0,
             "secondClickedQuarter": 0,
             "quarters": quarters,
+            // "quarters": null,
             "deleting": false
         }
     },
     methods: {
+        fetchUser: function() {
+            axios.get("/user")
+                .then(res => {
+                    this.userId = res.data._id;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+        fetchQuarters: function(selectedDate) {
+            /**
+             * selectedDate is an instance of moment, so 
+             * we can convert it to a readable UTC format
+             * with .format()
+             */
+            selectedDate = selectedDate.format();
+
+            axios.get("/quarters", {
+                params: { selectedDate }
+            }).then(res => {
+                if (res.data) {
+                    this.quarters = res.data;
+                } else {
+                    console.log("Unexpected data returned from server.");
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+        },
         refresh: function() {
             this.selectedDay = this.selectedDate.get("date");
             this.selectedMonth = this.selectedDate.get("month");
             this.selectedYear = this.selectedDate.get("year");
             this.daysInSelectedMonth = this.selectedDate.daysInMonth();
             this.emptyDaysBeforeStart = emptyDaysBeforeStart(this.selectedMonth, this.selectedYear);
+
+            this.fetchQuarters(this.selectedDate);
         },
         minusMonth: function() {
             this.selectedDate.set("date", 1);
@@ -187,13 +217,8 @@ export default {
         /**
          * Fetch the user ID so we can use that later
          */
-        axios.get("/user")
-            .then(res => {
-                this.userId = res.data._id;
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        this.fetchUser();        
+        this.fetchQuarters(this.selectedDate);
     },
     mounted() {
         this.$on('selectDay', (day) => {

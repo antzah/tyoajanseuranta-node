@@ -66567,9 +66567,7 @@ var quarters = [];
 for (var i = 0; i < 96; i++) {
     quarters.push({
         "qId": i,
-        "painted": false,
-        "hovered": false,
-        "deleting": false
+        "painted": false
     });
 }
 
@@ -66592,16 +66590,50 @@ for (var i = 0; i < 96; i++) {
             "firstClickedQuarter": 0,
             "secondClickedQuarter": 0,
             "quarters": quarters,
+            // "quarters": null,
             "deleting": false
         };
     },
     methods: {
+        fetchUser: function fetchUser() {
+            var _this = this;
+
+            axios.get("/user").then(function (res) {
+                _this.userId = res.data._id;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        fetchQuarters: function fetchQuarters(selectedDate) {
+            var _this2 = this;
+
+            /**
+             * selectedDate is an instance of moment, so 
+             * we can convert it to a readable UTC format
+             * with .format()
+             */
+            selectedDate = selectedDate.format();
+
+            axios.get("/quarters", {
+                params: { selectedDate: selectedDate }
+            }).then(function (res) {
+                if (res.data) {
+                    _this2.quarters = res.data;
+                } else {
+                    console.log("Unexpected data returned from server.");
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
         refresh: function refresh() {
             this.selectedDay = this.selectedDate.get("date");
             this.selectedMonth = this.selectedDate.get("month");
             this.selectedYear = this.selectedDate.get("year");
             this.daysInSelectedMonth = this.selectedDate.daysInMonth();
             this.emptyDaysBeforeStart = emptyDaysBeforeStart(this.selectedMonth, this.selectedYear);
+
+            this.fetchQuarters(this.selectedDate);
         },
         minusMonth: function minusMonth() {
             this.selectedDate.set("date", 1);
@@ -66654,77 +66686,72 @@ for (var i = 0; i < 96; i++) {
         }
     },
     created: function created() {
-        var _this = this;
-
         /**
          * Fetch the user ID so we can use that later
          */
-        axios.get("/user").then(function (res) {
-            _this.userId = res.data._id;
-        }).catch(function (err) {
-            console.log(err);
-        });
+        this.fetchUser();
+        this.fetchQuarters(this.selectedDate);
     },
     mounted: function mounted() {
-        var _this2 = this;
+        var _this3 = this;
 
         this.$on('selectDay', function (day) {
-            _this2.selectedDate = moment(new Date(_this2.selectedYear, _this2.selectedMonth, day, 12));
-            _this2.refresh();
+            _this3.selectedDate = moment(new Date(_this3.selectedYear, _this3.selectedMonth, day, 12));
+            _this3.refresh();
         });
 
         this.$on("quarterHovered", function (id) {
-            if (_this2.clicks == 1) {
-                _this2.secondClickedQuarter = id;
-                var sortedQuarters = returnSmallerAndBiggerId(_this2.firstClickedQuarter, _this2.secondClickedQuarter);
+            if (_this3.clicks == 1) {
+                _this3.secondClickedQuarter = id;
+                var sortedQuarters = returnSmallerAndBiggerId(_this3.firstClickedQuarter, _this3.secondClickedQuarter);
                 var smallerId = sortedQuarters[0],
                     biggerId = sortedQuarters[1];
 
-                for (var i = 0; i < _this2.quarters.length; i++) {
-                    _this2.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
-                    _this2.quarters[i].deleting = i >= smallerId && i <= biggerId && _this2.deleting ? true : false;
+                for (var i = 0; i < _this3.quarters.length; i++) {
+                    _this3.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
+                    _this3.quarters[i].deleting = i >= smallerId && i <= biggerId && _this3.deleting ? true : false;
                 }
             }
         });
 
         this.$on("quarterExited", function (id) {
-            for (var i = 0; i < _this2.quarters.length; i++) {
-                _this2.quarters[i].hovered = false;
-                _this2.quarters[i].deleting = false;
+            for (var i = 0; i < _this3.quarters.length; i++) {
+                _this3.quarters[i].hovered = false;
+                _this3.quarters[i].deleting = false;
             }
         });
 
         this.$on('quarterClicked', function (id) {
-            if (_this2.clicks == 0) {
-                _this2.quarters[id].painted = true;
-                _this2.quarters[id].deleting = _this2.deleting ? true : false;
-                _this2.firstClickedQuarter = id;
-                _this2.clicks++;
-            } else if (_this2.clicks == 1) {
-                _this2.secondClickedQuarter = id;
+            if (_this3.clicks == 0) {
+                _this3.quarters[id].painted = true;
+                _this3.quarters[id].deleting = _this3.deleting ? true : false;
+                _this3.firstClickedQuarter = id;
+                _this3.clicks++;
+            } else if (_this3.clicks == 1) {
+                _this3.secondClickedQuarter = id;
 
-                var sortedQuarters = returnSmallerAndBiggerId(_this2.firstClickedQuarter, _this2.secondClickedQuarter);
+                var sortedQuarters = returnSmallerAndBiggerId(_this3.firstClickedQuarter, _this3.secondClickedQuarter);
                 var smallerId = sortedQuarters[0],
                     biggerId = sortedQuarters[1];
 
-                if (_this2.deleting) {
+                if (_this3.deleting) {
                     for (var i = smallerId; i <= biggerId; i++) {
-                        _this2.quarters[i].painted = false;
-                        _this2.quarters[i].deleting = false;
-                        _this2.quarters[i].hovered = false;
+                        _this3.quarters[i].painted = false;
+                        _this3.quarters[i].deleting = false;
+                        _this3.quarters[i].hovered = false;
                     }
                 } else {
                     for (var i = smallerId; i <= biggerId; i++) {
-                        _this2.quarters[i].painted = true;
+                        _this3.quarters[i].painted = true;
                     }
                 }
 
-                _this2.clicks = 0;
-                _this2.deleting = false;
+                _this3.clicks = 0;
+                _this3.deleting = false;
 
                 axios.post("/calendar", {
-                    quarters: _this2.quarters,
-                    day: _this2.selectedDate
+                    quarters: _this3.quarters,
+                    day: _this3.selectedDate
                 }).then(function (res) {
                     return console.log(res.data);
                 }).catch(function (err) {
@@ -67090,8 +67117,8 @@ var render = function() {
                 attrs: {
                   clicks: _vm.clicks,
                   painted: quarter.painted,
-                  hovered: quarter.hovered,
-                  deleting: quarter.deleting,
+                  hovered: quarter.hovered ? quarter.hovered : false,
+                  deleting: quarter.deleting ? quarter.deleting : false,
                   id: quarter.qId
                 }
               })
