@@ -66566,7 +66566,7 @@ var quarters = [];
 
 for (var i = 0; i < 96; i++) {
     quarters.push({
-        "id": i,
+        "qId": i,
         "painted": false,
         "hovered": false,
         "deleting": false
@@ -66580,8 +66580,9 @@ for (var i = 0; i < 96; i++) {
     },
     data: function data() {
         return {
-            "currentDate": moment(),
-            "selectedDate": moment(),
+            "userId": null,
+            "currentDate": moment().hour(12).minute(0).seconds(0),
+            "selectedDate": moment().hour(12).minute(0).seconds(0),
             "selectedDay": moment().get("date"),
             "selectedMonth": moment().get("month"),
             "selectedYear": moment().get("year"),
@@ -66652,69 +66653,83 @@ for (var i = 0; i < 96; i++) {
             return parsedQNAPS + "–" + parsedQNAPSP15;
         }
     },
-    created: function created() {},
-    mounted: function mounted() {
+    created: function created() {
         var _this = this;
 
+        /**
+         * Fetch the user ID so we can use that later
+         */
+        axios.get("/user").then(function (res) {
+            _this.userId = res.data._id;
+        }).catch(function (err) {
+            console.log(err);
+        });
+    },
+    mounted: function mounted() {
+        var _this2 = this;
+
         this.$on('selectDay', function (day) {
-            _this.selectedDate = moment(new Date(_this.selectedYear, _this.selectedMonth, day));
-            _this.refresh();
+            _this2.selectedDate = moment(new Date(_this2.selectedYear, _this2.selectedMonth, day, 12));
+            _this2.refresh();
         });
 
         this.$on("quarterHovered", function (id) {
-            if (_this.clicks == 1) {
-                _this.secondClickedQuarter = id;
-                var sortedQuarters = returnSmallerAndBiggerId(_this.firstClickedQuarter, _this.secondClickedQuarter);
+            if (_this2.clicks == 1) {
+                _this2.secondClickedQuarter = id;
+                var sortedQuarters = returnSmallerAndBiggerId(_this2.firstClickedQuarter, _this2.secondClickedQuarter);
                 var smallerId = sortedQuarters[0],
                     biggerId = sortedQuarters[1];
 
-                for (var i = 0; i < _this.quarters.length; i++) {
-                    _this.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
-                    _this.quarters[i].deleting = i >= smallerId && i <= biggerId && _this.deleting ? true : false;
+                for (var i = 0; i < _this2.quarters.length; i++) {
+                    _this2.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
+                    _this2.quarters[i].deleting = i >= smallerId && i <= biggerId && _this2.deleting ? true : false;
                 }
             }
         });
 
         this.$on("quarterExited", function (id) {
-            for (var i = 0; i < _this.quarters.length; i++) {
-                _this.quarters[i].hovered = false;
-                _this.quarters[i].deleting = false;
+            for (var i = 0; i < _this2.quarters.length; i++) {
+                _this2.quarters[i].hovered = false;
+                _this2.quarters[i].deleting = false;
             }
         });
 
         this.$on('quarterClicked', function (id) {
-            if (_this.clicks == 0) {
-                _this.quarters[id].painted = true;
-                _this.quarters[id].deleting = _this.deleting ? true : false;
-                _this.firstClickedQuarter = id;
-                _this.clicks++;
-            } else if (_this.clicks == 1 && _this.deleting) {
-                _this.secondClickedQuarter = id;
+            if (_this2.clicks == 0) {
+                _this2.quarters[id].painted = true;
+                _this2.quarters[id].deleting = _this2.deleting ? true : false;
+                _this2.firstClickedQuarter = id;
+                _this2.clicks++;
+            } else if (_this2.clicks == 1) {
+                _this2.secondClickedQuarter = id;
 
-                var sortedQuarters = returnSmallerAndBiggerId(_this.firstClickedQuarter, _this.secondClickedQuarter);
+                var sortedQuarters = returnSmallerAndBiggerId(_this2.firstClickedQuarter, _this2.secondClickedQuarter);
                 var smallerId = sortedQuarters[0],
                     biggerId = sortedQuarters[1];
 
-                for (var i = smallerId; i <= biggerId; i++) {
-                    _this.quarters[i].painted = false;
-                    _this.quarters[i].deleting = false;
-                    _this.quarters[i].hovered = false;
+                if (_this2.deleting) {
+                    for (var i = smallerId; i <= biggerId; i++) {
+                        _this2.quarters[i].painted = false;
+                        _this2.quarters[i].deleting = false;
+                        _this2.quarters[i].hovered = false;
+                    }
+                } else {
+                    for (var i = smallerId; i <= biggerId; i++) {
+                        _this2.quarters[i].painted = true;
+                    }
                 }
 
-                _this.clicks = 0;
-                _this.deleting = false;
-            } else if (_this.clicks == 1) {
-                _this.secondClickedQuarter = id;
+                _this2.clicks = 0;
+                _this2.deleting = false;
 
-                var sortedQuarters = returnSmallerAndBiggerId(_this.firstClickedQuarter, _this.secondClickedQuarter);
-                var smallerId = sortedQuarters[0],
-                    biggerId = sortedQuarters[1];
-
-                for (var i = smallerId; i <= biggerId; i++) {
-                    _this.quarters[i].painted = true;
-                }
-
-                _this.clicks = 0;
+                axios.post("/calendar", {
+                    quarters: _this2.quarters,
+                    day: _this2.selectedDate
+                }).then(function (res) {
+                    return console.log(res.data);
+                }).catch(function (err) {
+                    return console.log(err);
+                });
             }
         });
     }
@@ -67067,17 +67082,17 @@ var render = function() {
                   {
                     name: "tooltip",
                     rawName: "v-tooltip",
-                    value: _vm.getTime(quarter.id),
-                    expression: "getTime(quarter.id)"
+                    value: _vm.getTime(quarter.qId),
+                    expression: "getTime(quarter.qId)"
                   }
                 ],
-                key: quarter.id,
+                key: quarter.qId,
                 attrs: {
                   clicks: _vm.clicks,
                   painted: quarter.painted,
                   hovered: quarter.hovered,
                   deleting: quarter.deleting,
-                  id: quarter.id
+                  id: quarter.qId
                 }
               })
             })

@@ -52,13 +52,13 @@
                     <div class="col-12 quarters" v-bind:class="{clicked: this.clicks == 1}">
                         <vartti 
                             v-for="quarter in quarters" 
-                            :key="quarter.id"
+                            :key="quarter.qId"
                             :clicks="clicks"
                             :painted="quarter.painted"
                             :hovered="quarter.hovered"
                             :deleting="quarter.deleting"
-                            :id="quarter.id"
-                            v-tooltip="getTime(quarter.id)"
+                            :id="quarter.qId"
+                            v-tooltip="getTime(quarter.qId)"
                         />
                     </div>
                 </div>
@@ -96,7 +96,7 @@ var quarters = [];
 
 for (var i = 0; i < 96; i++) {
     quarters.push({
-        "id": i,
+        "qId": i,
         "painted": false,
         "hovered": false,
         "deleting": false
@@ -110,8 +110,9 @@ export default {
     },
     data: function() {
         return {
-            "currentDate": moment(),
-            "selectedDate": moment(),
+            "userId": null,
+            "currentDate": moment().hour(12).minute(0).seconds(0),
+            "selectedDate": moment().hour(12).minute(0).seconds(0),
             "selectedDay": moment().get("date"),
             "selectedMonth": moment().get("month"),
             "selectedYear": moment().get("year"),
@@ -183,10 +184,20 @@ export default {
         }
     },
     created() {
+        /**
+         * Fetch the user ID so we can use that later
+         */
+        axios.get("/user")
+            .then(res => {
+                this.userId = res.data._id;
+            })
+            .catch(err => {
+                console.log(err);
+            });
     },
     mounted() {
         this.$on('selectDay', (day) => {
-            this.selectedDate = moment(new Date(this.selectedYear, this.selectedMonth, day));
+            this.selectedDate = moment(new Date(this.selectedYear, this.selectedMonth, day, 12));
             this.refresh();
         });
 
@@ -216,31 +227,33 @@ export default {
                 this.quarters[id].deleting = (this.deleting) ? true : false;
                 this.firstClickedQuarter = id;
                 this.clicks++;
-            } else if (this.clicks == 1 && this.deleting) {
-                this.secondClickedQuarter = id;            
-                
-                var sortedQuarters = returnSmallerAndBiggerId(this.firstClickedQuarter, this.secondClickedQuarter);
-                var smallerId = sortedQuarters[0], biggerId = sortedQuarters[1];
-
-                for (var i = smallerId; i <= biggerId; i++) {
-                    this.quarters[i].painted = false;
-                    this.quarters[i].deleting = false;
-                    this.quarters[i].hovered = false;
-                }
-
-                this.clicks = 0;
-                this.deleting = false;
             } else if (this.clicks == 1) {
                 this.secondClickedQuarter = id;            
                 
                 var sortedQuarters = returnSmallerAndBiggerId(this.firstClickedQuarter, this.secondClickedQuarter);
                 var smallerId = sortedQuarters[0], biggerId = sortedQuarters[1];
 
-                for (var i = smallerId; i <= biggerId; i++) {
-                    this.quarters[i].painted = true;
+                if (this.deleting) {
+                    for (var i = smallerId; i <= biggerId; i++) {
+                        this.quarters[i].painted = false;
+                        this.quarters[i].deleting = false;
+                        this.quarters[i].hovered = false;
+                    }
+                } else {
+                    for (var i = smallerId; i <= biggerId; i++) {
+                        this.quarters[i].painted = true;
+                    }
                 }
 
                 this.clicks = 0;
+                this.deleting = false;
+
+                axios.post("/calendar", {
+                    quarters: this.quarters,
+                    day: this.selectedDate
+                })
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err));
             }
         });
     }
