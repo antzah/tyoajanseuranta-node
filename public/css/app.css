@@ -82,7 +82,7 @@ body {
   line-height: 1.6;
   color: #212529;
   text-align: left;
-  background-color: rgba(23, 162, 184, 0.5);
+  background-color: #f3f3f3;
 }
 
 [tabindex="-1"]:focus {
@@ -524,7 +524,7 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: rgba(23, 162, 184, 0.5);
+  background-color: #f3f3f3;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   max-width: 100%;
@@ -1954,7 +1954,7 @@ pre code {
 }
 
 .table .table {
-  background-color: rgba(23, 162, 184, 0.5);
+  background-color: #f3f3f3;
 }
 
 .table-sm th,
@@ -2120,7 +2120,7 @@ pre code {
 }
 
 .table .thead-dark th {
-  color: rgba(23, 162, 184, 0.5);
+  color: #f3f3f3;
   background-color: #212529;
   border-color: #32383e;
 }
@@ -2132,7 +2132,7 @@ pre code {
 }
 
 .table-dark {
-  color: rgba(23, 162, 184, 0.5);
+  color: #f3f3f3;
   background-color: #212529;
 }
 
@@ -2539,8 +2539,8 @@ select.form-control-lg:not([size]):not([multiple]),
 
 .was-validated .custom-control-input:valid:focus ~ .custom-control-label::before,
 .custom-control-input.is-valid:focus ~ .custom-control-label::before {
-  -webkit-box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-          box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  -webkit-box-shadow: 0 0 0 1px #f3f3f3, 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+          box-shadow: 0 0 0 1px #f3f3f3, 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }
 
 .was-validated .custom-file-input:valid ~ .custom-file-label,
@@ -2656,8 +2656,8 @@ select.form-control-lg:not([size]):not([multiple]),
 
 .was-validated .custom-control-input:invalid:focus ~ .custom-control-label::before,
 .custom-control-input.is-invalid:focus ~ .custom-control-label::before {
-  -webkit-box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-          box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  -webkit-box-shadow: 0 0 0 1px #f3f3f3, 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+          box-shadow: 0 0 0 1px #f3f3f3, 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
 
 .was-validated .custom-file-input:invalid ~ .custom-file-label,
@@ -4067,8 +4067,8 @@ tbody.collapse.show {
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {
-  -webkit-box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-          box-shadow: 0 0 0 1px rgba(23, 162, 184, 0.5), 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  -webkit-box-shadow: 0 0 0 1px #f3f3f3, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+          box-shadow: 0 0 0 1px #f3f3f3, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .custom-control-input:active ~ .custom-control-label::before {
@@ -4336,8 +4336,8 @@ tbody.collapse.show {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #495057;
-  background-color: rgba(23, 162, 184, 0.5);
-  border-color: #dee2e6 #dee2e6 rgba(23, 162, 184, 0.5);
+  background-color: #f3f3f3;
+  border-color: #dee2e6 #dee2e6 #f3f3f3;
 }
 
 .nav-tabs .dropdown-menu {
@@ -10111,11 +10111,13 @@ h5,
 .card {
   border: 0;
   border-radius: 1px;
+  -webkit-box-shadow: 0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .card-header {
   background-color: #15a2b8;
-  border-radius: 1px !important;
+  border-radius: 2px 2px 0 0 !important;
   color: white;
 }
 
@@ -10343,5 +10345,35 @@ h5,
 
 .days {
   margin-bottom: 32px;
+}
+
+.calendar-wrapper {
+  position: relative;
+}
+
+.notifications {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.swal2-modal {
+  -webkit-box-shadow: 0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+          box-shadow: 0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+  border-radius: 2px !important;
+}
+
+.quarters {
+  position: relative;
+}
+
+.disabled-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: progress;
 }
 

@@ -3,6 +3,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.moment = require('moment');
 moment.locale("fi");
+window.swal = require("sweetalert2");
 
 import Tooltip from 'vue-directive-tooltip';
 

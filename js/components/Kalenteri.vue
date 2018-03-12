@@ -1,74 +1,86 @@
 <template>
-    <div class="row">
-        <div class="col-lg-3 col-12">
-            <div class="calendar">
-                <div class="month title">
-                    <button @click="minusMonth" class="btn float-left"><i class="fas fa-caret-left"></i></button> 
-                    {{ selectedDate.format("MMMM YYYY") }}
-                    <button @click="plusMonth" class="btn  float-right"><i class="fas fa-caret-right"></i></button> 
+    <div class="card">
+        <div class="card-header">
+            Kalenteri 
+            <span v-if="loading" style="font-size: 14px;color: #a9dbe5;">
+                <img src="/img/loading.svg" style="height: 15px;margin-bottom: 2px;"> Ladataan..
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row calendar-wrapper">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="calendar">
+                        <div class="month title">
+                            <button @click="minusMonth" class="btn float-left"><i class="fas fa-caret-left"></i></button> 
+                            {{ selectedDate.format("MMMM YYYY") }}
+                            <button @click="plusMonth" class="btn  float-right"><i class="fas fa-caret-right"></i></button> 
+                        </div>
+                        <div class="days">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="weekdays">
+                                        <div class="day-of-the-week">MA</div>
+                                        <div class="day-of-the-week">TI</div>
+                                        <div class="day-of-the-week">KE</div>
+                                        <div class="day-of-the-week">TO</div>
+                                        <div class="day-of-the-week">PE</div>
+                                        <div class="day-of-the-week">LA</div>
+                                        <div class="day-of-the-week">SU</div>
+                                    </div>
+                                    <paiva 
+                                        v-for="n in emptyDaysBeforeStart" 
+                                        :key="n" 
+                                        day-number=0
+                                    />
+                                    <paiva 
+                                        v-for="n in daysInSelectedMonth" 
+                                        :key="n+100" 
+                                        :day-number="n"
+                                        :is-selected-date="n == selectedDay"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="days">
+                <div class="col-lg-9 col-md-6 col-12 selectedDayContainer">
+                    <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
+                    <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
+                    <div class="spacer"></div>
+                    <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
+                    <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
+                </div>
+                <div class="col-12">
                     <div class="row">
                         <div class="col-12">
-                            <div class="weekdays">
-                                <div class="day-of-the-week">MA</div>
-                                <div class="day-of-the-week">TI</div>
-                                <div class="day-of-the-week">KE</div>
-                                <div class="day-of-the-week">TO</div>
-                                <div class="day-of-the-week">PE</div>
-                                <div class="day-of-the-week">LA</div>
-                                <div class="day-of-the-week">SU</div>
+                            <div class="hourIndicator" :key="n" v-for="n in 24">
+                                {{ (n < 11) ? "0" + (n-1) : n-1 }}
                             </div>
-                            <paiva 
-                                v-for="n in emptyDaysBeforeStart" 
-                                :key="n" 
-                                day-number=0
-                            />
-                            <paiva 
-                                v-for="n in daysInSelectedMonth" 
-                                :key="n+100" 
-                                :day-number="n"
-                                :is-selected-date="n == selectedDay"
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 quarters" v-bind:class="{clicked: this.clicks == 1}">
+                            <span class="disabled-overlay" v-if="loading"></span>
+                            <vartti 
+                                v-for="quarter in quarters" 
+                                :key="quarter.qId"
+                                :clicks="clicks"
+                                :painted="quarter.painted"
+                                :hovered="(quarter.hovered) ? quarter.hovered : false"
+                                :deleting="(quarter.deleting) ? quarter.deleting : false"
+                                :id="quarter.qId"
+                                v-tooltip="getTime(quarter.qId)"
                             />
                         </div>
                     </div>
+                    <div class="small-spacer"></div>
+                    <p v-if="clicks == 0">Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.</p>
+                    <p v-if="clicks == 1">Valitse vielä lopetusaika.</p>
+                    <button v-if="!deleting" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
+                    <button v-if="deleting" class="btn btn-secondary btn-sm" @click="deleting = false">Peruuta poistaminen</button>
+                    <p v-if="deleting && clicks == 0" style="color: red">Valitse poistettavan pätkän alku.</p>
+                    <p v-if="deleting && clicks == 1" style="color: red">Valitse poistettavan pätkän loppu.</p>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-9 col-12">
-            <div class="selectedDayContainer">
-                <h3>{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
-                <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
-                <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
-                <div class="spacer"></div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="hourIndicator" :key="n" v-for="n in 24">
-                            {{ (n < 11) ? "0" + (n-1) : n-1 }}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 quarters" v-bind:class="{clicked: this.clicks == 1}">
-                        <vartti 
-                            v-for="quarter in quarters" 
-                            :key="quarter.qId"
-                            :clicks="clicks"
-                            :painted="quarter.painted"
-                            :hovered="(quarter.hovered) ? quarter.hovered : false"
-                            :deleting="(quarter.deleting) ? quarter.deleting : false"
-                            :id="quarter.qId"
-                            v-tooltip="getTime(quarter.qId)"
-                        />
-                    </div>
-                </div>
-                <div class="small-spacer"></div>
-                <p v-if="clicks == 0">Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.</p>
-                <p v-if="clicks == 1">Valitse vielä lopetusaika.</p>
-                <button v-if="!deleting" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
-                <button v-if="deleting" class="btn btn-secondary btn-sm" @click="deleting = false">Peruuta poistaminen</button>
-                <p v-if="deleting && clicks == 0" style="color: red">Valitse poistettavan pätkän alku.</p>
-                <p v-if="deleting && clicks == 1" style="color: red">Valitse poistettavan pätkän loppu.</p>
             </div>
         </div>
     </div>
@@ -114,14 +126,14 @@ export default {
             "selectedDay": moment().get("date"),
             "selectedMonth": moment().get("month"),
             "selectedYear": moment().get("year"),
-            daysInSelectedMonth: moment().daysInMonth(),    
+            "daysInSelectedMonth": moment().daysInMonth(),    
             "emptyDaysBeforeStart": emptyDaysBeforeStart(moment().get("month"), moment().get("year")),
             "clicks": 0,
             "firstClickedQuarter": 0,
             "secondClickedQuarter": 0,
             "quarters": quarters,
-            // "quarters": null,
-            "deleting": false
+            "deleting": false,
+            "loading": false
         }
     },
     methods: {
@@ -130,8 +142,8 @@ export default {
                 .then(res => {
                     this.userId = res.data._id;
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(err => {                    
+                    this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
                 });
         },
         fetchQuarters: function(selectedDate) {
@@ -141,17 +153,25 @@ export default {
              * with .format()
              */
             selectedDate = selectedDate.format();
+            this.loading = true;
 
             axios.get("/quarters", {
                 params: { selectedDate }
             }).then(res => {
                 if (res.data) {
+                    res.data.map(quarter => {
+                        quarter.hovered = false;
+                        quarter.deleting = false;
+                    });
+
                     this.quarters = res.data;
+                    this.loading = false;
                 } else {
-                    console.log("Unexpected data returned from server.");
+                    this.loading = false;
+                    this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
                 }
-            }).catch(err => {
-                console.log(err);
+            }).catch(err => {                    
+                this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
             })
         },
         refresh: function() {
@@ -184,12 +204,15 @@ export default {
         getTime: (quarterNumber) => {
             var quarterNumberAsParsedString = String((quarterNumber/4).toFixed(2));
             var quarterNumberAsParsedStringPlus15 = (String(((quarterNumber + 1)/4).toFixed(2)));
+            var firstClickedquarterNumberAsParsedString = (String(((quarterNumber + 1)/4).toFixed(2)));
 
             var parsedQNAPS = quarterNumberAsParsedString.split(".");
             var parsedQNAPSP15 = quarterNumberAsParsedStringPlus15.split(".");
+            var parsedFCQNAPS = firstClickedquarterNumberAsParsedString.split(".");
 
             parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
             parsedQNAPSP15[1] = parsedQNAPSP15[1] / 100 * 60;
+            parsedFCQNAPS[1] = parsedFCQNAPS[1] / 100 * 60;
 
             if (parsedQNAPS[0] <= 9) {
                 parsedQNAPS[0] = "0" + parsedQNAPS[0];
@@ -207,10 +230,45 @@ export default {
                 parsedQNAPSP15[0] = "0" + parsedQNAPSP15[0];
             }
 
+            if (parsedFCQNAPS[1] == 0) {
+                parsedFCQNAPS[1] = "00";
+            }
+
+            if (parsedFCQNAPS[0] <= 9) {
+                parsedFCQNAPS[0] = "0" + parsedFCQNAPS[0];
+            }
+
             parsedQNAPS = (String(parsedQNAPS)).replace(",", ":");
             parsedQNAPSP15 = (String(parsedQNAPSP15)).replace(",", ":");
+            parsedFCQNAPS = (String(parsedFCQNAPS)).replace(",", ":");
 
-            return parsedQNAPS + "–" + parsedQNAPSP15;
+            return ((this.clicks == 1) ? parsedFCQNAPS : parsedQNAPS) + "–" + parsedQNAPSP15;
+        },
+        swalSuccess: function(message) {
+            swal({
+                position: 'bottom-end',
+                type: 'success',
+                title: message,
+                text: false,
+                showConfirmButton: false,
+                backdrop: false,
+                width: "280px",
+                padding: "12px",
+                timer: 1500
+            })
+        },
+        swalError: function(title, text) {
+            swal({
+                position: 'bottom-end',
+                type: 'error',
+                title: title,
+                text: text,
+                showConfirmButton: false,
+                backdrop: false,
+                width: "280px",
+                padding: "12px 12px 24px",
+                timer: 3000
+            })
         }
     },
     created() {
@@ -272,13 +330,20 @@ export default {
 
                 this.clicks = 0;
                 this.deleting = false;
+                this.loading = true;
 
                 axios.post("/calendar", {
                     quarters: this.quarters,
                     day: this.selectedDate
                 })
-                .then(res => console.log(res.data))
-                .catch(err => console.log(err));
+                .then(res => {
+                    this.swalSuccess("Tallennettu");
+                    this.loading = false;
+                })
+                .catch(err => {
+                    this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
+                    this.loading = false;
+                });
             }
         });
     }
