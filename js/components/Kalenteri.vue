@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <div class="row calendar-wrapper">
-                <div class="col-lg-3 col-md-6 col-12">
+                <div class="col-lg-4 col-xl-3 col-md-6 col-12">
                     <div class="calendar">
                         <div class="month title">
                             <button @click="minusMonth" class="btn float-left"><i class="fas fa-caret-left"></i></button> 
@@ -43,12 +43,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-6 col-12 selectedDayContainer">
+                <div class="col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer">
                     <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
                     <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
                     <div class="spacer"></div>
                     <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                     <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
+                    <p>Tunnit: {{ dayTotal }}</p>
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <textarea 
+                                placeholder="Syötä tähän halutessasi muistiinpanoja päivästä"
+                                name="muistiinpanot" 
+                                rows="3" 
+                                class="form-control notes-textarea"
+                                v-model="notes"
+                            >
+                            </textarea>
+                            <button 
+                                @click="saveNotes" 
+                                style="width: 100%; border-radius: 0 0 2px 2px" 
+                                class="btn btn-info btn-sm"
+                            >
+                                Tallenna
+                            </button>
+                            <div class="small-spacer"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-12">
                     <div class="row">
@@ -133,7 +154,9 @@ export default {
             "secondClickedQuarter": 0,
             "quarters": quarters,
             "deleting": false,
-            "loading": false
+            "loading": false,
+            "dayTotal": "00:00",
+            "notes": ""
         }
     },
     methods: {
@@ -172,6 +195,18 @@ export default {
                 }
             }).catch(err => {                    
                 this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
+            })
+        },
+        saveNotes: function() {
+            axios.post("/notes", {
+                selectedDate: this.selectedDate,
+                notes: this.notes                    
+            })
+            .then(res => {
+
+            })
+            .catch(err => {
+                
             })
         },
         refresh: function() {

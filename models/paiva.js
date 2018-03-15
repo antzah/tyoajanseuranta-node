@@ -9,6 +9,7 @@ var quarterSchema = mongoose.Schema({
 var daySchema = mongoose.Schema({
     quarters: [quarterSchema],
     day: Date,
+    notes: String,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 

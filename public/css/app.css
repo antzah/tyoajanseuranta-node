@@ -10377,3 +10377,8 @@ h5,
   cursor: progress;
 }
 
+.notes-textarea {
+  font-size: 12.5px;
+  padding: 8px;
+}
+

@@ -55,7 +55,8 @@ module.exports = (app, passport) => {
         }, {
             user: req.user.id,
             day: req.body.day,
-            quarters: req.body.quarters
+            quarters: req.body.quarters,
+            notes: req.body.notes
         }, {
             upsert: true
         }, (err, day) => {
