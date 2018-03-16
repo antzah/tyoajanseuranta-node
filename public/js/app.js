@@ -69547,8 +69547,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_p_iv____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__subcomponents_p_iv___);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_vartti__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_vartti___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__subcomponents_vartti__);
-var _this3 = this;
+var _this4 = this;
 
+//
+//
+//
+//
 //
 //
 //
@@ -69706,11 +69710,20 @@ for (var i = 0; i < 96; i++) {
             "quarters": quarters,
             "deleting": false,
             "loading": false,
-            "dayTotal": "00:00",
-            "notes": ""
+            "notes": "",
+            "dailyTotal": "00:00"
         };
     },
     methods: {
+        quartersToHourString: function quartersToHourString() {
+            var hoursAsDecimal, hoursAsString;
+
+            this.quarters.map(function (quarter) {
+                if (quarter.painted) hoursAsDecimal += 0.25;
+            });
+
+            return hoursAsDecimal;
+        },
         fetchUser: function fetchUser() {
             var _this = this;
 
@@ -69720,7 +69733,7 @@ for (var i = 0; i < 96; i++) {
                 _this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.");
             });
         },
-        fetchQuarters: function fetchQuarters(selectedDate) {
+        fetchDay: function fetchDay(selectedDate) {
             var _this2 = this;
 
             /**
@@ -69731,16 +69744,18 @@ for (var i = 0; i < 96; i++) {
             selectedDate = selectedDate.format();
             this.loading = true;
 
-            axios.get("/quarters", {
+            axios.get("/days", {
                 params: { selectedDate: selectedDate }
             }).then(function (res) {
                 if (res.data) {
-                    res.data.map(function (quarter) {
+                    res.data.quarters.map(function (quarter) {
                         quarter.hovered = false;
                         quarter.deleting = false;
                     });
 
-                    _this2.quarters = res.data;
+                    _this2.notes = res.data.notes;
+                    _this2.quarters = res.data.quarters;
+
                     _this2.loading = false;
                 } else {
                     _this2.loading = false;
@@ -69751,10 +69766,14 @@ for (var i = 0; i < 96; i++) {
             });
         },
         saveNotes: function saveNotes() {
+            var _this3 = this;
+
             axios.post("/notes", {
-                selectedDate: this.selectedDate,
+                day: this.selectedDate,
                 notes: this.notes
-            }).then(function (res) {}).catch(function (err) {});
+            }).then(function (res) {
+                _this3.swalSuccess("Tallennettu");
+            }).catch(function (err) {});
         },
         refresh: function refresh() {
             this.selectedDay = this.selectedDate.get("date");
@@ -69763,7 +69782,7 @@ for (var i = 0; i < 96; i++) {
             this.daysInSelectedMonth = this.selectedDate.daysInMonth();
             this.emptyDaysBeforeStart = emptyDaysBeforeStart(this.selectedMonth, this.selectedYear);
 
-            this.fetchQuarters(this.selectedDate);
+            this.fetchDay(this.selectedDate);
         },
         minusMonth: function minusMonth() {
             this.selectedDate.set("date", 1);
@@ -69824,14 +69843,14 @@ for (var i = 0; i < 96; i++) {
             parsedQNAPSP15 = String(parsedQNAPSP15).replace(",", ":");
             parsedFCQNAPS = String(parsedFCQNAPS).replace(",", ":");
 
-            return (_this3.clicks == 1 ? parsedFCQNAPS : parsedQNAPS) + "–" + parsedQNAPSP15;
+            return (_this4.clicks == 1 ? parsedFCQNAPS : parsedQNAPS) + "–" + parsedQNAPSP15;
         },
-        swalSuccess: function swalSuccess(message) {
+        swalSuccess: function swalSuccess(title, text) {
             swal({
                 position: 'bottom-end',
                 type: 'success',
-                title: message,
-                text: false,
+                title: title,
+                text: text,
                 showConfirmButton: false,
                 backdrop: false,
                 width: "280px",
@@ -69858,75 +69877,75 @@ for (var i = 0; i < 96; i++) {
          * Fetch the user ID so we can use that later
          */
         this.fetchUser();
-        this.fetchQuarters(this.selectedDate);
+        this.fetchDay(this.selectedDate);
     },
     mounted: function mounted() {
-        var _this4 = this;
+        var _this5 = this;
 
         this.$on('selectDay', function (day) {
-            _this4.selectedDate = moment(new Date(_this4.selectedYear, _this4.selectedMonth, day, 12));
-            _this4.refresh();
+            _this5.selectedDate = moment(new Date(_this5.selectedYear, _this5.selectedMonth, day, 12));
+            _this5.refresh();
         });
 
         this.$on("quarterHovered", function (id) {
-            if (_this4.clicks == 1) {
-                _this4.secondClickedQuarter = id;
-                var sortedQuarters = returnSmallerAndBiggerId(_this4.firstClickedQuarter, _this4.secondClickedQuarter);
+            if (_this5.clicks == 1) {
+                _this5.secondClickedQuarter = id;
+                var sortedQuarters = returnSmallerAndBiggerId(_this5.firstClickedQuarter, _this5.secondClickedQuarter);
                 var smallerId = sortedQuarters[0],
                     biggerId = sortedQuarters[1];
 
-                for (var i = 0; i < _this4.quarters.length; i++) {
-                    _this4.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
-                    _this4.quarters[i].deleting = i >= smallerId && i <= biggerId && _this4.deleting ? true : false;
+                for (var i = 0; i < _this5.quarters.length; i++) {
+                    _this5.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
+                    _this5.quarters[i].deleting = i >= smallerId && i <= biggerId && _this5.deleting ? true : false;
                 }
             }
         });
 
         this.$on("quarterExited", function (id) {
-            for (var i = 0; i < _this4.quarters.length; i++) {
-                _this4.quarters[i].hovered = false;
-                _this4.quarters[i].deleting = false;
+            for (var i = 0; i < _this5.quarters.length; i++) {
+                _this5.quarters[i].hovered = false;
+                _this5.quarters[i].deleting = false;
             }
         });
 
         this.$on('quarterClicked', function (id) {
-            if (_this4.clicks == 0) {
-                _this4.quarters[id].painted = true;
-                _this4.quarters[id].deleting = _this4.deleting ? true : false;
-                _this4.firstClickedQuarter = id;
-                _this4.clicks++;
-            } else if (_this4.clicks == 1) {
-                _this4.secondClickedQuarter = id;
+            if (_this5.clicks == 0) {
+                _this5.quarters[id].painted = true;
+                _this5.quarters[id].deleting = _this5.deleting ? true : false;
+                _this5.firstClickedQuarter = id;
+                _this5.clicks++;
+            } else if (_this5.clicks == 1) {
+                _this5.secondClickedQuarter = id;
 
-                var sortedQuarters = returnSmallerAndBiggerId(_this4.firstClickedQuarter, _this4.secondClickedQuarter);
+                var sortedQuarters = returnSmallerAndBiggerId(_this5.firstClickedQuarter, _this5.secondClickedQuarter);
                 var smallerId = sortedQuarters[0],
                     biggerId = sortedQuarters[1];
 
-                if (_this4.deleting) {
+                if (_this5.deleting) {
                     for (var i = smallerId; i <= biggerId; i++) {
-                        _this4.quarters[i].painted = false;
-                        _this4.quarters[i].deleting = false;
-                        _this4.quarters[i].hovered = false;
+                        _this5.quarters[i].painted = false;
+                        _this5.quarters[i].deleting = false;
+                        _this5.quarters[i].hovered = false;
                     }
                 } else {
                     for (var i = smallerId; i <= biggerId; i++) {
-                        _this4.quarters[i].painted = true;
+                        _this5.quarters[i].painted = true;
                     }
                 }
 
-                _this4.clicks = 0;
-                _this4.deleting = false;
-                _this4.loading = true;
+                _this5.clicks = 0;
+                _this5.deleting = false;
+                _this5.loading = true;
 
-                axios.post("/calendar", {
-                    quarters: _this4.quarters,
-                    day: _this4.selectedDate
+                axios.post("/days", {
+                    quarters: _this5.quarters,
+                    day: _this5.selectedDate
                 }).then(function (res) {
-                    _this4.swalSuccess("Tallennettu");
-                    _this4.loading = false;
+                    _this5.swalSuccess("Tallennettu");
+                    _this5.loading = false;
                 }).catch(function (err) {
-                    _this4.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
-                    _this4.loading = false;
+                    _this5.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
+                    _this5.loading = false;
                 });
             }
         });
@@ -70254,52 +70273,62 @@ var render = function() {
               "col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer"
           },
           [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-info btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.minusDay }
-              },
-              [_vm._v("Edellinen päivä")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-info btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.plusDay }
-              },
-              [_vm._v("Seuraava päivä")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "spacer" }),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("h3", [
-                  _vm._v(
-                    _vm._s(_vm.selectedDate.format("dddd")) +
-                      " " +
-                      _vm._s(_vm.selectedDate.format("D.M.YYYY"))
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.loading
-              ? _c("h3", { staticStyle: { color: "#adadad" } }, [
-                  _vm._v(
-                    _vm._s(_vm.selectedDate.format("dddd")) +
-                      " " +
-                      _vm._s(_vm.selectedDate.format("D.M.YYYY"))
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("p", [_vm._v("Tunnit: " + _vm._s(_vm.dayTotal))]),
-            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 col-lg-8" }, [
+              _c("div", { staticClass: "col-lg-6 col-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-info btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.minusDay }
+                  },
+                  [_vm._v("Edellinen päivä")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-info btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.plusDay }
+                  },
+                  [_vm._v("Seuraava päivä")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "spacer" }),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("h3", [
+                      _vm._v(
+                        _vm._s(_vm.selectedDate.format("dddd")) +
+                          " " +
+                          _vm._s(_vm.selectedDate.format("D.M.YYYY"))
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.loading
+                  ? _c("h3", { staticStyle: { color: "#adadad" } }, [
+                      _vm._v(
+                        _vm._s(_vm.selectedDate.format("dddd")) +
+                          " " +
+                          _vm._s(_vm.selectedDate.format("D.M.YYYY"))
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("p", [_vm._v("Tunnit: " + _vm._s(_vm.dailyTotal))])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-6 col-12" }, [
+                _c("h5", [_vm._v("Päivän muistiinpanot")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "small-text" }, [
+                  _vm._v(
+                    "Voit kirjata alle halutessasi esim. ranskalaisin viivoin päivän työtehtäviä."
+                  )
+                ]),
+                _vm._v(" "),
                 _c("textarea", {
                   directives: [
                     {
@@ -70311,10 +70340,9 @@ var render = function() {
                   ],
                   staticClass: "form-control notes-textarea",
                   attrs: {
-                    placeholder:
-                      "Syötä tähän halutessasi muistiinpanoja päivästä",
+                    placeholder: "Syötä muistiinpanot",
                     name: "muistiinpanot",
-                    rows: "3"
+                    rows: "4"
                   },
                   domProps: { value: _vm.notes },
                   on: {
@@ -70327,14 +70355,12 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
+                _c("div", { staticClass: "small-spacer" }),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
                     staticClass: "btn btn-info btn-sm",
-                    staticStyle: {
-                      width: "100%",
-                      "border-radius": "0 0 2px 2px"
-                    },
                     on: { click: _vm.saveNotes }
                   },
                   [

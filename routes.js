@@ -42,7 +42,7 @@ module.exports = (app, passport) => {
     /**
      * App logic
      */
-    app.post("/calendar", isAuthenticated, (req, res) => {
+    app.post("/days", isAuthenticated, (req, res) => {
         let dayStart = moment(req.body.day).hour(0).minute(0).second(0),
             dayEnd = moment(req.body.day).hour(23).minute(59).second(59);
 
@@ -66,7 +66,7 @@ module.exports = (app, passport) => {
         });
     });
     
-    app.get("/quarters", isAuthenticated, (req, res) => {
+    app.get("/days", isAuthenticated, (req, res) => {
         if (!req.query.selectedDate){
             res.status(500).send({ error: 'No day parameter provided.' });
         } else {
@@ -82,7 +82,7 @@ module.exports = (app, passport) => {
             }, (err, paiva) => {
                 if (err) res.status(500).send({ error: 'Something failed!' });
                 if (paiva) {
-                    res.json(paiva.quarters);
+                    res.json(paiva);
                 } else {
                     var quarters = [];
 
@@ -93,10 +93,36 @@ module.exports = (app, passport) => {
                         })
                     }
 
-                    res.json(quarters);
+                    var paiva = {
+                        quarters,
+                        notes: ""
+                    }
+
+                    res.json(paiva);
                 }
             })
         }
+    })
+
+    app.post("/notes", isAuthenticated, (req, res) => {
+        let dayStart = moment(req.body.day).hour(0).minute(0).second(0),
+            dayEnd = moment(req.body.day).hour(23).minute(59).second(59);
+
+        Paiva.findOneAndUpdate({
+            user: req.user.id,
+            day: {
+                $gte: dayStart,
+                $lt: dayEnd
+            }
+        }, {
+            notes: req.body.notes
+        }, {
+            upsert: true
+        }, (err, day) => {
+            if (err) return "Error while updating records";
+
+            res.send("OK");
+        });
     })
 
     /**

@@ -44,25 +44,29 @@
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer">
-                    <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
-                    <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
-                    <div class="spacer"></div>
-                    <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
-                    <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
-                    <p>Tunnit: {{ dayTotal }}</p>
                     <div class="row">
-                        <div class="col-12 col-lg-8">
+                        <div class="col-lg-6 col-12">
+                            <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
+                            <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
+                            <div class="spacer"></div>
+                            <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
+                            <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
+                            <p>Tunnit: {{ dailyTotal }}</p>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <h5>Päivän muistiinpanot</h5>
+                            <p class="small-text">Voit kirjata alle halutessasi esim. ranskalaisin viivoin päivän työtehtäviä.</p>
                             <textarea 
-                                placeholder="Syötä tähän halutessasi muistiinpanoja päivästä"
+                                placeholder='Syötä muistiinpanot'
                                 name="muistiinpanot" 
-                                rows="3" 
+                                rows="4" 
                                 class="form-control notes-textarea"
                                 v-model="notes"
                             >
                             </textarea>
+                            <div class="small-spacer"></div>
                             <button 
                                 @click="saveNotes" 
-                                style="width: 100%; border-radius: 0 0 2px 2px" 
                                 class="btn btn-info btn-sm"
                             >
                                 Tallenna
@@ -155,11 +159,20 @@ export default {
             "quarters": quarters,
             "deleting": false,
             "loading": false,
-            "dayTotal": "00:00",
-            "notes": ""
+            "notes": "",
+            "dailyTotal": "00:00"
         }
     },
     methods: {
+        quartersToHourString: function() {
+            var hoursAsDecimal, hoursAsString;
+            
+            this.quarters.map(quarter => {
+                if (quarter.painted) hoursAsDecimal += 0.25;
+            })
+
+            return hoursAsDecimal;
+        },
         fetchUser: function() {
             axios.get("/user")
                 .then(res => {
@@ -169,7 +182,7 @@ export default {
                     this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
                 });
         },
-        fetchQuarters: function(selectedDate) {
+        fetchDay: function(selectedDate) {
             /**
              * selectedDate is an instance of moment, so 
              * we can convert it to a readable UTC format
@@ -178,16 +191,18 @@ export default {
             selectedDate = selectedDate.format();
             this.loading = true;
 
-            axios.get("/quarters", {
+            axios.get("/days", {
                 params: { selectedDate }
             }).then(res => {
                 if (res.data) {
-                    res.data.map(quarter => {
+                    res.data.quarters.map(quarter => {
                         quarter.hovered = false;
                         quarter.deleting = false;
                     });
 
-                    this.quarters = res.data;
+                    this.notes = res.data.notes;
+                    this.quarters = res.data.quarters;
+                    
                     this.loading = false;
                 } else {
                     this.loading = false;
@@ -199,11 +214,11 @@ export default {
         },
         saveNotes: function() {
             axios.post("/notes", {
-                selectedDate: this.selectedDate,
+                day: this.selectedDate,
                 notes: this.notes                    
             })
             .then(res => {
-
+                this.swalSuccess("Tallennettu")
             })
             .catch(err => {
                 
@@ -216,7 +231,7 @@ export default {
             this.daysInSelectedMonth = this.selectedDate.daysInMonth();
             this.emptyDaysBeforeStart = emptyDaysBeforeStart(this.selectedMonth, this.selectedYear);
 
-            this.fetchQuarters(this.selectedDate);
+            this.fetchDay(this.selectedDate);
         },
         minusMonth: function() {
             this.selectedDate.set("date", 1);
@@ -279,12 +294,12 @@ export default {
 
             return ((this.clicks == 1) ? parsedFCQNAPS : parsedQNAPS) + "–" + parsedQNAPSP15;
         },
-        swalSuccess: function(message) {
+        swalSuccess: function(title, text) {
             swal({
                 position: 'bottom-end',
                 type: 'success',
-                title: message,
-                text: false,
+                title: title,
+                text: text,
                 showConfirmButton: false,
                 backdrop: false,
                 width: "280px",
@@ -311,7 +326,7 @@ export default {
          * Fetch the user ID so we can use that later
          */
         this.fetchUser();        
-        this.fetchQuarters(this.selectedDate);
+        this.fetchDay(this.selectedDate);
     },
     mounted() {
         this.$on('selectDay', (day) => {
@@ -367,7 +382,7 @@ export default {
                 this.deleting = false;
                 this.loading = true;
 
-                axios.post("/calendar", {
+                axios.post("/days", {
                     quarters: this.quarters,
                     day: this.selectedDate
                 })

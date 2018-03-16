@@ -10382,3 +10382,9 @@ h5,
   padding: 8px;
 }
 
+.small-text {
+  font-size: 0.75rem;
+  line-height: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
