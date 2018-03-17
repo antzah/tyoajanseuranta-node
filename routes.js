@@ -6,7 +6,14 @@ var Paiva = require('./models/paiva');
 var User = require("./models/user");
 
 module.exports = (app, passport) => {
+    /**
+     * Routes used by Vue Router
+     */
     app.get('/', isLoggedIn, (req, res) => {
+        res.render('index.ejs'); 
+    });
+
+    app.get("/raportit", isLoggedIn, (req, res) => {
         res.render('index.ejs'); 
     });
 

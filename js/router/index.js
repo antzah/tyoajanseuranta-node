@@ -6,6 +6,7 @@ import Raportit from "../components/raportit"
 Vue.use(Router)
 
 export default new Router({
+    mode: "history",
     base: "/",
     routes: [
         {
