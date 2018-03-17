@@ -69711,18 +69711,22 @@ for (var i = 0; i < 96; i++) {
             "deleting": false,
             "loading": false,
             "notes": "",
-            "dailyTotal": "00:00"
+            "dailyTotal": ".."
         };
     },
     methods: {
-        quartersToHourString: function quartersToHourString() {
-            var hoursAsDecimal, hoursAsString;
-
+        /**
+         * https://stackoverflow.com/questions/33769178/moment-js-decimals-into-time-format
+         */
+        decimalHoursToString: function decimalHoursToString(hours) {
+            return ('' + Math.floor(hours) % 24).slice(-2) + 'h ' + (hours % 1 * 60 + '0').slice(0, 2) + "min";
+        },
+        updateDailyTotal: function updateDailyTotal() {
+            var dailyTotalAsDecimal = 0;
             this.quarters.map(function (quarter) {
-                if (quarter.painted) hoursAsDecimal += 0.25;
+                return quarter.painted ? dailyTotalAsDecimal += 0.25 : null;
             });
-
-            return hoursAsDecimal;
+            this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal);
         },
         fetchUser: function fetchUser() {
             var _this = this;
@@ -69757,6 +69761,7 @@ for (var i = 0; i < 96; i++) {
                     _this2.quarters = res.data.quarters;
 
                     _this2.loading = false;
+                    _this2.updateDailyTotal();
                 } else {
                     _this2.loading = false;
                     _this2.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.");
@@ -69773,7 +69778,9 @@ for (var i = 0; i < 96; i++) {
                 notes: this.notes
             }).then(function (res) {
                 _this3.swalSuccess("Tallennettu");
-            }).catch(function (err) {});
+            }).catch(function (err) {
+                _this3.swalError("Virhe!", "Päivitä selain ja yritä tallentaa muistiinpanot uudelleen.");
+            });
         },
         refresh: function refresh() {
             this.selectedDay = this.selectedDate.get("date");
@@ -69943,6 +69950,7 @@ for (var i = 0; i < 96; i++) {
                 }).then(function (res) {
                     _this5.swalSuccess("Tallennettu");
                     _this5.loading = false;
+                    _this5.updateDailyTotal();
                 }).catch(function (err) {
                     _this5.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
                     _this5.loading = false;
@@ -70317,7 +70325,7 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c("p", [_vm._v("Tunnit: " + _vm._s(_vm.dailyTotal))])
+                _c("h5", [_vm._v(_vm._s(_vm.dailyTotal))])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-6 col-12" }, [

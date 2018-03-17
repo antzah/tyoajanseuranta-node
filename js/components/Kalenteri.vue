@@ -51,7 +51,7 @@
                             <div class="spacer"></div>
                             <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                             <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
-                            <p>Tunnit: {{ dailyTotal }}</p>
+                            <h5>{{ dailyTotal }}</h5>
                         </div>
                         <div class="col-lg-6 col-12">
                             <h5>Päivän muistiinpanot</h5>
@@ -160,18 +160,20 @@ export default {
             "deleting": false,
             "loading": false,
             "notes": "",
-            "dailyTotal": "00:00"
+            "dailyTotal": ".."
         }
     },
     methods: {
-        quartersToHourString: function() {
-            var hoursAsDecimal, hoursAsString;
-            
-            this.quarters.map(quarter => {
-                if (quarter.painted) hoursAsDecimal += 0.25;
-            })
-
-            return hoursAsDecimal;
+        /**
+         * https://stackoverflow.com/questions/33769178/moment-js-decimals-into-time-format
+         */
+        decimalHoursToString: function(hours) {
+            return ('' + Math.floor(hours) % 24).slice(-2) + 'h ' + ((hours % 1)*60 + '0').slice(0, 2) + "min";
+        },
+        updateDailyTotal: function() {
+            var dailyTotalAsDecimal = 0;
+            this.quarters.map(quarter => (quarter.painted) ? dailyTotalAsDecimal += 0.25 : null);
+            this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal);
         },
         fetchUser: function() {
             axios.get("/user")
@@ -204,13 +206,15 @@ export default {
                     this.quarters = res.data.quarters;
                     
                     this.loading = false;
+                    this.updateDailyTotal();
                 } else {
                     this.loading = false;
                     this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
                 }
             }).catch(err => {                    
                 this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
-            })
+            });
+    
         },
         saveNotes: function() {
             axios.post("/notes", {
@@ -221,7 +225,7 @@ export default {
                 this.swalSuccess("Tallennettu")
             })
             .catch(err => {
-                
+                this.swalError("Virhe!", "Päivitä selain ja yritä tallentaa muistiinpanot uudelleen.")
             })
         },
         refresh: function() {
@@ -389,6 +393,7 @@ export default {
                 .then(res => {
                     this.swalSuccess("Tallennettu");
                     this.loading = false;
+                    this.updateDailyTotal();
                 })
                 .catch(err => {
                     this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
