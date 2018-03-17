@@ -139,6 +139,7 @@ for (var i = 0; i < 96; i++) {
 }
 
 export default {
+    name: "kalenteri",
     components: {
         'paiva': päivä,
         'vartti': vartti

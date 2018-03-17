@@ -1,13 +1,12 @@
-require('./bootstrap');
+import "./bootstrap";
 
-window.Vue = require('vue');
-window.moment = require('moment');
-moment.locale("fi");
-window.swal = require("sweetalert2");
-
+/**
+ * Vue, Vue Components and Vue plugins
+ */
+import Vue from "vue";
 import Tooltip from 'vue-directive-tooltip';
-
-Vue.component('kalenteri-component', require('./components/Kalenteri.vue'));
+import App from "./App.vue";
+import router from "./router";
 
 Vue.use(Tooltip, {
     delay: 0,
@@ -15,8 +14,19 @@ Vue.use(Tooltip, {
     class: 'tas-tooltip'
 });
 
+/**
+ * Other tools and plugins
+ */
+window.moment = require("moment");
+moment.locale("fi");
+
+window.swal = require("sweetalert2");
+
 if (document.querySelector("#app")) {
-    const app = new Vue({
-        el: '#app'
-    });
+    new Vue({
+        el: '#app',
+        router,
+        template: '<App/>',
+        components: { App }
+    })
 }
