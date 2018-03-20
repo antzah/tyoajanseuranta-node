@@ -50,6 +50,12 @@ export default {
     components: {
         'datepicker': Datepicker,
     },
+    created() {
+        /**
+         * Fetch the user ID so we can use that later
+         */
+        this.fetchUser();
+    },
     methods: {
         openAPickerIfNecessary: function() {
             if (this.secondDate == "" || this.firstDate > this.secondDate) this.$refs.endingDate.showCalendar();
@@ -60,12 +66,63 @@ export default {
             else {
                 this.firstDateIsBiggerThanSecond = false;
 
-                if (this.firstDate != "" && this.secondDate != "") console.log("Query");
+                if (this.firstDate != "" && this.secondDate != "") {
+                    axios.get("/reports", {
+                        params: {
+                            firstDate: this.firstDate,
+                            secondDate: this.secondDate,
+                            userId: this.userId
+                        }
+                    }).then(res => {
+                        if (res.data) {
+                            console.log(res.data);
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                        this.swalError("Virhe!", "Päivitä selainikkuna ja yritä hakea raportti uudelleen.")
+                    });
+                }
             }
+        },
+        fetchUser: function() {
+            axios.get("/user")
+                .then(res => {
+                    this.userId = res.data._id;
+                })
+                .catch(err => {                    
+                    this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
+                });
+        },
+        swalSuccess: function(title, text) {
+            swal({
+                position: 'bottom-end',
+                type: 'success',
+                title: title,
+                text: text,
+                showConfirmButton: false,
+                backdrop: false,
+                width: "280px",
+                padding: "12px",
+                timer: 1500
+            })
+        },
+        swalError: function(title, text) {
+            swal({
+                position: 'bottom-end',
+                type: 'error',
+                title: title,
+                text: text,
+                showConfirmButton: false,
+                backdrop: false,
+                width: "280px",
+                padding: "12px 12px 24px",
+                timer: 3000
+            })
         }
     },
     data: function() {
         return {
+            userId: null,
             firstDate: "",
             secondDate: "",
             firstDateIsBiggerThanSecond: false

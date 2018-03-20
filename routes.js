@@ -47,7 +47,7 @@ module.exports = (app, passport) => {
     }));
 
     /**
-     * App logic
+     * Calendar logic
      */
     app.post("/days", isAuthenticated, (req, res) => {
         let dayStart = moment(req.body.day).hour(0).minute(0).second(0),
@@ -72,6 +72,27 @@ module.exports = (app, passport) => {
             res.send("OK");
         });
     });
+
+    app.post("/dailytotal", isAuthenticated, (req, res) => {
+        let dayStart = moment(req.body.day).hour(0).minute(0).second(0),
+            dayEnd = moment(req.body.day).hour(23).minute(59).second(59);
+
+        Paiva.findOneAndUpdate({
+            user: req.user.id,
+            day: {
+                $gte: dayStart,
+                $lt: dayEnd
+            }
+        }, {
+            dailyTotal: req.body.dailyTotal
+        }, {
+            upsert: true
+        }, (err, day) => {
+            if (err) return "Error while updating records";
+
+            res.send("OK");
+        });
+    })
     
     app.get("/days", isAuthenticated, (req, res) => {
         if (!req.query.selectedDate){
@@ -129,6 +150,28 @@ module.exports = (app, passport) => {
             if (err) return "Error while updating records";
 
             res.send("OK");
+        });
+    })
+
+    /**
+     * Reports logic
+     */
+    app.get("/reports", isAuthenticated, (req, res) => {
+        let firstDateStart = moment(req.query.firstDate).hour(0).minute(0).second(0),
+            secondDateEnd = moment(req.query.secondDate).hour(23).minute(59).second(59),
+            userId = req.query.userId;
+        
+        Paiva.find({
+            user: userId,
+            day: {
+                $gte: firstDateStart,
+                $lt: secondDateEnd
+            }
+        }).sort({ 
+            day: -1 
+        }).exec((err, paivas) => {
+            if (err) res.status(500).send({ error: "Something failed when querying for the report"});
+            res.json(paivas);
         });
     })
 

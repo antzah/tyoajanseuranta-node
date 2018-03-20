@@ -55627,7 +55627,8 @@ for (var i = 0; i < 96; i++) {
             "deleting": false,
             "loading": false,
             "notes": "",
-            "dailyTotal": ".."
+            "dailyTotal": "..",
+            "dailyTotalAsDecimal": 0
         };
     },
     methods: {
@@ -55642,6 +55643,7 @@ for (var i = 0; i < 96; i++) {
             this.quarters.map(function (quarter) {
                 return quarter.painted ? dailyTotalAsDecimal += 0.25 : null;
             });
+            this.dailyTotalAsDecimal = dailyTotalAsDecimal;
             this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal);
         },
         fetchUser: function fetchUser() {
@@ -55867,6 +55869,15 @@ for (var i = 0; i < 96; i++) {
                     _this5.swalSuccess("Tallennettu");
                     _this5.loading = false;
                     _this5.updateDailyTotal();
+
+                    axios.post("/dailytotal", {
+                        dailyTotal: _this5.dailyTotalAsDecimal,
+                        day: _this5.selectedDate
+                    }).then(function (res) {
+                        //
+                    }).catch(function (err) {
+                        _this5.swalError("Virhe!", "Pahoittelut, jokin meni pieleen! Päivitä selainikkuna jatkaaksesi.");
+                    });
                 }).catch(function (err) {
                     _this5.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
                     _this5.loading = false;
@@ -56338,21 +56349,81 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         'datepicker': __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default.a
     },
+    created: function created() {
+        /**
+         * Fetch the user ID so we can use that later
+         */
+        this.fetchUser();
+    },
+
     methods: {
         openAPickerIfNecessary: function openAPickerIfNecessary() {
             if (this.secondDate == "" || this.firstDate > this.secondDate) this.$refs.endingDate.showCalendar();
             if (this.firstDate == "" && this.secondDate != "") this.$refs.startDate.showCalendar();
         },
         validateSelectionsAndRunQuery: function validateSelectionsAndRunQuery() {
+            var _this = this;
+
             if (this.firstDate > this.secondDate && this.firstDate != "" && this.secondDate != "") this.firstDateIsBiggerThanSecond = true;else {
                 this.firstDateIsBiggerThanSecond = false;
 
-                if (this.firstDate != "" && this.secondDate != "") console.log("Query");
+                if (this.firstDate != "" && this.secondDate != "") {
+                    axios.get("/reports", {
+                        params: {
+                            firstDate: this.firstDate,
+                            secondDate: this.secondDate,
+                            userId: this.userId
+                        }
+                    }).then(function (res) {
+                        if (res.data) {
+                            console.log(res.data);
+                        }
+                    }).catch(function (err) {
+                        console.log(err);
+                        _this.swalError("Virhe!", "Päivitä selainikkuna ja yritä hakea raportti uudelleen.");
+                    });
+                }
             }
+        },
+        fetchUser: function fetchUser() {
+            var _this2 = this;
+
+            axios.get("/user").then(function (res) {
+                _this2.userId = res.data._id;
+            }).catch(function (err) {
+                _this2.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.");
+            });
+        },
+        swalSuccess: function swalSuccess(title, text) {
+            swal({
+                position: 'bottom-end',
+                type: 'success',
+                title: title,
+                text: text,
+                showConfirmButton: false,
+                backdrop: false,
+                width: "280px",
+                padding: "12px",
+                timer: 1500
+            });
+        },
+        swalError: function swalError(title, text) {
+            swal({
+                position: 'bottom-end',
+                type: 'error',
+                title: title,
+                text: text,
+                showConfirmButton: false,
+                backdrop: false,
+                width: "280px",
+                padding: "12px 12px 24px",
+                timer: 3000
+            });
         }
     },
     data: function data() {
         return {
+            userId: null,
             firstDate: "",
             secondDate: "",
             firstDateIsBiggerThanSecond: false

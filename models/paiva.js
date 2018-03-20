@@ -10,6 +10,7 @@ var daySchema = mongoose.Schema({
     quarters: [quarterSchema],
     day: Date,
     notes: String,
+    dailyTotal: Number,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 

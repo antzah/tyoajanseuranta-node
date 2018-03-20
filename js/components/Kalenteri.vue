@@ -162,7 +162,8 @@ export default {
             "deleting": false,
             "loading": false,
             "notes": "",
-            "dailyTotal": ".."
+            "dailyTotal": "..",
+            "dailyTotalAsDecimal": 0
         }
     },
     methods: {
@@ -175,6 +176,7 @@ export default {
         updateDailyTotal: function() {
             var dailyTotalAsDecimal = 0;
             this.quarters.map(quarter => (quarter.painted) ? dailyTotalAsDecimal += 0.25 : null);
+            this.dailyTotalAsDecimal = dailyTotalAsDecimal;
             this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal);
         },
         fetchUser: function() {
@@ -396,6 +398,17 @@ export default {
                     this.swalSuccess("Tallennettu");
                     this.loading = false;
                     this.updateDailyTotal();
+
+                    axios.post("/dailytotal", {
+                        dailyTotal: this.dailyTotalAsDecimal,
+                        day: this.selectedDate
+                    })
+                    .then(res => {
+                        //
+                    })
+                    .catch(err => {
+                        this.swalError("Virhe!", "Pahoittelut, jokin meni pieleen! Päivitä selainikkuna jatkaaksesi.");
+                    });
                 })
                 .catch(err => {
                     this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
