@@ -10,10 +10,11 @@
                     <label>Valitse aloituspäivä</label>
                     <datepicker 
                         placeholder="Klikkaa aloituspäivää"
+                        ref="startDate"
                         :monday-first="true"
                         :format="'d.M.yyyy'"
                         :language="'fi'"
-                        @closed="validateSelectionsAndRunQuery(); openSecondPickerIfNecessary(); "
+                        @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary(); "
                         v-model="firstDate"
                     />
                     <label
@@ -33,7 +34,7 @@
                         :format="'d.M.yyyy'"
                         :language="'fi'"
                         v-model="secondDate"
-                        @closed="validateSelectionsAndRunQuery"  
+                        @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary();"  
                     />
                 </div>
             </div>
@@ -50,8 +51,9 @@ export default {
         'datepicker': Datepicker,
     },
     methods: {
-        openSecondPickerIfNecessary: function() {
+        openAPickerIfNecessary: function() {
             if (this.secondDate == "" || this.firstDate > this.secondDate) this.$refs.endingDate.showCalendar();
+            if (this.firstDate == "" && this.secondDate != "") this.$refs.startDate.showCalendar();
         },
         validateSelectionsAndRunQuery: function() {
             if (this.firstDate > this.secondDate && this.firstDate != "" && this.secondDate != "") this.firstDateIsBiggerThanSecond = true;

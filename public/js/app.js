@@ -56329,6 +56329,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -56338,8 +56339,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'datepicker': __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default.a
     },
     methods: {
-        openSecondPickerIfNecessary: function openSecondPickerIfNecessary() {
+        openAPickerIfNecessary: function openAPickerIfNecessary() {
             if (this.secondDate == "" || this.firstDate > this.secondDate) this.$refs.endingDate.showCalendar();
+            if (this.firstDate == "" && this.secondDate != "") this.$refs.startDate.showCalendar();
         },
         validateSelectionsAndRunQuery: function validateSelectionsAndRunQuery() {
             if (this.firstDate > this.secondDate && this.firstDate != "" && this.secondDate != "") this.firstDateIsBiggerThanSecond = true;else {
@@ -56386,6 +56388,7 @@ var render = function() {
             _c("label", [_vm._v("Valitse aloituspäivä")]),
             _vm._v(" "),
             _c("datepicker", {
+              ref: "startDate",
               attrs: {
                 placeholder: "Klikkaa aloituspäivää",
                 "monday-first": true,
@@ -56395,7 +56398,7 @@ var render = function() {
               on: {
                 closed: function($event) {
                   _vm.validateSelectionsAndRunQuery()
-                  _vm.openSecondPickerIfNecessary()
+                  _vm.openAPickerIfNecessary()
                 }
               },
               model: {
@@ -56434,7 +56437,12 @@ var render = function() {
                 format: "d.M.yyyy",
                 language: "fi"
               },
-              on: { closed: _vm.validateSelectionsAndRunQuery },
+              on: {
+                closed: function($event) {
+                  _vm.validateSelectionsAndRunQuery()
+                  _vm.openAPickerIfNecessary()
+                }
+              },
               model: {
                 value: _vm.secondDate,
                 callback: function($$v) {
