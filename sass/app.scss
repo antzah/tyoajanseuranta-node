@@ -101,87 +101,87 @@ h1, h2, h3, h4, h5,
   }
 }
 
-.month {
+.calendar .month {
   background: #d43d32;
   text-align: center;
   padding: 8px;
   color: white;
 }
 
-.month.title {
+.calendar .month.title {
   text-transform: capitalize;
 }
 
-.days .week {
+.calendar .days .week {
   border-left: 1px solid rgba(0,0,0,.03);
   border-right: 1px solid rgba(0,0,0,.03);
 }
 
-.days .week:first-of-type {
+.calendar .days .week:first-of-type {
   border-top: 1px solid rgba(0,0,0,.03);
 }
 
-.days .week:last-of-type {
+.calendar .days .week:last-of-type {
   border-bottom: 1px solid rgba(0,0,0,.03);
 }
 
-.day-of-the-week, .day {
+.calendar .day-of-the-week, .day {
   text-align: center;
   padding: 2px;
   float: left;
   width: 14.28%;
 }
 
-.day {
+.calendar .day {
   display: inline-block;
   cursor: default;
   border: 1px solid rgba(0,0,0,.03);
 }
 
-.day:hover {
+.calendar .day:hover {
   border: 1px solid orange;
   cursor: pointer;
 }
 
 /* Saturday */
-.day:nth-child(7n) {
+.calendar .day:nth-child(7n) {
   background: rgba(138, 208, 219, 0.7490196078431373);
 }
 
 /* Sunday */
-.day:nth-child(7n+1) {
+.calendar .day:nth-child(7n+1) {
   background: #7cc4d0;
 }
 
-.day.empty {
+.calendar .day.empty {
   background: rgba(0,0,0,.03);
   cursor: default;
   border: 1px solid transparent !important;
 }
 
-.day.active {
+.calendar .day.active {
   background: orange;
   border: 1px solid transparent !important;
   color: white;
 }
 
-.month.title {
+.calendar .month.title {
   position: relative;
 }
 
-.month.title .btn {
+.calendar .month.title .btn {
   position: absolute;
   background: #dc6057;
   color: white;
 }
 
-.month.title .btn.float-left {
+.calendar .month.title .btn.float-left {
   left: 0;
   top: 0;
   bottom: 0;
 }
 
-.month.title .btn.float-right {
+.calendar .month.title .btn.float-right {
   right: 0;
   top: 0;
   bottom: 0;
@@ -301,4 +301,29 @@ h1, h2, h3, h4, h5,
   font-size: 0.75rem;
   line-height: 0.95rem;
   margin-bottom: 0.8rem;
+}
+
+.vdp-datepicker input {
+  padding: 4px 8px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,.1);
+  width: 100%;
+  cursor: pointer;
+}
+
+.vdp-datepicker::after {
+  content: "▼";
+  font-size: 8px;
+  color: gray;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.vdp-datepicker input:hover {
+  background: rgba(0,0,0,.02);
+}
+
+label {
+  font-size: 0.8rem;
 }

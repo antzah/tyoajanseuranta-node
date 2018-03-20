@@ -99,12 +99,13 @@
                         </div>
                     </div>
                     <div class="small-spacer"></div>
-                    <p v-if="clicks == 0">Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.</p>
-                    <p v-if="clicks == 1">Valitse vielä lopetusaika.</p>
-                    <button v-if="!deleting" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
-                    <button v-if="deleting" class="btn btn-secondary btn-sm" @click="deleting = false">Peruuta poistaminen</button>
+                    <p v-if="clicks == 0 && !deleting">Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.</p>
+                    <p v-if="clicks == 1 && !deleting">Valitse vielä lopetusaika.</p>
                     <p v-if="deleting && clicks == 0" style="color: red">Valitse poistettavan pätkän alku.</p>
                     <p v-if="deleting && clicks == 1" style="color: red">Valitse poistettavan pätkän loppu.</p>
+                    <button v-if="!deleting && clicks == 0" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
+                    <button disabled="disabled" v-if="!deleting && clicks == 1" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
+                    <button v-if="deleting" class="btn btn-secondary btn-sm" @click="deleting = false">Peruuta poistaminen</button>
                 </div>
             </div>
         </div>
