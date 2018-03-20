@@ -56341,6 +56341,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -56376,7 +56401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }
                     }).then(function (res) {
                         if (res.data) {
-                            console.log(res.data);
+                            _this.resultRows = res.data;
                         }
                     }).catch(function (err) {
                         console.log(err);
@@ -56426,7 +56451,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             userId: null,
             firstDate: "",
             secondDate: "",
-            firstDateIsBiggerThanSecond: false
+            firstDateIsBiggerThanSecond: false,
+            resultRows: []
         };
     }
 });
@@ -56525,11 +56551,51 @@ var render = function() {
           ],
           1
         )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("table", { staticClass: "table table-bordered" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.resultRows, function(result) {
+                return _c("tr", { key: result._id }, [
+                  _c("td", [_vm._v(_vm._s(result.day))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("MA")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(result.notes))])
+                ])
+              })
+            )
+          ])
+        ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Päivämäärä")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Viikonpäivä")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tunnit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Muistiinpanot")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

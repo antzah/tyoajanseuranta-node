@@ -38,6 +38,31 @@
                     />
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Päivämäärä</th>
+                                <th>Viikonpäivä</th>
+                                <th>Tunnit</th>
+                                <th>Muistiinpanot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr 
+                                v-for="result in resultRows" 
+                                :key="result._id"
+                            >
+                                <td>{{ result.day }}</td>
+                                <td>MA</td>
+                                <td>{{ result.dailyTotal }}</td>
+                                <td>{{ result.notes }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -75,7 +100,7 @@ export default {
                         }
                     }).then(res => {
                         if (res.data) {
-                            console.log(res.data);
+                            this.resultRows = res.data;
                         }
                     }).catch(err => {
                         console.log(err);
@@ -125,7 +150,8 @@ export default {
             userId: null,
             firstDate: "",
             secondDate: "",
-            firstDateIsBiggerThanSecond: false
+            firstDateIsBiggerThanSecond: false,
+            resultRows: []
         }
     }
 }
