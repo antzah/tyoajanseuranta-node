@@ -36,15 +36,16 @@
                         v-model="secondDate"
                         @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary();"  
                     />
+                    <div class="small-spacer"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <table class="table table-bordered">
-                        <thead>
+                    <table class="table table-sm table-bordered table-hover">
+                        <thead class="thead-light">
                             <tr>
+                                <th></th>
                                 <th>Päivämäärä</th>
-                                <th>Viikonpäivä</th>
                                 <th>Tunnit</th>
                                 <th>Muistiinpanot</th>
                             </tr>
@@ -53,11 +54,17 @@
                             <tr 
                                 v-for="result in resultRows" 
                                 :key="result._id"
-                            >
-                                <td>{{ result.day }}</td>
-                                <td>MA</td>
+                            >   
+                                <td>{{ result.dayOfWeek }} </td>
+                                <th>{{ result.day }}</th>
                                 <td>{{ result.dailyTotal }}</td>
                                 <td>{{ result.notes }}</td>
+                            </tr>
+                            <tr class="table-active">
+                                <td></td>
+                                <td></td>
+                                <th>{{ (periodTotal) ? periodTotal : null }}</th>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -100,6 +107,15 @@ export default {
                         }
                     }).then(res => {
                         if (res.data) {
+                            let resultTotal = 0;
+                            
+                            res.data.map(resultRow => {
+                                resultRow.dayOfWeek = moment(resultRow.day).format("ddd");
+                                resultRow.day = moment(resultRow.day).format("D.M.Y");
+                                resultTotal += resultRow.dailyTotal;
+                            });
+
+                            this.periodTotal = resultTotal;
                             this.resultRows = res.data;
                         }
                     }).catch(err => {
@@ -151,7 +167,8 @@ export default {
             firstDate: "",
             secondDate: "",
             firstDateIsBiggerThanSecond: false,
-            resultRows: []
+            resultRows: [],
+            periodTotal: 0
         }
     }
 }

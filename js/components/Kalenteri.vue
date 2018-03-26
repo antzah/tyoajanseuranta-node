@@ -79,7 +79,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="hourIndicator" :key="n" v-for="n in 24">
-                                {{ (n < 11) ? "0" + (n-1) : n-1 }}
+                                {{ leftPad(n, 2, 0) }}
                             </div>
                         </div>
                     </div>
@@ -114,6 +114,7 @@
 
 <script>
 
+import leftPad from "left-pad";
 import päivä from "./subcomponents/päivä";
 import vartti from "./subcomponents/vartti";
 
@@ -223,7 +224,9 @@ export default {
         saveNotes: function() {
             axios.post("/notes", {
                 day: this.selectedDate,
-                notes: this.notes                    
+                notes: this.notes,
+                quarters: this.quarters,     
+                dailyTotal: this.dailyTotalAsDecimal                  
             })
             .then(res => {
                 this.swalSuccess("Tallennettu")
@@ -327,7 +330,8 @@ export default {
                 padding: "12px 12px 24px",
                 timer: 3000
             })
-        }
+        },
+        leftPad
     },
     created() {
         /**
@@ -389,26 +393,17 @@ export default {
                 this.clicks = 0;
                 this.deleting = false;
                 this.loading = true;
+                this.updateDailyTotal();
 
                 axios.post("/days", {
                     quarters: this.quarters,
-                    day: this.selectedDate
+                    day: this.selectedDate,
+                    dailyTotal: this.dailyTotalAsDecimal,
+                    notes: this.notes
                 })
                 .then(res => {
-                    this.swalSuccess("Tallennettu");
                     this.loading = false;
-                    this.updateDailyTotal();
-
-                    axios.post("/dailytotal", {
-                        dailyTotal: this.dailyTotalAsDecimal,
-                        day: this.selectedDate
-                    })
-                    .then(res => {
-                        //
-                    })
-                    .catch(err => {
-                        this.swalError("Virhe!", "Pahoittelut, jokin meni pieleen! Päivitä selainikkuna jatkaaksesi.");
-                    });
+                    this.swalSuccess("Tallennettu");
                 })
                 .catch(err => {
                     this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");

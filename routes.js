@@ -63,7 +63,8 @@ module.exports = (app, passport) => {
             user: req.user.id,
             day: req.body.day,
             quarters: req.body.quarters,
-            notes: req.body.notes
+            notes: req.body.notes,
+            dailyTotal: req.body.dailyTotal
         }, {
             upsert: true
         }, (err, day) => {
@@ -143,7 +144,10 @@ module.exports = (app, passport) => {
                 $lt: dayEnd
             }
         }, {
-            notes: req.body.notes
+            notes: req.body.notes,
+            day: req.body.day,
+            quarters: req.body.quarters,
+            dailyTotal: req.body.dailyTotal
         }, {
             upsert: true
         }, (err, day) => {
@@ -168,9 +172,9 @@ module.exports = (app, passport) => {
                 $lt: secondDateEnd
             }
         }).sort({ 
-            day: -1 
+            day: 1 
         }).exec((err, paivas) => {
-            if (err) res.status(500).send({ error: "Something failed when querying for the report"});
+            if (err) res.status(500).send({ error: "Something failed when querying for the report" });
             res.json(paivas);
         });
     })
