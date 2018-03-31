@@ -53041,6 +53041,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -53058,16 +53065,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        exportToExcel: function exportToExcel() {
-            var raporttiTable = document.getElementById("raportti");
+        exportToExcel: function exportToExcel(format) {
             var ws = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.json_to_sheet(this.exportableResults);
             var wb = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.book_new();
             __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.book_append_sheet(wb, ws, "Raportti");
-            var wbout = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.write(wb, { bookType: 'csv', type: 'binary' });
+            var wbout = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.write(wb, { bookType: format, type: 'binary' });
 
             FileSaver.saveAs(new Blob([this.s2ab(wbout)], {
                 type: "application/octet-stream"
-            }), 'tuntiraportti_' + moment(this.firstDate).format("D.M.Y") + '_' + moment(this.secondDate).format("D.M.Y") + '.csv');
+            }), 'tuntiraportti_' + moment(this.firstDate).format("D.M.Y") + '_' + moment(this.secondDate).format("D.M.Y") + '.' + format);
         },
         s2ab: function s2ab(s) {
             var buf = new ArrayBuffer(s.length);
@@ -53281,9 +53287,33 @@ var render = function() {
             {
               staticClass: "btn btn-info",
               attrs: { disabled: _vm.resultRows.length == 0 },
-              on: { click: _vm.exportToExcel }
+              on: {
+                click: function($event) {
+                  _vm.exportToExcel("csv")
+                }
+              }
             },
-            [_vm._v("\n                    Vie exceliin\n                ")]
+            [
+              _c("i", { staticClass: "far fa-file-excel" }),
+              _vm._v(" Vie (.csv)\n                ")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info",
+              attrs: { disabled: _vm.resultRows.length == 0 },
+              on: {
+                click: function($event) {
+                  _vm.exportToExcel("xlsx")
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "far fa-file-excel" }),
+              _vm._v(" Vie (.xlsx)\n                ")
+            ]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "small-spacer" }),

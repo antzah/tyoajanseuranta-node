@@ -42,11 +42,18 @@
             <div class="row">
                 <div class="col-12">
                     <button 
-                        @click="exportToExcel" 
+                        @click="exportToExcel('csv')" 
                         :disabled="resultRows.length == 0"
                         class="btn btn-info"
                     >
-                        Vie exceliin
+                        <i class="far fa-file-excel"></i> Vie (.csv)
+                    </button>
+                    <button 
+                        @click="exportToExcel('xlsx')" 
+                        :disabled="resultRows.length == 0"
+                        class="btn btn-info"
+                    >
+                        <i class="far fa-file-excel"></i> Vie (.xlsx)
                     </button>
                     <div class="small-spacer"></div>
                     <table id="raportti" class="table table-hover table-sm">
@@ -95,16 +102,15 @@ export default {
         this.fetchUser();
     },
     methods: {
-        exportToExcel: function() {
-            let raporttiTable = document.getElementById("raportti");
+        exportToExcel: function(format) {
             let ws = XLSX.utils.json_to_sheet(this.exportableResults);
             let wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Raportti");
-            let wbout = XLSX.write(wb, {bookType:'csv', type:'binary'});
+            let wbout = XLSX.write(wb, {bookType: format, type:'binary'});
 
             FileSaver.saveAs(new Blob([this.s2ab(wbout)], {
                 type:"application/octet-stream"
-            }), `tuntiraportti_${moment(this.firstDate).format("D.M.Y")}_${moment(this.secondDate).format("D.M.Y")}.csv`);
+            }), `tuntiraportti_${moment(this.firstDate).format("D.M.Y")}_${moment(this.secondDate).format("D.M.Y")}.${format}`);
         },
         s2ab: function(s) {
             var buf = new ArrayBuffer(s.length);
