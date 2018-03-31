@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:600|Oxygen:300);/*!
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600|Oxygen:300:700);/*!
  * Font Awesome Free 5.0.6 by @fontawesome - http://fontawesome.com
  * License - http://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
@@ -10413,5 +10413,14 @@ h5,
 
 label {
   font-size: 0.8rem;
+}
+
+.raportit thead {
+  border-right: 1px solid #dee2e6;
+  border-left: 1px solid #dee2e6;
+}
+
+.raportit thead td {
+  background: #f7f7f7;
 }
 
