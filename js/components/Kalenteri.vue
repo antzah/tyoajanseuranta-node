@@ -51,9 +51,10 @@
                             <div class="spacer"></div>
                             <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                             <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
-                            <h5>{{ dailyTotal }}</h5>
+                            <h4 id="dailyTotal">{{ dailyTotal }}</h4>
                         </div>
                         <div class="col-lg-6 col-12">
+                            <hr class="d-block d-sm-block d-md-block d-lg-none">
                             <h5>Päivän muistiinpanot</h5>
                             <p class="small-text">Voit kirjata alle halutessasi esim. ranskalaisin viivoin päivän työtehtäviä.</p>
                             <textarea 
@@ -94,8 +95,35 @@
                                 :hovered="(quarter.hovered) ? quarter.hovered : false"
                                 :deleting="(quarter.deleting) ? quarter.deleting : false"
                                 :id="quarter.qId"
-                                v-tooltip="getTime(quarter.qId)"
+                                v-tooltip="getTimeAndEnding(quarter.qId)"
                             />
+                        </div>
+                    </div>
+                    <div class="small-spacer"></div>
+                    <div class="row">
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <select class="form-control">
+                                <option>Alkuaika</option>
+                                <option 
+                                    v-for="n in 96"
+                                    :value="n-1"
+                                    :key="n-1"
+                                >
+                                    {{ getStartTime(n-1) }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <select class="form-control">
+                                <option>Loppuaika</option>
+                                <option 
+                                    v-for="n in 96"
+                                    :value="n-1"
+                                    :key="n-1"
+                                >
+                                    {{ getEndTime(n-1) }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="small-spacer"></div>
@@ -262,7 +290,37 @@ export default {
             this.selectedDate.subtract(1, "day");
             this.refresh();
         },
-        getTime: (quarterNumber) => {
+        getStartTime: function(quarterNumber) {
+            var quarterNumberAsParsedString = String((quarterNumber/4).toFixed(2));
+            var parsedQNAPS = quarterNumberAsParsedString.split(".");
+            parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
+
+            if (parsedQNAPS[0] <= 9) {
+                parsedQNAPS[0] = "0" + parsedQNAPS[0];
+            }
+
+            if (parsedQNAPS[1] == 0) {
+                parsedQNAPS[1] = "00";
+            }
+
+            return parsedQNAPS = (String(parsedQNAPS)).replace(",", ":");
+        },
+        getEndTime: function(quarterNumber) {
+            var quarterNumberAsParsedString = String(((quarterNumber + 1)/4).toFixed(2));
+            var parsedQNAPS = quarterNumberAsParsedString.split(".");
+            parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
+
+            if (parsedQNAPS[0] <= 9) {
+                parsedQNAPS[0] = "0" + parsedQNAPS[0];
+            }
+
+            if (parsedQNAPS[1] == 0) {
+                parsedQNAPS[1] = "00";
+            }
+
+            return parsedQNAPS = (String(parsedQNAPS)).replace(",", ":");
+        },
+        getTimeAndEnding: (quarterNumber) => {
             var quarterNumberAsParsedString = String((quarterNumber/4).toFixed(2));
             var quarterNumberAsParsedStringPlus15 = (String(((quarterNumber + 1)/4).toFixed(2)));
             var firstClickedquarterNumberAsParsedString = (String(((quarterNumber + 1)/4).toFixed(2)));
@@ -409,6 +467,9 @@ export default {
                     this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
                     this.loading = false;
                 });
+
+                this.firstClickedQuarter = 0;
+                this.secondClickedQuarter = 0;
             }
         });
     }

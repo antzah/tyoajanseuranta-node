@@ -2,6 +2,9 @@
     <div class="card raportit">
         <div class="card-header">
             Raportit 
+            <span v-if="loading" style="font-size: 14px;color: #a9dbe5;">
+                <img src="/img/loading.svg" style="height: 15px; margin-bottom: 2px;"> Ladataan..
+            </span>
         </div>
         <div class="card-body">
             <p>Voit tarkastella tuntikertymää pidemmältä ajalta valitsemalla haluamasi ajanjakson.</p>
@@ -44,16 +47,16 @@
                     <button 
                         @click="exportToExcel('csv')" 
                         :disabled="resultRows.length == 0"
-                        class="btn btn-info"
+                        class="btn btn-info btn-sm"
                     >
-                        <i class="far fa-file-excel"></i> Vie (.csv)
+                        <i class="fas fa-file-excel"></i> Vie (.csv)
                     </button>
                     <button 
                         @click="exportToExcel('xlsx')" 
                         :disabled="resultRows.length == 0"
-                        class="btn btn-info"
+                        class="btn btn-info btn-sm"
                     >
-                        <i class="far fa-file-excel"></i> Vie (.xlsx)
+                        <i class="fas fa-file-excel"></i> Vie (.xlsx)
                     </button>
                     <div class="small-spacer"></div>
                     <table id="raportti" class="table table-hover table-sm">
@@ -73,12 +76,14 @@
                                 <td>{{ result.dailyTotal }}</td>
                                 <td>{{ result.notes }}</td>
                             </tr>
+                        </tbody>
+                        <tfoot v-if="resultRows.length != 0">
                             <tr>
-                                <td><strong v-if="resultRows.length != 0">Yhteensä</strong></td>                                
-                                <th><strong>{{ (periodTotal) ? periodTotal : null }}</strong></th>
+                                <td><strong>Yhteensä</strong></td>                                
+                                <td><strong>{{ (periodTotal) ? periodTotal : null }}</strong></td>
                                 <td></td>
                             </tr>
-                        </tbody>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -94,6 +99,18 @@ export default {
     name: "raportit",
     components: {
         'datepicker': Datepicker,
+    },
+    data: function() {
+        return {
+            loading: false,
+            userId: null,
+            firstDate: "",
+            secondDate: "",
+            firstDateIsBiggerThanSecond: false,
+            resultRows: [],
+            periodTotal: 0,
+            exportableResults: []
+        }
     },
     created() {
         /**
@@ -128,6 +145,8 @@ export default {
                 this.firstDateIsBiggerThanSecond = false;
 
                 if (this.firstDate != "" && this.secondDate != "") {
+                    this.loading = true;
+
                     axios.get("/reports", {
                         params: {
                             firstDate: this.firstDate,
@@ -154,6 +173,7 @@ export default {
 
                             this.periodTotal = resultTotal;
                             this.resultRows = res.data;
+                            this.loading = false;
                         }
                     }).catch(err => {
                         console.log(err);
@@ -196,17 +216,6 @@ export default {
                 padding: "12px 12px 24px",
                 timer: 3000
             })
-        }
-    },
-    data: function() {
-        return {
-            userId: null,
-            firstDate: "",
-            secondDate: "",
-            firstDateIsBiggerThanSecond: false,
-            resultRows: [],
-            periodTotal: 0,
-            exportableResults: []
         }
     }
 }

@@ -51954,6 +51954,34 @@ var _this4 = this;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -52107,7 +52135,37 @@ for (var i = 0; i < 96; i++) {
             this.selectedDate.subtract(1, "day");
             this.refresh();
         },
-        getTime: function getTime(quarterNumber) {
+        getStartTime: function getStartTime(quarterNumber) {
+            var quarterNumberAsParsedString = String((quarterNumber / 4).toFixed(2));
+            var parsedQNAPS = quarterNumberAsParsedString.split(".");
+            parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
+
+            if (parsedQNAPS[0] <= 9) {
+                parsedQNAPS[0] = "0" + parsedQNAPS[0];
+            }
+
+            if (parsedQNAPS[1] == 0) {
+                parsedQNAPS[1] = "00";
+            }
+
+            return parsedQNAPS = String(parsedQNAPS).replace(",", ":");
+        },
+        getEndTime: function getEndTime(quarterNumber) {
+            var quarterNumberAsParsedString = String(((quarterNumber + 1) / 4).toFixed(2));
+            var parsedQNAPS = quarterNumberAsParsedString.split(".");
+            parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
+
+            if (parsedQNAPS[0] <= 9) {
+                parsedQNAPS[0] = "0" + parsedQNAPS[0];
+            }
+
+            if (parsedQNAPS[1] == 0) {
+                parsedQNAPS[1] = "00";
+            }
+
+            return parsedQNAPS = String(parsedQNAPS).replace(",", ":");
+        },
+        getTimeAndEnding: function getTimeAndEnding(quarterNumber) {
             var quarterNumberAsParsedString = String((quarterNumber / 4).toFixed(2));
             var quarterNumberAsParsedStringPlus15 = String(((quarterNumber + 1) / 4).toFixed(2));
             var firstClickedquarterNumberAsParsedString = String(((quarterNumber + 1) / 4).toFixed(2));
@@ -52256,6 +52314,9 @@ for (var i = 0; i < 96; i++) {
                     _this5.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
                     _this5.loading = false;
                 });
+
+                _this5.firstClickedQuarter = 0;
+                _this5.secondClickedQuarter = 0;
             }
         });
     }
@@ -52685,10 +52746,16 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c("h5", [_vm._v(_vm._s(_vm.dailyTotal))])
+                _c("h4", { attrs: { id: "dailyTotal" } }, [
+                  _vm._v(_vm._s(_vm.dailyTotal))
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-6 col-12" }, [
+                _c("hr", {
+                  staticClass: "d-block d-sm-block d-md-block d-lg-none"
+                }),
+                _vm._v(" "),
                 _c("h5", [_vm._v("Päivän muistiinpanot")]),
                 _vm._v(" "),
                 _c("p", { staticClass: "small-text" }, [
@@ -52779,8 +52846,8 @@ var render = function() {
                       {
                         name: "tooltip",
                         rawName: "v-tooltip",
-                        value: _vm.getTime(quarter.qId),
-                        expression: "getTime(quarter.qId)"
+                        value: _vm.getTimeAndEnding(quarter.qId),
+                        expression: "getTimeAndEnding(quarter.qId)"
                       }
                     ],
                     key: quarter.qId,
@@ -52796,6 +52863,60 @@ var render = function() {
               ],
               2
             )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "small-spacer" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-6 col-md-4 col-lg-2" }, [
+              _c(
+                "select",
+                { staticClass: "form-control" },
+                [
+                  _c("option", [_vm._v("Alkuaika")]),
+                  _vm._v(" "),
+                  _vm._l(96, function(n) {
+                    return _c(
+                      "option",
+                      { key: n - 1, domProps: { value: n - 1 } },
+                      [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.getStartTime(n - 1)) +
+                            "\n                            "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-6 col-md-4 col-lg-2" }, [
+              _c(
+                "select",
+                { staticClass: "form-control" },
+                [
+                  _c("option", [_vm._v("Loppuaika")]),
+                  _vm._v(" "),
+                  _vm._l(96, function(n) {
+                    return _c(
+                      "option",
+                      { key: n - 1, domProps: { value: n - 1 } },
+                      [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.getEndTime(n - 1)) +
+                            "\n                            "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "small-spacer" }),
@@ -53048,6 +53169,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -53056,6 +53182,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: "raportit",
     components: {
         'datepicker': __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default.a
+    },
+    data: function data() {
+        return {
+            loading: false,
+            userId: null,
+            firstDate: "",
+            secondDate: "",
+            firstDateIsBiggerThanSecond: false,
+            resultRows: [],
+            periodTotal: 0,
+            exportableResults: []
+        };
     },
     created: function created() {
         /**
@@ -53093,6 +53231,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.firstDateIsBiggerThanSecond = false;
 
                 if (this.firstDate != "" && this.secondDate != "") {
+                    this.loading = true;
+
                     axios.get("/reports", {
                         params: {
                             firstDate: this.firstDate,
@@ -53119,6 +53259,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                             _this.periodTotal = resultTotal;
                             _this.resultRows = res.data;
+                            _this.loading = false;
                         }
                     }).catch(function (err) {
                         console.log(err);
@@ -53162,17 +53303,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 timer: 3000
             });
         }
-    },
-    data: function data() {
-        return {
-            userId: null,
-            firstDate: "",
-            secondDate: "",
-            firstDateIsBiggerThanSecond: false,
-            resultRows: [],
-            periodTotal: 0,
-            exportableResults: []
-        };
     }
 });
 
@@ -53192,7 +53322,20 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card raportit" }, [
     _c("div", { staticClass: "card-header" }, [
-      _vm._v("\n        Raportit \n    ")
+      _vm._v("\n        Raportit \n        "),
+      _vm.loading
+        ? _c(
+            "span",
+            { staticStyle: { "font-size": "14px", color: "#a9dbe5" } },
+            [
+              _c("img", {
+                staticStyle: { height: "15px", "margin-bottom": "2px" },
+                attrs: { src: "/img/loading.svg" }
+              }),
+              _vm._v(" Ladataan..\n        ")
+            ]
+          )
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -53285,7 +53428,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-info",
+              staticClass: "btn btn-info btn-sm",
               attrs: { disabled: _vm.resultRows.length == 0 },
               on: {
                 click: function($event) {
@@ -53294,7 +53437,7 @@ var render = function() {
               }
             },
             [
-              _c("i", { staticClass: "far fa-file-excel" }),
+              _c("i", { staticClass: "fas fa-file-excel" }),
               _vm._v(" Vie (.csv)\n                ")
             ]
           ),
@@ -53302,7 +53445,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-info",
+              staticClass: "btn btn-info btn-sm",
               attrs: { disabled: _vm.resultRows.length == 0 },
               on: {
                 click: function($event) {
@@ -53311,7 +53454,7 @@ var render = function() {
               }
             },
             [
-              _c("i", { staticClass: "far fa-file-excel" }),
+              _c("i", { staticClass: "fas fa-file-excel" }),
               _vm._v(" Vie (.xlsx)\n                ")
             ]
           ),
@@ -53329,41 +53472,40 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                [
-                  _vm._l(_vm.resultRows, function(result) {
-                    return _c("tr", { key: result._id }, [
-                      _c("th", [
-                        _vm._v(
-                          _vm._s(result.dayOfWeek) +
-                            " " +
-                            _vm._s(result.readableDate)
-                        )
+                _vm._l(_vm.resultRows, function(result) {
+                  return _c("tr", { key: result._id }, [
+                    _c("th", [
+                      _vm._v(
+                        _vm._s(result.dayOfWeek) +
+                          " " +
+                          _vm._s(result.readableDate)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(result.notes))])
+                  ])
+                })
+              ),
+              _vm._v(" "),
+              _vm.resultRows.length != 0
+                ? _c("tfoot", [
+                    _c("tr", [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("strong", [
+                          _vm._v(
+                            _vm._s(_vm.periodTotal ? _vm.periodTotal : null)
+                          )
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(result.notes))])
+                      _c("td")
                     ])
-                  }),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _vm.resultRows.length != 0
-                        ? _c("strong", [_vm._v("Yhteensä")])
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("th", [
-                      _c("strong", [
-                        _vm._v(_vm._s(_vm.periodTotal ? _vm.periodTotal : null))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td")
                   ])
-                ],
-                2
-              )
+                : _vm._e()
             ]
           )
         ])
@@ -53385,6 +53527,12 @@ var staticRenderFns = [
         _c("td", [_vm._v("Muistiinpanot")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Yhteensä")])])
   }
 ]
 render._withStripped = true
