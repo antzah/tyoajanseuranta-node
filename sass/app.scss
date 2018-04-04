@@ -349,3 +349,9 @@ label {
 #dailyTotal {
   color: #FF9800;
 }
+
+@media (min-width: 768px) {
+  .calendar {
+    display: block !important;
+  }
+}

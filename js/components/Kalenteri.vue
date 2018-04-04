@@ -1,3 +1,11 @@
+<style>
+@media (min-width: 768px) {
+    .muistiinpanot { 
+        display: block !important; 
+    }
+}
+</style>
+
 <template>
     <div class="card">
         <div class="card-header">
@@ -9,7 +17,7 @@
         <div class="card-body">
             <div class="row calendar-wrapper">
                 <div class="col-lg-4 col-xl-3 col-md-6 col-12">
-                    <div class="calendar">
+                    <div class="calendar" v-show="showCalendarOnMobile">
                         <div class="month title">
                             <button @click="minusMonth" class="btn float-left"><i class="fas fa-caret-left"></i></button> 
                             {{ selectedDate.format("MMMM YYYY") }}
@@ -46,6 +54,12 @@
                 <div class="col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer">
                     <div class="row">
                         <div class="col-lg-6 col-12">
+                            <button 
+                                class="btn btn-warning btn-sm d-md-none"
+                                @click="showCalendarOnMobile = !showCalendarOnMobile"
+                            >
+                                {{ showCalendarOnMobile ? "Piilota" : "Näytä" }} kalenteri
+                            </button>
                             <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
                             <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
                             <div class="spacer"></div>
@@ -55,24 +69,41 @@
                         </div>
                         <div class="col-lg-6 col-12">
                             <hr class="d-block d-sm-block d-md-block d-lg-none">
-                            <h5>Päivän muistiinpanot</h5>
-                            <p class="small-text">Voit kirjata alle halutessasi esim. ranskalaisin viivoin päivän työtehtäviä.</p>
-                            <textarea 
-                                placeholder='Syötä muistiinpanot'
-                                name="muistiinpanot" 
-                                rows="4" 
-                                class="form-control notes-textarea"
-                                v-model="notes"
-                            >
-                            </textarea>
-                            <div class="small-spacer"></div>
-                            <button 
-                                @click="saveNotes" 
-                                class="btn btn-info btn-sm"
-                            >
-                                Tallenna
-                            </button>
-                            <div class="small-spacer"></div>
+                            <div class="row">
+                                <div class="col-9 col-sm-8 col-md-12">
+                                    <h5 style="margin-bottom: 0">Päivän muistiinpanot</h5>
+                                </div>
+                                <div class="col-3 col-sm-4 d-md-none">
+                                    <button 
+                                        class="btn btn-warning btn-sm d-md-none"
+                                        @click="showNotesOnMobile = !showNotesOnMobile"
+                                        style="margin-bottom: 0; float: right"
+                                    >
+                                        {{ showNotesOnMobile ? "Piilota" : "Näytä" }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="muistiinpanot" v-show="showNotesOnMobile">
+                                <div class="small-spacer"></div>
+                                <p class="small-text">Voit kirjata alle halutessasi esim. ranskalaisin viivoin päivän työtehtäviä.</p>
+                                <textarea 
+                                    placeholder='Syötä muistiinpanot'
+                                    name="muistiinpanot" 
+                                    rows="4" 
+                                    class="form-control notes-textarea"
+                                    v-model="notes"
+                                >
+                                </textarea>
+                                <div class="small-spacer"></div>
+                                <button 
+                                    @click="saveNotes" 
+                                    class="btn btn-info btn-sm"
+                                >
+                                    Tallenna
+                                </button>
+                                <div class="small-spacer"></div>
+                            </div>
+                            <hr class="d-block d-sm-block d-md-none">
                         </div>
                     </div>
                 </div>
@@ -100,30 +131,39 @@
                         </div>
                     </div>
                     <div class="small-spacer"></div>
-                    <div class="row">
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <select class="form-control">
-                                <option>Alkuaika</option>
-                                <option 
-                                    v-for="n in 96"
-                                    :value="n-1"
-                                    :key="n-1"
+                    <div class="d-block d-sm-block d-md-none">
+                        <div class="row">
+                            <div class="col-6">
+                                <select 
+                                    class="form-control"
                                 >
-                                    {{ getStartTime(n-1) }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <select class="form-control">
-                                <option>Loppuaika</option>
-                                <option 
-                                    v-for="n in 96"
-                                    :value="n-1"
-                                    :key="n-1"
+                                    <option>Alkuaika</option>
+                                    <option 
+                                        v-for="n in 96"
+                                        :value="n-1"
+                                        :key="n-1"
+                                    >
+                                        {{ getStartTime(n-1) }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select 
+                                    class="form-control"
                                 >
-                                    {{ getEndTime(n-1) }}
-                                </option>
-                            </select>
+                                    <option>Loppuaika</option>
+                                    <option 
+                                        v-for="n in 96"
+                                        :value="n-1"
+                                        :key="n-1"
+                                    >
+                                        {{ getEndTime(n-1) }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button style="margin-top: 12px; width: 100%" class="btn btn-success">Tallenna</button>
+                            </div>
                         </div>
                     </div>
                     <div class="small-spacer"></div>
@@ -192,7 +232,9 @@ export default {
             "loading": false,
             "notes": "",
             "dailyTotal": "..",
-            "dailyTotalAsDecimal": 0
+            "dailyTotalAsDecimal": 0,
+            showCalendarOnMobile: false,
+            showNotesOnMobile: false
         }
     },
     methods: {
