@@ -52988,12 +52988,12 @@ var render = function() {
                 _c("div", { staticClass: "row" }, [
                   _vm._m(1),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-3 col-sm-4 d-md-none" }, [
+                  _c("div", { staticClass: "d-block d-md-none col-12" }, [
                     _c(
                       "button",
                       {
                         staticClass: "btn btn-warning btn-sm d-md-none",
-                        staticStyle: { "margin-bottom": "0", float: "right" },
+                        staticStyle: { "margin-bottom": "0" },
                         on: {
                           click: function($event) {
                             _vm.showNotesOnMobile = !_vm.showNotesOnMobile
@@ -53006,7 +53006,7 @@ var render = function() {
                             _vm._s(
                               _vm.showNotesOnMobile ? "Piilota" : "Näytä"
                             ) +
-                            "\n                                "
+                            " päivän muistiinpanot\n                                "
                         )
                       ]
                     )
@@ -53393,7 +53393,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-9 col-sm-8 col-md-12" }, [
+    return _c("div", { staticClass: "d-none d-md-block col-md-12" }, [
       _c("h5", { staticStyle: { "margin-bottom": "0" } }, [
         _vm._v("Päivän muistiinpanot")
       ])

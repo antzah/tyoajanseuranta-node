@@ -106,16 +106,16 @@ hr {
                         <div class="col-lg-6 col-12">
                             <hr class="d-block d-xs-none d-sm-block d-md-block d-lg-none">
                             <div class="row">
-                                <div class="col-9 col-sm-8 col-md-12">
+                                <div class="d-none d-md-block col-md-12">
                                     <h5 style="margin-bottom: 0">Päivän muistiinpanot</h5>
                                 </div>
-                                <div class="col-3 col-sm-4 d-md-none">
+                                <div class="d-block d-md-none col-12">
                                     <button 
                                         class="btn btn-warning btn-sm d-md-none"
                                         @click="showNotesOnMobile = !showNotesOnMobile"
-                                        style="margin-bottom: 0; float: right"
+                                        style="margin-bottom: 0;"
                                     >
-                                        {{ showNotesOnMobile ? "Piilota" : "Näytä" }}
+                                        {{ showNotesOnMobile ? "Piilota" : "Näytä" }} päivän muistiinpanot
                                     </button>
                                 </div>
                             </div>
