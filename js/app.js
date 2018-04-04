@@ -4,6 +4,7 @@ import "./bootstrap";
  * Vue, Vue Components and Vue plugins
  */
 import Vue from "vue";
+import VuejsDialog from "vuejs-dialog"
 import Tooltip from 'vue-directive-tooltip';
 import App from "./App.vue";
 import router from "./router";
@@ -13,6 +14,8 @@ Vue.use(Tooltip, {
     placement: 'bottom',
     class: 'tas-tooltip'
 });
+
+Vue.use(VuejsDialog);
 
 /**
  * Other tools and plugins

@@ -44,6 +44,7 @@
         "vue-directive-tooltip": "^1.4.2",
         "vue-router": "^3.0.1",
         "vuejs-datepicker": "^0.9.29",
+        "vuejs-dialog": "^0.9.0",
         "xlsx": "^0.12.6"
     }
 }

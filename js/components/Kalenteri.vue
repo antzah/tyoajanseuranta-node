@@ -4,6 +4,39 @@
         display: block !important; 
     }
 }
+
+.dg-content-body {
+  border-bottom: 0;
+}
+
+.dg-main-content {
+  width: 95%;
+  border-radius: 2px;
+}
+
+.dg-btn {
+    border-radius: 1px;
+}
+
+.card {
+    margin-bottom: 16px;
+}
+
+hr {
+    border-top: 1px solid rgba(204, 204, 204, 0.32);
+}
+
+.dg-btn--ok {
+    color: #ffffff;
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.dg-btn-loader .dg-circle {
+    width: .6em;
+    height: .6em;
+    background-color: #ffffff;
+}
 </style>
 
 <template>
@@ -53,22 +86,25 @@
                 </div>
                 <div class="col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer">
                     <div class="row">
-                        <div class="col-lg-6 col-12">
+                        <div class="col-12 d-md-none">
                             <button 
-                                class="btn btn-warning btn-sm d-md-none"
+                                class="btn btn-warning btn-sm "
                                 @click="showCalendarOnMobile = !showCalendarOnMobile"
                             >
                                 {{ showCalendarOnMobile ? "Piilota" : "Näytä" }} kalenteri
                             </button>
+                            <div class="small-spacer"></div>
+                        </div>
+                        <div class="col-lg-6 col-12">
                             <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
                             <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
-                            <div class="spacer"></div>
+                            <div class="small-spacer"></div>
                             <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                             <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                             <h4 id="dailyTotal">{{ dailyTotal }}</h4>
                         </div>
                         <div class="col-lg-6 col-12">
-                            <hr class="d-block d-sm-block d-md-block d-lg-none">
+                            <hr class="d-block d-xs-none d-sm-block d-md-block d-lg-none">
                             <div class="row">
                                 <div class="col-9 col-sm-8 col-md-12">
                                     <h5 style="margin-bottom: 0">Päivän muistiinpanot</h5>
@@ -103,7 +139,7 @@
                                 </button>
                                 <div class="small-spacer"></div>
                             </div>
-                            <hr class="d-block d-sm-block d-md-none">
+                            <hr class="d-block d-xs-none d-sm-block d-md-none">
                         </div>
                     </div>
                 </div>
@@ -133,11 +169,16 @@
                     <div class="small-spacer"></div>
                     <div class="d-block d-sm-block d-md-none">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
+                                <hr>
+                                <h5>Lisää tai poista työjakso</h5>
+                            </div>
+                            <div class="col-6" style="padding-right: 5px">
+                                <label>Alku</label>
                                 <select 
                                     class="form-control"
+                                    v-model="selectedStartTime"
                                 >
-                                    <option>Alkuaika</option>
                                     <option 
                                         v-for="n in 96"
                                         :value="n-1"
@@ -147,11 +188,12 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6" style="padding-left: 5px">
+                                <label>Loppu</label>
                                 <select 
                                     class="form-control"
+                                    v-model="selectedEndTime"
                                 >
-                                    <option>Loppuaika</option>
                                     <option 
                                         v-for="n in 96"
                                         :value="n-1"
@@ -161,19 +203,35 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="col-12">
-                                <button style="margin-top: 12px; width: 100%" class="btn btn-success">Tallenna</button>
+                            <div class="col-8" style="padding-right: 0">
+                                <button 
+                                    style="margin-top: 12px; width: 100%" 
+                                    class="btn btn-success"
+                                    @click="addPeriod"
+                                >
+                                    Lisää
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button 
+                                    style="margin-top: 12px; width: 100%" 
+                                    class="btn btn-danger"
+                                    @click="removePeriod"
+                                >
+                                    Poista
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="small-spacer"></div>
-                    <p v-if="clicks == 0 && !deleting">Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.</p>
-                    <p v-if="clicks == 1 && !deleting">Valitse vielä lopetusaika.</p>
-                    <p v-if="deleting && clicks == 0" style="color: red">Valitse poistettavan pätkän alku.</p>
-                    <p v-if="deleting && clicks == 1" style="color: red">Valitse poistettavan pätkän loppu.</p>
-                    <button v-if="!deleting && clicks == 0" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
-                    <button disabled="disabled" v-if="!deleting && clicks == 1" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
-                    <button v-if="deleting" class="btn btn-secondary btn-sm" @click="deleting = false">Peruuta poistaminen</button>
+                    <div class="d-none d-md-block">         
+                        <p v-if="clicks == 0 && !deleting">Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.</p>
+                        <p v-if="clicks == 1 && !deleting">Valitse vielä lopetusaika.</p>
+                        <p v-if="deleting && clicks == 0" style="color: red">Valitse poistettavan pätkän alku.</p>
+                        <p v-if="deleting && clicks == 1" style="color: red">Valitse poistettavan pätkän loppu.</p>
+                        <button v-if="!deleting && clicks == 0" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
+                        <button disabled="disabled" v-if="!deleting && clicks == 1" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
+                        <button v-if="deleting" class="btn btn-secondary btn-sm" @click="deleting = false">Peruuta poistaminen</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -234,10 +292,94 @@ export default {
             "dailyTotal": "..",
             "dailyTotalAsDecimal": 0,
             showCalendarOnMobile: false,
-            showNotesOnMobile: false
+            showNotesOnMobile: false,
+            selectedStartTime: 0,
+            selectedEndTime: 0
         }
     },
     methods: {
+        addPeriod: function() {
+            let sortedQuarters = returnSmallerAndBiggerId(this.selectedStartTime, this.selectedEndTime);
+            let smallerId = sortedQuarters[0], biggerId = sortedQuarters[1];
+
+            this.$dialog.confirm(`Haluatko varmasti lisätä työjakson välille ${this.getStartTime(smallerId)}–${this.getEndTime(biggerId)}?`, {
+                loader: true,
+                cancelText: "Peruuta",
+                okText: "Vahvista"
+            })
+            .then((dialog) => {
+
+                this.loading = true;
+
+                for (var i = smallerId; i <= biggerId; i++) {
+                    this.quarters[i].painted = true;
+                }
+
+                this.updateDailyTotal();
+
+                axios.post("/days", {
+                    quarters: this.quarters,
+                    day: this.selectedDate,
+                    dailyTotal: this.dailyTotalAsDecimal,
+                    notes: this.notes
+                })
+                .then(res => {
+                    this.loading = false;
+                    this.swalSuccess("Tallennettu");
+                })
+                .catch(err => {
+                    this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
+                    this.loading = false;
+                });
+
+                this.loading = false;
+                dialog.close();
+            })
+            .catch(() => {
+                console.log('Delete aborted');
+            });
+        },
+        removePeriod: function() {
+            let sortedQuarters = returnSmallerAndBiggerId(this.selectedStartTime, this.selectedEndTime);
+            let smallerId = sortedQuarters[0], biggerId = sortedQuarters[1];
+
+            this.$dialog.confirm(`Haluatko varmasti poistaa jakson ${this.getStartTime(smallerId)}–${this.getEndTime(biggerId)} merkinnät?`, {
+                loader: true,
+                cancelText: "Peruuta",
+                okText: "Vahvista"
+            })
+            .then((dialog) => {
+
+                this.loading = true;
+
+                for (var i = smallerId; i <= biggerId; i++) {
+                    this.quarters[i].painted = false;
+                }
+
+                this.updateDailyTotal();
+
+                axios.post("/days", {
+                    quarters: this.quarters,
+                    day: this.selectedDate,
+                    dailyTotal: this.dailyTotalAsDecimal,
+                    notes: this.notes
+                })
+                .then(res => {
+                    this.loading = false;
+                    this.swalSuccess("Tallennettu");
+                })
+                .catch(err => {
+                    this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
+                    this.loading = false;
+                });
+
+                this.loading = false;
+                dialog.close();
+            })
+            .catch(() => {
+                console.log('Delete aborted');
+            });
+        },
         /**
          * https://stackoverflow.com/questions/33769178/moment-js-decimals-into-time-format
          */
