@@ -53097,7 +53097,7 @@ var render = function() {
                 return _c("div", { key: n, staticClass: "hourIndicator" }, [
                   _vm._v(
                     "\n                            " +
-                      _vm._s(_vm.leftPad(n, 2, 0)) +
+                      _vm._s(_vm.leftPad(n - 1, 2, 0)) +
                       "\n                        "
                   )
                 ])

@@ -147,7 +147,7 @@ hr {
                     <div class="row">
                         <div class="col-12">
                             <div class="hourIndicator" :key="n" v-for="n in 24">
-                                {{ leftPad(n, 2, 0) }}
+                                {{ leftPad(n-1, 2, 0) }}
                             </div>
                         </div>
                     </div>
