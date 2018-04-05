@@ -52089,6 +52089,19 @@ var _this6 = this;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -52908,11 +52921,11 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 d-md-none" }, [
+              _c("div", { staticClass: "col-lg-6 col-12" }, [
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-warning btn-sm ",
+                    staticClass: "btn btn-warning btn-sm d-md-none",
                     on: {
                       click: function($event) {
                         _vm.showCalendarOnMobile = !_vm.showCalendarOnMobile
@@ -52920,18 +52933,15 @@ var render = function() {
                     }
                   },
                   [
+                    _c("i", { staticClass: "fas fa-calendar-alt" }),
                     _vm._v(
-                      "\n                            " +
+                      " " +
                         _vm._s(_vm.showCalendarOnMobile ? "Piilota" : "Näytä") +
-                        " kalenteri\n                        "
+                        " \n                        "
                     )
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "small-spacer" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-6 col-12" }, [
                 _c(
                   "button",
                   {
@@ -52980,19 +52990,16 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-6 col-12" }, [
-                _c("hr", {
-                  staticClass:
-                    "d-block d-xs-none d-sm-block d-md-block d-lg-none"
-                }),
+                _c("div", { staticClass: "small-spacer" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _vm._m(1),
                   _vm._v(" "),
-                  _c("div", { staticClass: "d-block d-md-none col-12" }, [
+                  _c("div", { staticClass: "d-block d-lg-none col-12" }, [
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-warning btn-sm d-md-none",
+                        staticClass: "btn btn-warning btn-sm",
                         staticStyle: { "margin-bottom": "0" },
                         on: {
                           click: function($event) {
@@ -53001,12 +53008,13 @@ var render = function() {
                         }
                       },
                       [
+                        _c("i", { staticClass: "fas fa-edit" }),
                         _vm._v(
-                          "\n                                    " +
+                          " " +
                             _vm._s(
                               _vm.showNotesOnMobile ? "Piilota" : "Näytä"
                             ) +
-                            " päivän muistiinpanot\n                                "
+                            " päivän muistiinpanot \n                                "
                         )
                       ]
                     )
@@ -53080,9 +53088,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("hr", {
-                  staticClass: "d-block d-xs-none d-sm-block d-md-none"
-                })
+                _c("div", { staticClass: "spacer" })
               ])
             ])
           ]
@@ -53393,7 +53399,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-none d-md-block col-md-12" }, [
+    return _c("div", { staticClass: "d-none d-lg-block col-md-12" }, [
       _c("h5", { staticStyle: { "margin-bottom": "0" } }, [
         _vm._v("Päivän muistiinpanot")
       ])
@@ -53404,7 +53410,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12" }, [
-      _c("hr"),
+      _c("div", { staticClass: "small-spacer" }),
       _vm._v(" "),
       _c("h5", [_vm._v("Lisää tai poista työjakso")])
     ])
@@ -90034,7 +90040,7 @@ exports = module.exports = __webpack_require__(183)(false);
 
 
 // module
-exports.push([module.i, "\n@media (min-width: 768px) {\n.muistiinpanot { \n        display: block !important;\n}\n}\n.dg-content-body {\n  border-bottom: 0;\n}\n.dg-main-content {\n  width: 95%;\n  border-radius: 2px;\n}\n.dg-btn {\n    border-radius: 1px;\n}\n.card {\n    margin-bottom: 16px;\n}\nhr {\n    border-top: 1px solid rgba(204, 204, 204, 0.32);\n}\n.dg-btn--ok {\n    color: #ffffff;\n    background-color: #4CAF50;\n    border-color: #4CAF50;\n}\n.dg-btn-loader .dg-circle {\n    width: .6em;\n    height: .6em;\n    background-color: #ffffff;\n}\n", ""]);
+exports.push([module.i, "\n@media (min-width: 992px) {\n.muistiinpanot { \n        display: block !important;\n}\n}\n.dg-content-body {\n  border-bottom: 0;\n}\n.dg-main-content {\n  width: 95%;\n  border-radius: 2px;\n}\n.dg-btn {\n    border-radius: 1px;\n}\n.card {\n    margin-bottom: 16px;\n}\nhr {\n    border-top: 1px solid rgba(204, 204, 204, 0.32);\n}\n.dg-btn--ok {\n    color: #ffffff;\n    background-color: #4CAF50;\n    border-color: #4CAF50;\n}\n.dg-btn-loader .dg-circle {\n    width: .6em;\n    height: .6em;\n    background-color: #ffffff;\n}\n@media (max-width: 560px) {\n.hourIndicator {\n    font-size: 2.5vw;\n}\n}\n#dailyTotal {\n  color: #FF9800;\n}\n@media (min-width: 768px) {\n.calendar {\n    display: block !important;\n}\n}\n", ""]);
 
 // exports
 

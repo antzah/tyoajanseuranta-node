@@ -1,5 +1,5 @@
 <style>
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .muistiinpanot { 
         display: block !important; 
     }
@@ -36,6 +36,22 @@ hr {
     width: .6em;
     height: .6em;
     background-color: #ffffff;
+}
+
+@media (max-width: 560px) {
+  .hourIndicator {
+    font-size: 2.5vw;
+  }
+}
+
+#dailyTotal {
+  color: #FF9800;
+}
+
+@media (min-width: 768px) {
+  .calendar {
+    display: block !important;
+  }
 }
 </style>
 
@@ -86,16 +102,13 @@ hr {
                 </div>
                 <div class="col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer">
                     <div class="row">
-                        <div class="col-12 d-md-none">
+                        <div class="col-lg-6 col-12">
                             <button 
-                                class="btn btn-warning btn-sm "
+                                class="btn btn-warning btn-sm d-md-none"
                                 @click="showCalendarOnMobile = !showCalendarOnMobile"
                             >
-                                {{ showCalendarOnMobile ? "Piilota" : "Näytä" }} kalenteri
+                                <i class="fas fa-calendar-alt"></i> {{ showCalendarOnMobile ? "Piilota" : "Näytä" }} 
                             </button>
-                            <div class="small-spacer"></div>
-                        </div>
-                        <div class="col-lg-6 col-12">
                             <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
                             <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
                             <div class="small-spacer"></div>
@@ -104,18 +117,18 @@ hr {
                             <h4 id="dailyTotal">{{ dailyTotal }}</h4>
                         </div>
                         <div class="col-lg-6 col-12">
-                            <hr class="d-block d-xs-none d-sm-block d-md-block d-lg-none">
+                            <div class="small-spacer"></div>
                             <div class="row">
-                                <div class="d-none d-md-block col-md-12">
+                                <div class="d-none d-lg-block col-md-12">
                                     <h5 style="margin-bottom: 0">Päivän muistiinpanot</h5>
                                 </div>
-                                <div class="d-block d-md-none col-12">
+                                <div class="d-block d-lg-none col-12">
                                     <button 
-                                        class="btn btn-warning btn-sm d-md-none"
+                                        class="btn btn-warning btn-sm"
                                         @click="showNotesOnMobile = !showNotesOnMobile"
                                         style="margin-bottom: 0;"
                                     >
-                                        {{ showNotesOnMobile ? "Piilota" : "Näytä" }} päivän muistiinpanot
+                                        <i class="fas fa-edit"></i> {{ showNotesOnMobile ? "Piilota" : "Näytä" }} päivän muistiinpanot 
                                     </button>
                                 </div>
                             </div>
@@ -139,7 +152,7 @@ hr {
                                 </button>
                                 <div class="small-spacer"></div>
                             </div>
-                            <hr class="d-block d-xs-none d-sm-block d-md-none">
+                            <div class="spacer"></div>
                         </div>
                     </div>
                 </div>
@@ -170,7 +183,7 @@ hr {
                     <div class="d-block d-sm-block d-md-none">
                         <div class="row">
                             <div class="col-12">
-                                <hr>
+                                <div class="small-spacer"></div>
                                 <h5>Lisää tai poista työjakso</h5>
                             </div>
                             <div class="col-6" style="padding-right: 5px">
