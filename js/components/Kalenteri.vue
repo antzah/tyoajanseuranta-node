@@ -107,7 +107,7 @@ hr {
                                 class="btn btn-warning btn-sm d-md-none"
                                 @click="showCalendarOnMobile = !showCalendarOnMobile"
                             >
-                                <i class="fas fa-calendar-alt"></i> {{ showCalendarOnMobile ? "Piilota" : "Näytä" }} 
+                                <i class="fas fa-calendar-alt"></i> {{ showCalendarOnMobile ? "Piilota" : "Kalenteri" }} 
                             </button>
                             <button @click="minusDay" type="button" class="btn btn-outline-info btn-sm">Edellinen päivä</button>
                             <button @click="plusDay" type="button" class="btn btn-outline-info btn-sm">Seuraava päivä</button>
@@ -128,7 +128,7 @@ hr {
                                         @click="showNotesOnMobile = !showNotesOnMobile"
                                         style="margin-bottom: 0;"
                                     >
-                                        <i class="fas fa-edit"></i> {{ showNotesOnMobile ? "Piilota" : "Näytä" }} päivän muistiinpanot 
+                                        <i class="fas fa-edit"></i> {{ showNotesOnMobile ? "Piilota" : "Päivän muistiinpanot" }} 
                                     </button>
                                 </div>
                             </div>
