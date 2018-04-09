@@ -116,7 +116,7 @@ export default {
         /**
          * Fetch the user ID so we can use that later
          */
-        this.fetchUser();
+        this.fetchUserAndSetDates();
     },
     methods: {
         exportToExcel: function(format) {
@@ -182,13 +182,16 @@ export default {
                 }
             }
         },
-        fetchUser: function() {
+        fetchUserAndSetDates: function() {
             axios.get("/user")
                 .then(res => {
                     this.userId = res.data._id;
+                    this.firstDate = moment().date(1).toDate();
+                    this.secondDate = moment().toDate();
+                    this.validateSelectionsAndRunQuery();
                 })
                 .catch(err => {                    
-                    this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.")
+                    this.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.")
                 });
         },
         swalSuccess: function(title, text) {

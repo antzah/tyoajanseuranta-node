@@ -56011,7 +56011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         /**
          * Fetch the user ID so we can use that later
          */
-        this.fetchUser();
+        this.fetchUserAndSetDates();
     },
 
     methods: {
@@ -56080,13 +56080,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
         },
-        fetchUser: function fetchUser() {
+        fetchUserAndSetDates: function fetchUserAndSetDates() {
             var _this2 = this;
 
             axios.get("/user").then(function (res) {
                 _this2.userId = res.data._id;
+                _this2.firstDate = moment().date(1).toDate();
+                _this2.secondDate = moment().toDate();
+                _this2.validateSelectionsAndRunQuery();
             }).catch(function (err) {
-                _this2.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.");
+                _this2.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.");
             });
         },
         swalSuccess: function swalSuccess(title, text) {
