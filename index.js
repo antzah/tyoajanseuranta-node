@@ -39,7 +39,7 @@ app.use(session({
     name: "tasc",
     secret: secrets.secret,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
 app.use(helmet());

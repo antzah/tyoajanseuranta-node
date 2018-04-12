@@ -47,25 +47,43 @@ module.exports = (app, passport) => {
     }));
 
     app.get("/settings", isLoggedIn, (req, res) => {
-        res.render("settings.ejs", { req });
+        res.render("settings.ejs", {  
+            passwordChangeSuccess: req.flash("passwordChangeSuccess"),
+            passwordChangeError: req.flash("passwordChangeError")
+        });
     })
 
     app.post("/settings/change-password", isAuthenticated, (req, res) => {
-        console.log(req.body);
+        if ( 
+            !("oldPassword" in req.body) 
+            || !("newPassword" in req.body) 
+            || !("newPasswordValidate" in req.body) 
+            || (req.body.oldPassword == "")
+            || (req.body.newPassword == "")
+            || (req.body.newPasswordValidate == "")
+        ) {
+            req.flash("passwordChangeError", "Joitakin tietoja puuttui. Yritä uudelleen.");
+            return res.redirect("/settings");
+        }
         User.findById(req.user.id, (err, user) => {
-            if (err) res.redirect("/settings?error=password-change-generic");
-            else if (user.validPassword(req.body.newPassword)) res.redirect("/settings?error=password-change-wrong-password");
-            else if (req.body.newPassword != req.body.newPasswordValidate) res.redirect("/settings?error=password-change-no-match");
-            else {
+            if (err) {
+                req.flash("passwordChangeError", "Jokin meni pieleen! Yritä uudelleen.")
+            } else if (!user.validPassword(req.body.oldPassword)) {
+                req.flash("passwordChangeError", "Syötit väärän salasanan. Yritä uudelleen.");
+            } else if (req.body.newPassword != req.body.newPasswordValidate) {
+                req.flash("passwordChangeError", "Syötit uuden salasanan vahvistuksen väärin. Yritä uudelleen.");
+            } else {
                 user.local.password = user.generateHash(req.body.newPassword);
                 try {
                     user.save();
-                    res.redirect("/settings?success=password-changed");
+                    req.flash("passwordChangeSuccess", "Salasana vaihdettu!");
                 } catch(e) {
                     console.log(e);
-                    res.redirect("/settings?error=password-change-generic");
+                    req.flash("passwordChangeError", "Jokin meni pieleen! Yritä uudelleen.")
                 }
             }
+
+            res.redirect("/settings");
         })
     })
 
