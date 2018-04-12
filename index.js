@@ -19,8 +19,6 @@ mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url, {
     keepAlive: true,
     reconnectTries: Number.MAX_VALUE,
-    user: configDB.user,
-    pass: configDB.password,
     useMongoClient: true
 });
 
