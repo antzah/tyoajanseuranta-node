@@ -10,6 +10,7 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+var helmet       = require("helmet");
 
 var configDB = require('./config/database.js');
 var secrets = require('./config/secrets.js');
@@ -35,10 +36,13 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs'); 
 
 app.use(session({ 
+    name: "tasc",
     secret: secrets.secret,
     resave: true,
     saveUninitialized: true
 }));
+
+app.use(helmet());
 
 app.use(passport.initialize());
 app.use(passport.session()); 

@@ -7,7 +7,7 @@ var User = require("./models/user");
 
 module.exports = (app, passport) => {
     /**
-     * Routes used by Vue Router
+     * App logic – routes used by Vue Router
      */
     app.get('/', isLoggedIn, (req, res) => {
         res.render('index.ejs'); 
@@ -18,7 +18,7 @@ module.exports = (app, passport) => {
     });
 
     /**
-     * Login, logout, signup
+     * Login, logout, signup, password changes and resets
      */
 
     app.get('/login', (req, res) => {
@@ -45,6 +45,29 @@ module.exports = (app, passport) => {
         failureRedirect: '/signup', 
         failureFlash: true
     }));
+
+    app.get("/settings", isLoggedIn, (req, res) => {
+        res.render("settings.ejs", { req });
+    })
+
+    app.post("/settings/change-password", isAuthenticated, (req, res) => {
+        console.log(req.body);
+        User.findById(req.user.id, (err, user) => {
+            if (err) res.redirect("/settings?error=password-change-generic");
+            else if (user.validPassword(req.body.newPassword)) res.redirect("/settings?error=password-change-wrong-password");
+            else if (req.body.newPassword != req.body.newPasswordValidate) res.redirect("/settings?error=password-change-no-match");
+            else {
+                user.local.password = user.generateHash(req.body.newPassword);
+                try {
+                    user.save();
+                    res.redirect("/settings?success=password-changed");
+                } catch(e) {
+                    console.log(e);
+                    res.redirect("/settings?error=password-change-generic");
+                }
+            }
+        })
+    })
 
     /**
      * Calendar logic
