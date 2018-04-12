@@ -6,7 +6,9 @@ var userSchema = mongoose.Schema({
         name: String,
         email: String,
         password: String,
-    }
+    },
+    hasAccessTo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    accessibleBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 userSchema.methods.generateHash = function(password) {

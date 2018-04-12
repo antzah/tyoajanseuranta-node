@@ -1,3 +1,5 @@
 module.exports = {
-    'url' : 'mongodb://localhost/tyoajanseuranta2' 
+    'url' : 'mongodb://localhost/tyoajanseuranta',
+    'user': '',
+    'password': ""
 };
