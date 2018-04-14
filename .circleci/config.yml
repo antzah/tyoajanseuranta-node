@@ -9,7 +9,6 @@ jobs:
     working_directory: ~/tyoajanseuranta-node
 
     steps:
-      - run: git fetch
-      - run: git pull
+      - checkout
       - run: npm install
       - run: npm run prod
