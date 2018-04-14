@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Kalenteri from "../components/kalenteri"
-import Raportit from "../components/raportit"
+import Kalenteri from "../components/Kalenteri.vue"
+import Raportit from "../components/Raportit.vue"
 
 Vue.use(Router)
 
