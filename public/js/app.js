@@ -54215,234 +54215,12 @@ function leftPad (str, len, ch) {
 
 
 /***/ }),
-/* 178 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(179)
-/* template */
-var __vue_template__ = __webpack_require__(180)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "js/components/subcomponents/päivä.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-592f9e59", Component.options)
-  } else {
-    hotAPI.reload("data-v-592f9e59", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 179 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["dayNumber", "isSelectedDate"],
-    methods: {
-        selectDay: function selectDay(day) {
-            this.$parent.$emit('selectDay', day);
-        }
-    }
-});
-
-/***/ }),
-/* 180 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "day",
-      class: { empty: _vm.dayNumber == 0, active: _vm.isSelectedDate },
-      on: {
-        click: function($event) {
-          _vm.selectDay(_vm.dayNumber)
-        }
-      }
-    },
-    [_vm._v("\n    " + _vm._s(_vm.dayNumber == 0 ? " " : _vm.dayNumber) + "\n")]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-592f9e59", module.exports)
-  }
-}
-
-/***/ }),
-/* 181 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(182)
-/* template */
-var __vue_template__ = __webpack_require__(183)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "js/components/subcomponents/vartti.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-289613dc", Component.options)
-  } else {
-    hotAPI.reload("data-v-289613dc", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 182 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["painted", "hovered", "deleting", "id", "clicks"],
-    methods: {
-        quarterHovered: function quarterHovered(id) {
-            this.$parent.$emit("quarterHovered", id);
-        },
-        quarterClicked: function quarterClicked(id) {
-            this.$parent.$emit('quarterClicked', id);
-        },
-        quarterExited: function quarterExited(id) {
-            this.$parent.$emit('quarterExited', id);
-        }
-    },
-    data: function data() {
-        return {
-            "isPainted": this.painted
-        };
-    }
-});
-
-/***/ }),
-/* 183 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", {
-    staticClass: "quarterHour",
-    class: {
-      painted: _vm.painted,
-      hovered: _vm.hovered,
-      deleting: _vm.deleting
-    },
-    on: {
-      mouseover: function($event) {
-        _vm.quarterHovered(_vm.id)
-      },
-      click: function($event) {
-        _vm.quarterClicked(_vm.id)
-      },
-      mouseleave: function($event) {
-        _vm.quarterExited(_vm.id)
-      }
-    }
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-289613dc", module.exports)
-  }
-}
-
-/***/ }),
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
 /* 184 */,
 /* 185 */,
 /* 186 */,
@@ -88511,10 +88289,10 @@ exports.push([module.i, "\n@media (min-width: 992px) {\n.muistiinpanot { \n     
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_left_pad__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_left_pad___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_left_pad__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_p_iv___ = __webpack_require__(178);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_p_iv____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__subcomponents_p_iv___);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_vartti__ = __webpack_require__(181);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_vartti___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__subcomponents_vartti__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue__);
 var _this6 = this;
 
 //
@@ -88801,8 +88579,8 @@ for (var i = 0; i < 96; i++) {
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "kalenteri",
     components: {
-        'paiva': __WEBPACK_IMPORTED_MODULE_1__subcomponents_p_iv____default.a,
-        'vartti': __WEBPACK_IMPORTED_MODULE_2__subcomponents_vartti___default.a
+        'paiva': __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue___default.a,
+        'vartti': __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue___default.a
     },
     data: function data() {
         return {
@@ -90324,6 +90102,234 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-6e2e5d9c", module.exports)
+  }
+}
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(230)
+/* template */
+var __vue_template__ = __webpack_require__(231)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "js/components/subcomponents/Päivä.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5ebc838e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5ebc838e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ["dayNumber", "isSelectedDate"],
+    methods: {
+        selectDay: function selectDay(day) {
+            this.$parent.$emit('selectDay', day);
+        }
+    }
+});
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "day",
+      class: { empty: _vm.dayNumber == 0, active: _vm.isSelectedDate },
+      on: {
+        click: function($event) {
+          _vm.selectDay(_vm.dayNumber)
+        }
+      }
+    },
+    [_vm._v("\n    " + _vm._s(_vm.dayNumber == 0 ? " " : _vm.dayNumber) + "\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5ebc838e", module.exports)
+  }
+}
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(233)
+/* template */
+var __vue_template__ = __webpack_require__(234)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "js/components/subcomponents/Vartti.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c1302008", Component.options)
+  } else {
+    hotAPI.reload("data-v-c1302008", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 233 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ["painted", "hovered", "deleting", "id", "clicks"],
+    methods: {
+        quarterHovered: function quarterHovered(id) {
+            this.$parent.$emit("quarterHovered", id);
+        },
+        quarterClicked: function quarterClicked(id) {
+            this.$parent.$emit('quarterClicked', id);
+        },
+        quarterExited: function quarterExited(id) {
+            this.$parent.$emit('quarterExited', id);
+        }
+    },
+    data: function data() {
+        return {
+            "isPainted": this.painted
+        };
+    }
+});
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {
+    staticClass: "quarterHour",
+    class: {
+      painted: _vm.painted,
+      hovered: _vm.hovered,
+      deleting: _vm.deleting
+    },
+    on: {
+      mouseover: function($event) {
+        _vm.quarterHovered(_vm.id)
+      },
+      click: function($event) {
+        _vm.quarterClicked(_vm.id)
+      },
+      mouseleave: function($event) {
+        _vm.quarterExited(_vm.id)
+      }
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c1302008", module.exports)
   }
 }
 

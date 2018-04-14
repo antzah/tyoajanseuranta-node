@@ -254,8 +254,8 @@ hr {
 <script>
 
 import leftPad from "left-pad";
-import päivä from "./subcomponents/päivä";
-import vartti from "./subcomponents/vartti";
+import päivä from "./subcomponents/Päivä.vue";
+import vartti from "./subcomponents/Vartti.vue";
 
 function emptyDaysBeforeStart(month, year) {
     var day = moment(new Date(year, month, 1));
