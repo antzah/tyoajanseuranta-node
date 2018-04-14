@@ -15,7 +15,7 @@ jobs:
 
   deploy:
     machine: true
-    working_directory: ~/tyoajanseuranta-node
+    working_directory: /home/anssi/tyoajanseuranta-node
     steps:
       - checkout
       - run: git fetch
