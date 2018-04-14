@@ -6,10 +6,9 @@ version: 2
 jobs:
   build:
     machine: true
-    working_directory: ~/tyoajanseuranta-node
+    working_directory: /home/anssi/tyoajanseuranta-node
 
     steps:
-      - run: git fetch
-      - run: git pull
+      - checkout
       - run: npm install
       - run: npm run prod
