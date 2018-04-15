@@ -7,6 +7,11 @@ var User = require("./models/user");
 
 module.exports = (app, passport) => {
     /**
+     * Generic health check route
+     */
+    app.get('/health-check', (req, res) => res.sendStatus(200));
+
+    /**
      * App logic – routes used by Vue Router
      */
     app.get('/', isLoggedIn, (req, res) => {

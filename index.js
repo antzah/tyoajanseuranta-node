@@ -1,6 +1,7 @@
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 3000;
+var fs       = require('fs');
+var https    = require("https");
 
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -63,5 +64,13 @@ app.use(variablesHelper);
 
 require('./routes.js')(app, passport);
 
-app.listen(port);
-console.log('The magic happens on port ' + port);
+var options = {
+    key: fs.readFileSync('./keys/server.key'),
+    cert: fs.readFileSync('./keys/server.crt'),
+    requestCert: false,
+    rejectUnauthorized: false
+};
+
+var server = https.createServer(options, app).listen(3000, function(){
+    console.log(`server started at port 3000`);
+});
