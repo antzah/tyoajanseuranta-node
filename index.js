@@ -65,8 +65,8 @@ app.use(variablesHelper);
 require('./routes.js')(app, passport);
 
 var options = {
-    key: fs.readFileSync('./keys/server.key'),
-    cert: fs.readFileSync('./keys/server.crt'),
+    key: fs.readFileSync('./keys/privkey.pem'),
+    cert: fs.readFileSync('./keys/cert.pem'),
     requestCert: false,
     rejectUnauthorized: false
 };
