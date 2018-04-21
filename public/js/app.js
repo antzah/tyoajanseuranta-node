@@ -29994,9 +29994,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_directive_tooltip___default.a, {
-    delay: 0,
-    placement: 'bottom',
-    class: 'tas-tooltip'
+  delay: 0,
+  placement: 'bottom',
+  class: 'tas-tooltip'
 });
 
 __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuejs_dialog___default.a);
@@ -30005,17 +30005,17 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuej
  * Other tools and plugins
  */
 window.moment = __webpack_require__(0);
-moment.locale("fi");
+window.moment.locale('fi');
 
 window.swal = __webpack_require__(199);
 
-if (document.querySelector("#app")) {
-    new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
-        el: '#app',
-        router: __WEBPACK_IMPORTED_MODULE_5__router__["a" /* default */],
-        template: '<App/>',
-        components: { App: __WEBPACK_IMPORTED_MODULE_4__App_vue___default.a }
-    });
+if (document.querySelector('#app')) {
+  new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({ // eslint-disable-line no-new
+    el: '#app',
+    router: __WEBPACK_IMPORTED_MODULE_5__router__["a" /* default */],
+    template: '<App/>',
+    components: { App: __WEBPACK_IMPORTED_MODULE_4__App_vue___default.a }
+  });
 }
 
 /***/ }),
@@ -30023,9 +30023,9 @@ if (document.querySelector("#app")) {
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
-    __webpack_require__(137);
+  __webpack_require__(137);
 } catch (e) {
-    console.log(e);
+  console.log(e);
 }
 
 window.axios = __webpack_require__(140);
@@ -51122,7 +51122,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'app'
+  name: 'app'
 });
 
 /***/ }),
@@ -51153,9 +51153,9 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(169);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Kalenteri_vue__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Kalenteri_vue__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Kalenteri_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Kalenteri_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Raportit_vue__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Raportit_vue__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Raportit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Raportit_vue__);
 
 
@@ -51165,17 +51165,17 @@ if (false) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    mode: "history",
-    base: "/",
-    routes: [{
-        path: '/',
-        name: 'Kalenteri',
-        component: __WEBPACK_IMPORTED_MODULE_2__components_Kalenteri_vue___default.a
-    }, {
-        path: "/raportit",
-        name: "Raportit",
-        component: __WEBPACK_IMPORTED_MODULE_3__components_Raportit_vue___default.a
-    }]
+  mode: 'history',
+  base: '/',
+  routes: [{
+    path: '/',
+    name: 'Kalenteri',
+    component: __WEBPACK_IMPORTED_MODULE_2__components_Kalenteri_vue___default.a
+  }, {
+    path: '/raportit',
+    name: 'Raportit',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_Raportit_vue___default.a
+  }]
 }));
 
 /***/ }),
@@ -53809,9 +53809,97 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 170 */,
-/* 171 */,
-/* 172 */,
+/* 170 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(171)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(176)
+/* template */
+var __vue_template__ = __webpack_require__(184)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "js/components/Kalenteri.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-62bd6414", Component.options)
+  } else {
+    hotAPI.reload("data-v-62bd6414", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 171 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(172);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(174)("1c2f6780", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-62bd6414\",\"scoped\":false,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Kalenteri.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-62bd6414\",\"scoped\":false,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Kalenteri.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(173)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n@media (min-width: 992px) {\n.muistiinpanot {\n        display: block !important;\n}\n}\n.dg-content-body {\n  border-bottom: 0;\n}\n.dg-main-content {\n  width: 95%;\n  border-radius: 2px;\n}\n.dg-btn {\n    border-radius: 1px;\n}\n.card {\n    margin-bottom: 16px;\n}\nhr {\n    border-top: 1px solid rgba(204, 204, 204, 0.32);\n}\n.dg-btn--ok {\n    color: #ffffff;\n    background-color: #4CAF50;\n    border-color: #4CAF50;\n}\n.dg-btn-loader .dg-circle {\n    width: .6em;\n    height: .6em;\n    background-color: #ffffff;\n}\n@media (max-width: 560px) {\n.hourIndicator {\n    font-size: 2.5vw;\n}\n}\n#dailyTotal {\n  color: #FF9800;\n}\n@media (min-width: 768px) {\n.calendar {\n    display: block !important;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 173 */
 /***/ (function(module, exports) {
 
@@ -54155,7 +54243,705 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 176 */,
+/* 176 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_left_pad__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_left_pad___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_left_pad__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue__);
+var _this6 = this;
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* eslint no-undef: 0 */
+/* eslint no-return-assign: 0 */
+/* eslint no-unneeded-ternary: 0 */
+/* eslint no-return-assign: 0 */
+
+
+
+
+
+function emptyDaysBeforeStart(month, year) {
+  var day = moment(new Date(year, month, 1));
+  var weekday = day.isoWeekday();
+  return weekday - 1;
+}
+
+function returnSmallerAndBiggerId(firstId, secondId) {
+  var smallerId = firstId < secondId ? firstId : secondId;
+  var biggerId = secondId > firstId ? secondId : firstId;
+
+  return [smallerId, biggerId];
+}
+
+var quarters = [];
+
+for (var i = 0; i < 96; i++) {
+  quarters.push({
+    'qId': i,
+    'painted': false
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'kalenteri',
+  components: {
+    'paiva': __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue___default.a,
+    'vartti': __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue___default.a
+  },
+  data: function data() {
+    return {
+      'userId': null,
+      'currentDate': moment().hour(12).minute(0).seconds(0),
+      'selectedDate': moment().hour(12).minute(0).seconds(0),
+      'selectedDay': moment().get('date'),
+      'selectedMonth': moment().get('month'),
+      'selectedYear': moment().get('year'),
+      'daysInSelectedMonth': moment().daysInMonth(),
+      'emptyDaysBeforeStart': emptyDaysBeforeStart(moment().get('month'), moment().get('year')),
+      'clicks': 0,
+      'firstClickedQuarter': 0,
+      'secondClickedQuarter': 0,
+      'quarters': quarters,
+      'deleting': false,
+      'loading': false,
+      'notes': '',
+      'dailyTotal': '..',
+      'dailyTotalAsDecimal': 0,
+      showCalendarOnMobile: false,
+      showNotesOnMobile: false,
+      selectedStartTime: 0,
+      selectedEndTime: 0
+    };
+  },
+  methods: {
+    addPeriod: function addPeriod() {
+      var _this = this;
+
+      var sortedQuarters = returnSmallerAndBiggerId(this.selectedStartTime, this.selectedEndTime);
+      var smallerId = sortedQuarters[0];
+      var biggerId = sortedQuarters[1];
+
+      this.$dialog.confirm('Haluatko varmasti lis\xE4t\xE4 ty\xF6jakson v\xE4lille ' + this.getStartTime(smallerId) + '\u2013' + this.getEndTime(biggerId) + '?', {
+        loader: true,
+        cancelText: 'Peruuta',
+        okText: 'Vahvista'
+      }).then(function (dialog) {
+        _this.loading = true;
+
+        for (var i = smallerId; i <= biggerId; i++) {
+          _this.quarters[i].painted = true;
+        }
+
+        _this.updateDailyTotal();
+
+        axios.post('/days', {
+          quarters: _this.quarters,
+          day: _this.selectedDate,
+          dailyTotal: _this.dailyTotalAsDecimal,
+          notes: _this.notes
+        }).then(function (res) {
+          _this.loading = false;
+          _this.swalSuccess('Tallennettu');
+        }).catch(function (err) {
+          console.log(err);
+          _this.swalError('Virhe!', 'Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.');
+          _this.loading = false;
+        });
+
+        _this.loading = false;
+        dialog.close();
+      }).catch(function () {
+        console.log('Delete aborted');
+      });
+    },
+    removePeriod: function removePeriod() {
+      var _this2 = this;
+
+      var sortedQuarters = returnSmallerAndBiggerId(this.selectedStartTime, this.selectedEndTime);
+      var smallerId = sortedQuarters[0];
+      var biggerId = sortedQuarters[1];
+
+      this.$dialog.confirm('Haluatko varmasti poistaa jakson ' + this.getStartTime(smallerId) + '\u2013' + this.getEndTime(biggerId) + ' merkinn\xE4t?', {
+        loader: true,
+        cancelText: 'Peruuta',
+        okText: 'Vahvista'
+      }).then(function (dialog) {
+        _this2.loading = true;
+
+        for (var i = smallerId; i <= biggerId; i++) {
+          _this2.quarters[i].painted = false;
+        }
+
+        _this2.updateDailyTotal();
+
+        axios.post('/days', {
+          quarters: _this2.quarters,
+          day: _this2.selectedDate,
+          dailyTotal: _this2.dailyTotalAsDecimal,
+          notes: _this2.notes
+        }).then(function (res) {
+          _this2.loading = false;
+          _this2.swalSuccess('Tallennettu');
+        }).catch(function (err) {
+          console.log(err);
+          _this2.swalError('Virhe!', 'Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.');
+          _this2.loading = false;
+        });
+
+        _this2.loading = false;
+        dialog.close();
+      }).catch(function () {
+        console.log('Delete aborted');
+      });
+    },
+    /**
+         * https://stackoverflow.com/questions/33769178/moment-js-decimals-into-time-format
+         */
+    decimalHoursToString: function decimalHoursToString(hours) {
+      return ('' + Math.floor(hours) % 24).slice(-2) + 'h ' + (hours % 1 * 60 + '0').slice(0, 2) + 'min';
+    },
+    updateDailyTotal: function updateDailyTotal() {
+      var dailyTotalAsDecimal = 0;
+      this.quarters.map(function (quarter) {
+        return quarter.painted ? dailyTotalAsDecimal += 0.25 : null;
+      });
+      this.dailyTotalAsDecimal = dailyTotalAsDecimal;
+      this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal);
+    },
+    fetchUser: function fetchUser() {
+      var _this3 = this;
+
+      axios.get('/user').then(function (res) {
+        _this3.userId = res.data._id;
+      }).catch(function (err) {
+        console.log(err);
+        _this3.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.');
+      });
+    },
+    fetchDay: function fetchDay(selectedDate) {
+      var _this4 = this;
+
+      /**
+             * selectedDate is an instance of moment, so
+             * we can convert it to a readable UTC format
+             * with .format()
+             */
+      selectedDate = selectedDate.format();
+      this.loading = true;
+
+      axios.get('/days', {
+        params: { selectedDate: selectedDate }
+      }).then(function (res) {
+        if (res.data) {
+          res.data.quarters.map(function (quarter) {
+            quarter.hovered = false;
+            quarter.deleting = false;
+          });
+
+          _this4.notes = res.data.notes;
+          _this4.quarters = res.data.quarters;
+
+          _this4.loading = false;
+          _this4.updateDailyTotal();
+        } else {
+          _this4.loading = false;
+          _this4.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.');
+        }
+      }).catch(function (err) {
+        console.log(err);
+        _this4.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.');
+      });
+    },
+    saveNotes: function saveNotes() {
+      var _this5 = this;
+
+      axios.post('/notes', {
+        day: this.selectedDate,
+        notes: this.notes,
+        quarters: this.quarters,
+        dailyTotal: this.dailyTotalAsDecimal
+      }).then(function (res) {
+        _this5.swalSuccess('Tallennettu');
+      }).catch(function (err) {
+        console.log(err);
+        _this5.swalError('Virhe!', 'Päivitä selain ja yritä tallentaa muistiinpanot uudelleen.');
+      });
+    },
+    refresh: function refresh() {
+      this.selectedDay = this.selectedDate.get('date');
+      this.selectedMonth = this.selectedDate.get('month');
+      this.selectedYear = this.selectedDate.get('year');
+      this.daysInSelectedMonth = this.selectedDate.daysInMonth();
+      this.emptyDaysBeforeStart = emptyDaysBeforeStart(this.selectedMonth, this.selectedYear);
+
+      this.fetchDay(this.selectedDate);
+    },
+    minusMonth: function minusMonth() {
+      this.selectedDate.set('date', 1);
+      this.selectedDate.subtract(1, 'month');
+      this.refresh();
+    },
+    plusMonth: function plusMonth() {
+      this.selectedDate.set('date', 1);
+      this.selectedDate.add(1, 'month');
+      this.refresh();
+    },
+    plusDay: function plusDay() {
+      this.selectedDate.add(1, 'day');
+      this.refresh();
+    },
+    minusDay: function minusDay() {
+      this.selectedDate.subtract(1, 'day');
+      this.refresh();
+    },
+    getStartTime: function getStartTime(quarterNumber) {
+      var quarterNumberAsParsedString = String((quarterNumber / 4).toFixed(2));
+      var parsedQNAPS = quarterNumberAsParsedString.split('.');
+      parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
+
+      if (parsedQNAPS[0] <= 9) {
+        parsedQNAPS[0] = '0' + parsedQNAPS[0];
+      }
+
+      if (parsedQNAPS[1] === 0) {
+        parsedQNAPS[1] = '00';
+      }
+
+      return parsedQNAPS = String(parsedQNAPS).replace(',', ':');
+    },
+    getEndTime: function getEndTime(quarterNumber) {
+      var quarterNumberAsParsedString = String(((quarterNumber + 1) / 4).toFixed(2));
+      var parsedQNAPS = quarterNumberAsParsedString.split('.');
+      parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
+
+      if (parsedQNAPS[0] <= 9) {
+        parsedQNAPS[0] = '0' + parsedQNAPS[0];
+      }
+
+      if (parsedQNAPS[1] === 0) {
+        parsedQNAPS[1] = '00';
+      }
+
+      return parsedQNAPS = String(parsedQNAPS).replace(',', ':');
+    },
+    getTimeAndEnding: function getTimeAndEnding(quarterNumber) {
+      var quarterNumberAsParsedString = String((quarterNumber / 4).toFixed(2));
+      var quarterNumberAsParsedStringPlus15 = String(((quarterNumber + 1) / 4).toFixed(2));
+      var firstClickedquarterNumberAsParsedString = String(((quarterNumber + 1) / 4).toFixed(2));
+
+      var parsedQNAPS = quarterNumberAsParsedString.split('.');
+      var parsedQNAPSP15 = quarterNumberAsParsedStringPlus15.split('.');
+      var parsedFCQNAPS = firstClickedquarterNumberAsParsedString.split('.');
+
+      parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
+      parsedQNAPSP15[1] = parsedQNAPSP15[1] / 100 * 60;
+      parsedFCQNAPS[1] = parsedFCQNAPS[1] / 100 * 60;
+
+      if (parsedQNAPS[0] <= 9) {
+        parsedQNAPS[0] = '0' + parsedQNAPS[0];
+      }
+
+      if (parsedQNAPS[1] === 0) {
+        parsedQNAPS[1] = '00';
+      }
+
+      if (parsedQNAPSP15[1] === 0) {
+        parsedQNAPSP15[1] = '00';
+      }
+
+      if (parsedQNAPSP15[0] <= 9) {
+        parsedQNAPSP15[0] = '0' + parsedQNAPSP15[0];
+      }
+
+      if (parsedFCQNAPS[1] === 0) {
+        parsedFCQNAPS[1] = '00';
+      }
+
+      if (parsedFCQNAPS[0] <= 9) {
+        parsedFCQNAPS[0] = '0' + parsedFCQNAPS[0];
+      }
+
+      parsedQNAPS = String(parsedQNAPS).replace(',', ':');
+      parsedQNAPSP15 = String(parsedQNAPSP15).replace(',', ':');
+      parsedFCQNAPS = String(parsedFCQNAPS).replace(',', ':');
+
+      return (_this6.clicks === 1 ? parsedFCQNAPS : parsedQNAPS) + '–' + parsedQNAPSP15;
+    },
+    swalSuccess: function swalSuccess(title, text) {
+      swal({
+        position: 'bottom-end',
+        type: 'success',
+        title: title,
+        text: text,
+        showConfirmButton: false,
+        backdrop: false,
+        width: '280px',
+        padding: '12px',
+        timer: 1500
+      });
+    },
+    swalError: function swalError(title, text) {
+      swal({
+        position: 'bottom-end',
+        type: 'error',
+        title: title,
+        text: text,
+        showConfirmButton: false,
+        backdrop: false,
+        width: '280px',
+        padding: '12px 12px 24px',
+        timer: 3000
+      });
+    },
+    leftPad: __WEBPACK_IMPORTED_MODULE_0_left_pad___default.a
+  },
+  created: function created() {
+    /**
+         * Fetch the user ID so we can use that later
+         */
+    this.fetchUser();
+    this.fetchDay(this.selectedDate);
+  },
+  mounted: function mounted() {
+    var _this7 = this;
+
+    this.$on('selectDay', function (day) {
+      _this7.selectedDate = moment(new Date(_this7.selectedYear, _this7.selectedMonth, day, 12));
+      _this7.refresh();
+    });
+
+    this.$on('quarterHovered', function (id) {
+      if (_this7.clicks === 1) {
+        _this7.secondClickedQuarter = id;
+        var sortedQuarters = returnSmallerAndBiggerId(_this7.firstClickedQuarter, _this7.secondClickedQuarter);
+        var smallerId = sortedQuarters[0];
+        var biggerId = sortedQuarters[1];
+
+        for (var i = 0; i < _this7.quarters.length; i++) {
+          _this7.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
+          _this7.quarters[i].deleting = i >= smallerId && i <= biggerId && _this7.deleting ? true : false;
+        }
+      }
+    });
+
+    this.$on('quarterExited', function (id) {
+      for (var i = 0; i < _this7.quarters.length; i++) {
+        _this7.quarters[i].hovered = false;
+        _this7.quarters[i].deleting = false;
+      }
+    });
+
+    this.$on('quarterClicked', function (id) {
+      if (_this7.clicks === 0) {
+        _this7.quarters[id].painted = true;
+        _this7.quarters[id].deleting = _this7.deleting ? true : false;
+        _this7.firstClickedQuarter = id;
+        _this7.clicks++;
+      } else if (_this7.clicks === 1) {
+        _this7.secondClickedQuarter = id;
+
+        var sortedQuarters = returnSmallerAndBiggerId(_this7.firstClickedQuarter, _this7.secondClickedQuarter);
+        var smallerId = sortedQuarters[0];
+        var biggerId = sortedQuarters[1];
+
+        if (_this7.deleting) {
+          for (var i = smallerId; i <= biggerId; i++) {
+            _this7.quarters[i].painted = false;
+            _this7.quarters[i].deleting = false;
+            _this7.quarters[i].hovered = false;
+          }
+        } else {
+          for (var i = smallerId; i <= biggerId; i++) {
+            _this7.quarters[i].painted = true;
+          }
+        }
+
+        _this7.clicks = 0;
+        _this7.deleting = false;
+        _this7.loading = true;
+        _this7.updateDailyTotal();
+
+        axios.post('/days', {
+          quarters: _this7.quarters,
+          day: _this7.selectedDate,
+          dailyTotal: _this7.dailyTotalAsDecimal,
+          notes: _this7.notes
+        }).then(function (res) {
+          _this7.loading = false;
+          _this7.swalSuccess('Tallennettu');
+        }).catch(function (err) {
+          console.log(err);
+          _this7.swalError('Virhe!', 'Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.');
+          _this7.loading = false;
+        });
+
+        _this7.firstClickedQuarter = 0;
+        _this7.secondClickedQuarter = 0;
+      }
+    });
+  }
+});
+
+/***/ }),
 /* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54215,15 +55001,1137 @@ function leftPad (str, len, ch) {
 
 
 /***/ }),
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(179)
+/* template */
+var __vue_template__ = __webpack_require__(180)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "js/components/subcomponents/Päivä.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5ebc838e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5ebc838e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 179 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['dayNumber', 'isSelectedDate'],
+  methods: {
+    selectDay: function selectDay(day) {
+      this.$parent.$emit('selectDay', day);
+    }
+  }
+});
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "day",
+      class: { empty: _vm.dayNumber == 0, active: _vm.isSelectedDate },
+      on: {
+        click: function($event) {
+          _vm.selectDay(_vm.dayNumber)
+        }
+      }
+    },
+    [_vm._v("\n    " + _vm._s(_vm.dayNumber == 0 ? " " : _vm.dayNumber) + "\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5ebc838e", module.exports)
+  }
+}
+
+/***/ }),
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(182)
+/* template */
+var __vue_template__ = __webpack_require__(183)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "js/components/subcomponents/Vartti.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c1302008", Component.options)
+  } else {
+    hotAPI.reload("data-v-c1302008", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 182 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['painted', 'hovered', 'deleting', 'id', 'clicks'],
+  methods: {
+    quarterHovered: function quarterHovered(id) {
+      this.$parent.$emit('quarterHovered', id);
+    },
+    quarterClicked: function quarterClicked(id) {
+      this.$parent.$emit('quarterClicked', id);
+    },
+    quarterExited: function quarterExited(id) {
+      this.$parent.$emit('quarterExited', id);
+    }
+  },
+  data: function data() {
+    return {
+      'isPainted': this.painted
+    };
+  }
+});
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {
+    staticClass: "quarterHour",
+    class: {
+      painted: _vm.painted,
+      hovered: _vm.hovered,
+      deleting: _vm.deleting
+    },
+    on: {
+      mouseover: function($event) {
+        _vm.quarterHovered(_vm.id)
+      },
+      click: function($event) {
+        _vm.quarterClicked(_vm.id)
+      },
+      mouseleave: function($event) {
+        _vm.quarterExited(_vm.id)
+      }
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c1302008", module.exports)
+  }
+}
+
+/***/ }),
+/* 184 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _vm._v("\n        Kalenteri\n        "),
+      _vm.loading
+        ? _c(
+            "span",
+            { staticStyle: { "font-size": "14px", color: "#a9dbe5" } },
+            [
+              _c("img", {
+                staticStyle: { height: "15px", "margin-bottom": "2px" },
+                attrs: { src: "/img/loading.svg" }
+              }),
+              _vm._v(" Ladataan..\n        ")
+            ]
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row calendar-wrapper" }, [
+        _c("div", { staticClass: "col-lg-4 col-xl-3 col-md-6 col-12" }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showCalendarOnMobile,
+                  expression: "showCalendarOnMobile"
+                }
+              ],
+              staticClass: "calendar"
+            },
+            [
+              _c("div", { staticClass: "month title" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn float-left",
+                    on: { click: _vm.minusMonth }
+                  },
+                  [_c("i", { staticClass: "fas fa-caret-left" })]
+                ),
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.selectedDate.format("MMMM YYYY")) +
+                    "\n                        "
+                ),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn  float-right",
+                    on: { click: _vm.plusMonth }
+                  },
+                  [_c("i", { staticClass: "fas fa-caret-right" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "days" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-12" },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.emptyDaysBeforeStart, function(n) {
+                        return _c("paiva", {
+                          key: n,
+                          attrs: { "day-number": "0" }
+                        })
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.daysInSelectedMonth, function(n) {
+                        return _c("paiva", {
+                          key: n + 100,
+                          attrs: {
+                            "day-number": n,
+                            "is-selected-date": n == _vm.selectedDay
+                          }
+                        })
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer"
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6 col-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning btn-sm d-md-none",
+                    on: {
+                      click: function($event) {
+                        _vm.showCalendarOnMobile = !_vm.showCalendarOnMobile
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-calendar-alt" }),
+                    _vm._v(
+                      " " +
+                        _vm._s(
+                          _vm.showCalendarOnMobile ? "Piilota" : "Kalenteri"
+                        ) +
+                        "\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-info btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.minusDay }
+                  },
+                  [_vm._v("Edellinen päivä")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-info btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.plusDay }
+                  },
+                  [_vm._v("Seuraava päivä")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "small-spacer" }),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("h3", [
+                      _vm._v(
+                        _vm._s(_vm.selectedDate.format("dddd")) +
+                          " " +
+                          _vm._s(_vm.selectedDate.format("D.M.YYYY"))
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.loading
+                  ? _c("h3", { staticStyle: { color: "#adadad" } }, [
+                      _vm._v(
+                        _vm._s(_vm.selectedDate.format("dddd")) +
+                          " " +
+                          _vm._s(_vm.selectedDate.format("D.M.YYYY"))
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("h4", { attrs: { id: "dailyTotal" } }, [
+                  _vm._v(_vm._s(_vm.dailyTotal))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-6 col-12" }, [
+                _c("div", { staticClass: "small-spacer" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "d-block d-lg-none col-12" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning btn-sm",
+                        staticStyle: { "margin-bottom": "0" },
+                        on: {
+                          click: function($event) {
+                            _vm.showNotesOnMobile = !_vm.showNotesOnMobile
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-edit" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              _vm.showNotesOnMobile
+                                ? "Piilota"
+                                : "Päivän muistiinpanot"
+                            ) +
+                            "\n                                "
+                        )
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.showNotesOnMobile,
+                        expression: "showNotesOnMobile"
+                      }
+                    ],
+                    staticClass: "muistiinpanot"
+                  },
+                  [
+                    _c("div", { staticClass: "small-spacer" }),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "small-text" }, [
+                      _vm._v(
+                        "Voit kirjata alle halutessasi esim. ranskalaisin viivoin päivän työtehtäviä."
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.notes,
+                          expression: "notes"
+                        }
+                      ],
+                      staticClass: "form-control notes-textarea",
+                      attrs: {
+                        placeholder: "Syötä muistiinpanot",
+                        name: "muistiinpanot",
+                        rows: "4"
+                      },
+                      domProps: { value: _vm.notes },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.notes = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "small-spacer" }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-sm",
+                        on: { click: _vm.saveNotes }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Tallenna\n                            "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "small-spacer" })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "spacer" })
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-12" },
+              _vm._l(24, function(n) {
+                return _c("div", { key: n, staticClass: "hourIndicator" }, [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(_vm.leftPad(n - 1, 2, 0)) +
+                      "\n                        "
+                  )
+                ])
+              })
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              {
+                staticClass: "col-12 quarters",
+                class: { clicked: this.clicks == 1 }
+              },
+              [
+                _vm.loading
+                  ? _c("span", { staticClass: "disabled-overlay" })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.quarters, function(quarter) {
+                  return _c("vartti", {
+                    directives: [
+                      {
+                        name: "tooltip",
+                        rawName: "v-tooltip",
+                        value: _vm.getTimeAndEnding(quarter.qId),
+                        expression: "getTimeAndEnding(quarter.qId)"
+                      }
+                    ],
+                    key: quarter.qId,
+                    attrs: {
+                      clicks: _vm.clicks,
+                      painted: quarter.painted,
+                      hovered: quarter.hovered ? quarter.hovered : false,
+                      deleting: quarter.deleting ? quarter.deleting : false,
+                      id: quarter.qId
+                    }
+                  })
+                })
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "small-spacer" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-block d-sm-block d-md-none" }, [
+            _c("div", { staticClass: "row" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-6",
+                  staticStyle: { "padding-right": "5px" }
+                },
+                [
+                  _c("label", [_vm._v("Alku")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedStartTime,
+                          expression: "selectedStartTime"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedStartTime = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(96, function(n) {
+                      return _c(
+                        "option",
+                        { key: n - 1, domProps: { value: n - 1 } },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.getStartTime(n - 1)) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    })
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-6",
+                  staticStyle: { "padding-left": "5px" }
+                },
+                [
+                  _c("label", [_vm._v("Loppu")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedEndTime,
+                          expression: "selectedEndTime"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedEndTime = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(96, function(n) {
+                      return _c(
+                        "option",
+                        { key: n - 1, domProps: { value: n - 1 } },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.getEndTime(n - 1)) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    })
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-8", staticStyle: { "padding-right": "0" } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      staticStyle: { "margin-top": "12px", width: "100%" },
+                      on: { click: _vm.addPeriod }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Lisää\n                            "
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    staticStyle: { "margin-top": "12px", width: "100%" },
+                    on: { click: _vm.removePeriod }
+                  },
+                  [
+                    _vm._v(
+                      "\n                                Poista\n                            "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-none d-md-block" }, [
+            _vm.clicks == 0 && !_vm.deleting
+              ? _c("p", [
+                  _vm._v("Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.clicks == 1 && !_vm.deleting
+              ? _c("p", [_vm._v("Valitse vielä lopetusaika.")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.deleting && _vm.clicks == 0
+              ? _c("p", { staticStyle: { color: "red" } }, [
+                  _vm._v("Valitse poistettavan pätkän alku.")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.deleting && _vm.clicks == 1
+              ? _c("p", { staticStyle: { color: "red" } }, [
+                  _vm._v("Valitse poistettavan pätkän loppu.")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.deleting && _vm.clicks == 0
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-sm",
+                    on: {
+                      click: function($event) {
+                        _vm.deleting = true
+                      }
+                    }
+                  },
+                  [_vm._v("Poista")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.deleting && _vm.clicks == 1
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-sm",
+                    attrs: { disabled: "disabled" },
+                    on: {
+                      click: function($event) {
+                        _vm.deleting = true
+                      }
+                    }
+                  },
+                  [_vm._v("Poista")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.deleting
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary btn-sm",
+                    on: {
+                      click: function($event) {
+                        _vm.deleting = false
+                      }
+                    }
+                  },
+                  [_vm._v("Peruuta poistaminen")]
+                )
+              : _vm._e()
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "weekdays" }, [
+      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("MA")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("TI")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("KE")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("TO")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("PE")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("LA")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("SU")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-none d-lg-block col-md-12" }, [
+      _c("h5", { staticStyle: { "margin-bottom": "0" } }, [
+        _vm._v("Päivän muistiinpanot")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c("div", { staticClass: "small-spacer" }),
+      _vm._v(" "),
+      _c("h5", [_vm._v("Lisää tai poista työjakso")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-62bd6414", module.exports)
+  }
+}
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(186)
+/* template */
+var __vue_template__ = __webpack_require__(196)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "js/components/Raportit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6e2e5d9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-6e2e5d9c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 186 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_xlsx__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* eslint no-undef: 0 */
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'raportit',
+  components: {
+    'datepicker': __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default.a
+  },
+  data: function data() {
+    return {
+      loading: false,
+      userId: null,
+      firstDate: '',
+      secondDate: '',
+      firstDateIsBiggerThanSecond: false,
+      resultRows: [],
+      periodTotal: 0,
+      exportableResults: []
+    };
+  },
+  created: function created() {
+    /**
+         * Fetch the user ID so we can use that later
+         */
+    this.fetchUserAndSetDates();
+  },
+
+  methods: {
+    exportToExcel: function exportToExcel(format) {
+      var ws = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.json_to_sheet(this.exportableResults);
+      var wb = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.book_new();
+      __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.book_append_sheet(wb, ws, 'Raportti');
+      var wbout = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.write(wb, { bookType: format, type: 'binary' });
+
+      FileSaver.saveAs(new Blob([this.s2ab(wbout)], {
+        type: 'application/octet-stream'
+      }), 'tuntiraportti_' + moment(this.firstDate).format('D.M.Y') + '_' + moment(this.secondDate).format('D.M.Y') + '.' + format);
+    },
+    s2ab: function s2ab(s) {
+      var buf = new ArrayBuffer(s.length);
+      var view = new Uint8Array(buf);
+      for (var i = 0; i !== s.length; ++i) {
+        view[i] = s.charCodeAt(i) & 0xFF;
+      }return buf;
+    },
+    openAPickerIfNecessary: function openAPickerIfNecessary() {
+      if (this.secondDate === '' || this.firstDate > this.secondDate) this.$refs.endingDate.showCalendar();
+      if (this.firstDate === '' && this.secondDate !== '') this.$refs.startDate.showCalendar();
+    },
+    validateSelectionsAndRunQuery: function validateSelectionsAndRunQuery() {
+      var _this = this;
+
+      if (this.firstDate > this.secondDate && this.firstDate !== '' && this.secondDate !== '') this.firstDateIsBiggerThanSecond = true;else {
+        this.firstDateIsBiggerThanSecond = false;
+
+        if (this.firstDate !== '' && this.secondDate !== '') {
+          this.loading = true;
+
+          axios.get('/reports', {
+            params: {
+              firstDate: this.firstDate,
+              secondDate: this.secondDate,
+              userId: this.userId
+            }
+          }).then(function (res) {
+            if (res.data) {
+              var resultTotal = 0;
+
+              _this.exportableResults = [];
+
+              res.data.map(function (resultRow) {
+                resultRow.dayOfWeek = moment(resultRow.day).format('ddd');
+                resultRow.trimmedDate = moment(resultRow.day).format('YYYY-MM-DD');
+                resultRow.readableDate = moment(resultRow.day).format('D.M.Y');
+                resultTotal += resultRow.dailyTotal;
+                _this.exportableResults.push({
+                  'Päivämäärä': resultRow.trimmedDate,
+                  'Tunnit': resultRow.dailyTotal,
+                  'Muistiinpanot': resultRow.notes
+                });
+              });
+
+              _this.periodTotal = resultTotal;
+              _this.resultRows = res.data;
+              _this.loading = false;
+            }
+          }).catch(function (err) {
+            console.log(err);
+            _this.swalError('Virhe!', 'Päivitä selainikkuna ja yritä hakea raportti uudelleen.');
+          });
+        }
+      }
+    },
+    fetchUserAndSetDates: function fetchUserAndSetDates() {
+      var _this2 = this;
+
+      axios.get('/user').then(function (res) {
+        _this2.userId = res.data._id;
+        _this2.firstDate = moment().date(1).toDate();
+        _this2.secondDate = moment().toDate();
+        _this2.validateSelectionsAndRunQuery();
+      }).catch(function (err) {
+        console.log(err);
+        _this2.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.');
+      });
+    },
+    swalSuccess: function swalSuccess(title, text) {
+      swal({
+        position: 'bottom-end',
+        type: 'success',
+        title: title,
+        text: text,
+        showConfirmButton: false,
+        backdrop: false,
+        width: '280px',
+        padding: '12px',
+        timer: 1500
+      });
+    },
+    swalError: function swalError(title, text) {
+      swal({
+        position: 'bottom-end',
+        type: 'error',
+        title: title,
+        text: text,
+        showConfirmButton: false,
+        backdrop: false,
+        width: '280px',
+        padding: '12px 12px 24px',
+        timer: 3000
+      });
+    }
+  }
+});
+
+/***/ }),
 /* 187 */
 /***/ (function(module, exports) {
 
@@ -84798,7 +86706,238 @@ module.exports = ZStream;
 /* (ignored) */
 
 /***/ }),
-/* 196 */,
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card raportit" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _vm._v("\n        Raportit\n        "),
+      _vm.loading
+        ? _c(
+            "span",
+            { staticStyle: { "font-size": "14px", color: "#a9dbe5" } },
+            [
+              _c("img", {
+                staticStyle: { height: "15px", "margin-bottom": "2px" },
+                attrs: { src: "/img/loading.svg" }
+              }),
+              _vm._v(" Ladataan..\n        ")
+            ]
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("p", [
+        _vm._v(
+          "Voit tarkastella tuntikertymää pidemmältä ajalta valitsemalla haluamasi ajanjakson."
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-lg-3 col-md-6 col-12" },
+          [
+            _c("label", [_vm._v("Valitse aloituspäivä")]),
+            _vm._v(" "),
+            _c("datepicker", {
+              ref: "startDate",
+              attrs: {
+                placeholder: "Klikkaa aloituspäivää",
+                "monday-first": true,
+                format: "d.M.yyyy",
+                language: "fi"
+              },
+              on: {
+                closed: function($event) {
+                  _vm.validateSelectionsAndRunQuery()
+                  _vm.openAPickerIfNecessary()
+                }
+              },
+              model: {
+                value: _vm.firstDate,
+                callback: function($$v) {
+                  _vm.firstDate = $$v
+                },
+                expression: "firstDate"
+              }
+            }),
+            _vm._v(" "),
+            _vm.firstDateIsBiggerThanSecond
+              ? _c("label", { staticStyle: { color: "red" } }, [
+                  _vm._v(
+                    "\n                    Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "small-spacer" })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-lg-3 col-md-6 col-12" },
+          [
+            _c("label", [_vm._v("Valitse lopetuspäivä")]),
+            _vm._v(" "),
+            _c("datepicker", {
+              ref: "endingDate",
+              attrs: {
+                placeholder: "Klikkaa lopetuspäivää",
+                "monday-first": true,
+                format: "d.M.yyyy",
+                language: "fi"
+              },
+              on: {
+                closed: function($event) {
+                  _vm.validateSelectionsAndRunQuery()
+                  _vm.openAPickerIfNecessary()
+                }
+              },
+              model: {
+                value: _vm.secondDate,
+                callback: function($$v) {
+                  _vm.secondDate = $$v
+                },
+                expression: "secondDate"
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "small-spacer" })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info btn-sm",
+              attrs: { disabled: _vm.resultRows.length == 0 },
+              on: {
+                click: function($event) {
+                  _vm.exportToExcel("csv")
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-file-excel" }),
+              _vm._v(" Vie (.csv)\n                ")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info btn-sm",
+              attrs: { disabled: _vm.resultRows.length == 0 },
+              on: {
+                click: function($event) {
+                  _vm.exportToExcel("xlsx")
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-file-excel" }),
+              _vm._v(" Vie (.xlsx)\n                ")
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "small-spacer" }),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              staticClass: "table table-hover table-sm",
+              attrs: { id: "raportti" }
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.resultRows, function(result) {
+                  return _c("tr", { key: result._id }, [
+                    _c("th", [
+                      _vm._v(
+                        _vm._s(result.dayOfWeek) +
+                          " " +
+                          _vm._s(result.readableDate)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(result.notes))])
+                  ])
+                })
+              ),
+              _vm._v(" "),
+              _vm.resultRows.length != 0
+                ? _c("tfoot", [
+                    _c("tr", [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("strong", [
+                          _vm._v(
+                            _vm._s(_vm.periodTotal ? _vm.periodTotal : null)
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td")
+                    ])
+                  ])
+                : _vm._e()
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("Päivämäärä")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Tunnit")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Muistiinpanot")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Yhteensä")])])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6e2e5d9c", module.exports)
+  }
+}
+
+/***/ }),
 /* 197 */
 /***/ (function(module, exports) {
 
@@ -88169,2169 +90308,6 @@ if (typeof document !== "undefined"){!function(e,t){var n=e.createElement("style
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(222)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(224)
-/* template */
-var __vue_template__ = __webpack_require__(225)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "js/components/Kalenteri.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-62bd6414", Component.options)
-  } else {
-    hotAPI.reload("data-v-62bd6414", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 222 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(223);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(174)("1c2f6780", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-62bd6414\",\"scoped\":false,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Kalenteri.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-62bd6414\",\"scoped\":false,\"hasInlineConfig\":true}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Kalenteri.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 223 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(173)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n@media (min-width: 992px) {\n.muistiinpanot { \n        display: block !important;\n}\n}\n.dg-content-body {\n  border-bottom: 0;\n}\n.dg-main-content {\n  width: 95%;\n  border-radius: 2px;\n}\n.dg-btn {\n    border-radius: 1px;\n}\n.card {\n    margin-bottom: 16px;\n}\nhr {\n    border-top: 1px solid rgba(204, 204, 204, 0.32);\n}\n.dg-btn--ok {\n    color: #ffffff;\n    background-color: #4CAF50;\n    border-color: #4CAF50;\n}\n.dg-btn-loader .dg-circle {\n    width: .6em;\n    height: .6em;\n    background-color: #ffffff;\n}\n@media (max-width: 560px) {\n.hourIndicator {\n    font-size: 2.5vw;\n}\n}\n#dailyTotal {\n  color: #FF9800;\n}\n@media (min-width: 768px) {\n.calendar {\n    display: block !important;\n}\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 224 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_left_pad__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_left_pad___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_left_pad__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue__);
-var _this6 = this;
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-function emptyDaysBeforeStart(month, year) {
-    var day = moment(new Date(year, month, 1));
-    var weekday = day.isoWeekday();
-    return weekday - 1;
-}
-
-function returnSmallerAndBiggerId(firstId, secondId) {
-    var smallerId = firstId < secondId ? firstId : secondId;
-    var biggerId = secondId > firstId ? secondId : firstId;
-
-    return [smallerId, biggerId];
-}
-
-var quarters = [];
-
-for (var i = 0; i < 96; i++) {
-    quarters.push({
-        "qId": i,
-        "painted": false
-    });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: "kalenteri",
-    components: {
-        'paiva': __WEBPACK_IMPORTED_MODULE_1__subcomponents_P_iv_vue___default.a,
-        'vartti': __WEBPACK_IMPORTED_MODULE_2__subcomponents_Vartti_vue___default.a
-    },
-    data: function data() {
-        return {
-            "userId": null,
-            "currentDate": moment().hour(12).minute(0).seconds(0),
-            "selectedDate": moment().hour(12).minute(0).seconds(0),
-            "selectedDay": moment().get("date"),
-            "selectedMonth": moment().get("month"),
-            "selectedYear": moment().get("year"),
-            "daysInSelectedMonth": moment().daysInMonth(),
-            "emptyDaysBeforeStart": emptyDaysBeforeStart(moment().get("month"), moment().get("year")),
-            "clicks": 0,
-            "firstClickedQuarter": 0,
-            "secondClickedQuarter": 0,
-            "quarters": quarters,
-            "deleting": false,
-            "loading": false,
-            "notes": "",
-            "dailyTotal": "..",
-            "dailyTotalAsDecimal": 0,
-            showCalendarOnMobile: false,
-            showNotesOnMobile: false,
-            selectedStartTime: 0,
-            selectedEndTime: 0
-        };
-    },
-    methods: {
-        addPeriod: function addPeriod() {
-            var _this = this;
-
-            var sortedQuarters = returnSmallerAndBiggerId(this.selectedStartTime, this.selectedEndTime);
-            var smallerId = sortedQuarters[0],
-                biggerId = sortedQuarters[1];
-
-            this.$dialog.confirm("Haluatko varmasti lis\xE4t\xE4 ty\xF6jakson v\xE4lille " + this.getStartTime(smallerId) + "\u2013" + this.getEndTime(biggerId) + "?", {
-                loader: true,
-                cancelText: "Peruuta",
-                okText: "Vahvista"
-            }).then(function (dialog) {
-
-                _this.loading = true;
-
-                for (var i = smallerId; i <= biggerId; i++) {
-                    _this.quarters[i].painted = true;
-                }
-
-                _this.updateDailyTotal();
-
-                axios.post("/days", {
-                    quarters: _this.quarters,
-                    day: _this.selectedDate,
-                    dailyTotal: _this.dailyTotalAsDecimal,
-                    notes: _this.notes
-                }).then(function (res) {
-                    _this.loading = false;
-                    _this.swalSuccess("Tallennettu");
-                }).catch(function (err) {
-                    _this.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
-                    _this.loading = false;
-                });
-
-                _this.loading = false;
-                dialog.close();
-            }).catch(function () {
-                console.log('Delete aborted');
-            });
-        },
-        removePeriod: function removePeriod() {
-            var _this2 = this;
-
-            var sortedQuarters = returnSmallerAndBiggerId(this.selectedStartTime, this.selectedEndTime);
-            var smallerId = sortedQuarters[0],
-                biggerId = sortedQuarters[1];
-
-            this.$dialog.confirm("Haluatko varmasti poistaa jakson " + this.getStartTime(smallerId) + "\u2013" + this.getEndTime(biggerId) + " merkinn\xE4t?", {
-                loader: true,
-                cancelText: "Peruuta",
-                okText: "Vahvista"
-            }).then(function (dialog) {
-
-                _this2.loading = true;
-
-                for (var i = smallerId; i <= biggerId; i++) {
-                    _this2.quarters[i].painted = false;
-                }
-
-                _this2.updateDailyTotal();
-
-                axios.post("/days", {
-                    quarters: _this2.quarters,
-                    day: _this2.selectedDate,
-                    dailyTotal: _this2.dailyTotalAsDecimal,
-                    notes: _this2.notes
-                }).then(function (res) {
-                    _this2.loading = false;
-                    _this2.swalSuccess("Tallennettu");
-                }).catch(function (err) {
-                    _this2.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
-                    _this2.loading = false;
-                });
-
-                _this2.loading = false;
-                dialog.close();
-            }).catch(function () {
-                console.log('Delete aborted');
-            });
-        },
-        /**
-         * https://stackoverflow.com/questions/33769178/moment-js-decimals-into-time-format
-         */
-        decimalHoursToString: function decimalHoursToString(hours) {
-            return ('' + Math.floor(hours) % 24).slice(-2) + 'h ' + (hours % 1 * 60 + '0').slice(0, 2) + "min";
-        },
-        updateDailyTotal: function updateDailyTotal() {
-            var dailyTotalAsDecimal = 0;
-            this.quarters.map(function (quarter) {
-                return quarter.painted ? dailyTotalAsDecimal += 0.25 : null;
-            });
-            this.dailyTotalAsDecimal = dailyTotalAsDecimal;
-            this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal);
-        },
-        fetchUser: function fetchUser() {
-            var _this3 = this;
-
-            axios.get("/user").then(function (res) {
-                _this3.userId = res.data._id;
-            }).catch(function (err) {
-                _this3.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.");
-            });
-        },
-        fetchDay: function fetchDay(selectedDate) {
-            var _this4 = this;
-
-            /**
-             * selectedDate is an instance of moment, so 
-             * we can convert it to a readable UTC format
-             * with .format()
-             */
-            selectedDate = selectedDate.format();
-            this.loading = true;
-
-            axios.get("/days", {
-                params: { selectedDate: selectedDate }
-            }).then(function (res) {
-                if (res.data) {
-                    res.data.quarters.map(function (quarter) {
-                        quarter.hovered = false;
-                        quarter.deleting = false;
-                    });
-
-                    _this4.notes = res.data.notes;
-                    _this4.quarters = res.data.quarters;
-
-                    _this4.loading = false;
-                    _this4.updateDailyTotal();
-                } else {
-                    _this4.loading = false;
-                    _this4.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.");
-                }
-            }).catch(function (err) {
-                _this4.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja kirjautua uudelleen sisään.");
-            });
-        },
-        saveNotes: function saveNotes() {
-            var _this5 = this;
-
-            axios.post("/notes", {
-                day: this.selectedDate,
-                notes: this.notes,
-                quarters: this.quarters,
-                dailyTotal: this.dailyTotalAsDecimal
-            }).then(function (res) {
-                _this5.swalSuccess("Tallennettu");
-            }).catch(function (err) {
-                _this5.swalError("Virhe!", "Päivitä selain ja yritä tallentaa muistiinpanot uudelleen.");
-            });
-        },
-        refresh: function refresh() {
-            this.selectedDay = this.selectedDate.get("date");
-            this.selectedMonth = this.selectedDate.get("month");
-            this.selectedYear = this.selectedDate.get("year");
-            this.daysInSelectedMonth = this.selectedDate.daysInMonth();
-            this.emptyDaysBeforeStart = emptyDaysBeforeStart(this.selectedMonth, this.selectedYear);
-
-            this.fetchDay(this.selectedDate);
-        },
-        minusMonth: function minusMonth() {
-            this.selectedDate.set("date", 1);
-            this.selectedDate.subtract(1, "month");
-            this.refresh();
-        },
-        plusMonth: function plusMonth() {
-            this.selectedDate.set("date", 1);
-            this.selectedDate.add(1, "month");
-            this.refresh();
-        },
-        plusDay: function plusDay() {
-            this.selectedDate.add(1, "day");
-            this.refresh();
-        },
-        minusDay: function minusDay() {
-            this.selectedDate.subtract(1, "day");
-            this.refresh();
-        },
-        getStartTime: function getStartTime(quarterNumber) {
-            var quarterNumberAsParsedString = String((quarterNumber / 4).toFixed(2));
-            var parsedQNAPS = quarterNumberAsParsedString.split(".");
-            parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
-
-            if (parsedQNAPS[0] <= 9) {
-                parsedQNAPS[0] = "0" + parsedQNAPS[0];
-            }
-
-            if (parsedQNAPS[1] == 0) {
-                parsedQNAPS[1] = "00";
-            }
-
-            return parsedQNAPS = String(parsedQNAPS).replace(",", ":");
-        },
-        getEndTime: function getEndTime(quarterNumber) {
-            var quarterNumberAsParsedString = String(((quarterNumber + 1) / 4).toFixed(2));
-            var parsedQNAPS = quarterNumberAsParsedString.split(".");
-            parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
-
-            if (parsedQNAPS[0] <= 9) {
-                parsedQNAPS[0] = "0" + parsedQNAPS[0];
-            }
-
-            if (parsedQNAPS[1] == 0) {
-                parsedQNAPS[1] = "00";
-            }
-
-            return parsedQNAPS = String(parsedQNAPS).replace(",", ":");
-        },
-        getTimeAndEnding: function getTimeAndEnding(quarterNumber) {
-            var quarterNumberAsParsedString = String((quarterNumber / 4).toFixed(2));
-            var quarterNumberAsParsedStringPlus15 = String(((quarterNumber + 1) / 4).toFixed(2));
-            var firstClickedquarterNumberAsParsedString = String(((quarterNumber + 1) / 4).toFixed(2));
-
-            var parsedQNAPS = quarterNumberAsParsedString.split(".");
-            var parsedQNAPSP15 = quarterNumberAsParsedStringPlus15.split(".");
-            var parsedFCQNAPS = firstClickedquarterNumberAsParsedString.split(".");
-
-            parsedQNAPS[1] = parsedQNAPS[1] / 100 * 60;
-            parsedQNAPSP15[1] = parsedQNAPSP15[1] / 100 * 60;
-            parsedFCQNAPS[1] = parsedFCQNAPS[1] / 100 * 60;
-
-            if (parsedQNAPS[0] <= 9) {
-                parsedQNAPS[0] = "0" + parsedQNAPS[0];
-            }
-
-            if (parsedQNAPS[1] == 0) {
-                parsedQNAPS[1] = "00";
-            }
-
-            if (parsedQNAPSP15[1] == 0) {
-                parsedQNAPSP15[1] = "00";
-            }
-
-            if (parsedQNAPSP15[0] <= 9) {
-                parsedQNAPSP15[0] = "0" + parsedQNAPSP15[0];
-            }
-
-            if (parsedFCQNAPS[1] == 0) {
-                parsedFCQNAPS[1] = "00";
-            }
-
-            if (parsedFCQNAPS[0] <= 9) {
-                parsedFCQNAPS[0] = "0" + parsedFCQNAPS[0];
-            }
-
-            parsedQNAPS = String(parsedQNAPS).replace(",", ":");
-            parsedQNAPSP15 = String(parsedQNAPSP15).replace(",", ":");
-            parsedFCQNAPS = String(parsedFCQNAPS).replace(",", ":");
-
-            return (_this6.clicks == 1 ? parsedFCQNAPS : parsedQNAPS) + "–" + parsedQNAPSP15;
-        },
-        swalSuccess: function swalSuccess(title, text) {
-            swal({
-                position: 'bottom-end',
-                type: 'success',
-                title: title,
-                text: text,
-                showConfirmButton: false,
-                backdrop: false,
-                width: "280px",
-                padding: "12px",
-                timer: 1500
-            });
-        },
-        swalError: function swalError(title, text) {
-            swal({
-                position: 'bottom-end',
-                type: 'error',
-                title: title,
-                text: text,
-                showConfirmButton: false,
-                backdrop: false,
-                width: "280px",
-                padding: "12px 12px 24px",
-                timer: 3000
-            });
-        },
-        leftPad: __WEBPACK_IMPORTED_MODULE_0_left_pad___default.a
-    },
-    created: function created() {
-        /**
-         * Fetch the user ID so we can use that later
-         */
-        this.fetchUser();
-        this.fetchDay(this.selectedDate);
-    },
-    mounted: function mounted() {
-        var _this7 = this;
-
-        this.$on('selectDay', function (day) {
-            _this7.selectedDate = moment(new Date(_this7.selectedYear, _this7.selectedMonth, day, 12));
-            _this7.refresh();
-        });
-
-        this.$on("quarterHovered", function (id) {
-            if (_this7.clicks == 1) {
-                _this7.secondClickedQuarter = id;
-                var sortedQuarters = returnSmallerAndBiggerId(_this7.firstClickedQuarter, _this7.secondClickedQuarter);
-                var smallerId = sortedQuarters[0],
-                    biggerId = sortedQuarters[1];
-
-                for (var i = 0; i < _this7.quarters.length; i++) {
-                    _this7.quarters[i].hovered = i > smallerId && i < biggerId ? true : false;
-                    _this7.quarters[i].deleting = i >= smallerId && i <= biggerId && _this7.deleting ? true : false;
-                }
-            }
-        });
-
-        this.$on("quarterExited", function (id) {
-            for (var i = 0; i < _this7.quarters.length; i++) {
-                _this7.quarters[i].hovered = false;
-                _this7.quarters[i].deleting = false;
-            }
-        });
-
-        this.$on('quarterClicked', function (id) {
-            if (_this7.clicks == 0) {
-                _this7.quarters[id].painted = true;
-                _this7.quarters[id].deleting = _this7.deleting ? true : false;
-                _this7.firstClickedQuarter = id;
-                _this7.clicks++;
-            } else if (_this7.clicks == 1) {
-                _this7.secondClickedQuarter = id;
-
-                var sortedQuarters = returnSmallerAndBiggerId(_this7.firstClickedQuarter, _this7.secondClickedQuarter);
-                var smallerId = sortedQuarters[0],
-                    biggerId = sortedQuarters[1];
-
-                if (_this7.deleting) {
-                    for (var i = smallerId; i <= biggerId; i++) {
-                        _this7.quarters[i].painted = false;
-                        _this7.quarters[i].deleting = false;
-                        _this7.quarters[i].hovered = false;
-                    }
-                } else {
-                    for (var i = smallerId; i <= biggerId; i++) {
-                        _this7.quarters[i].painted = true;
-                    }
-                }
-
-                _this7.clicks = 0;
-                _this7.deleting = false;
-                _this7.loading = true;
-                _this7.updateDailyTotal();
-
-                axios.post("/days", {
-                    quarters: _this7.quarters,
-                    day: _this7.selectedDate,
-                    dailyTotal: _this7.dailyTotalAsDecimal,
-                    notes: _this7.notes
-                }).then(function (res) {
-                    _this7.loading = false;
-                    _this7.swalSuccess("Tallennettu");
-                }).catch(function (err) {
-                    _this7.swalError("Virhe!", "Tiedot eivät tallentuneet. Yritä uudelleen tai päivitä selainikkuna.");
-                    _this7.loading = false;
-                });
-
-                _this7.firstClickedQuarter = 0;
-                _this7.secondClickedQuarter = 0;
-            }
-        });
-    }
-});
-
-/***/ }),
-/* 225 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _vm._v("\n        Kalenteri \n        "),
-      _vm.loading
-        ? _c(
-            "span",
-            { staticStyle: { "font-size": "14px", color: "#a9dbe5" } },
-            [
-              _c("img", {
-                staticStyle: { height: "15px", "margin-bottom": "2px" },
-                attrs: { src: "/img/loading.svg" }
-              }),
-              _vm._v(" Ladataan..\n        ")
-            ]
-          )
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "row calendar-wrapper" }, [
-        _c("div", { staticClass: "col-lg-4 col-xl-3 col-md-6 col-12" }, [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showCalendarOnMobile,
-                  expression: "showCalendarOnMobile"
-                }
-              ],
-              staticClass: "calendar"
-            },
-            [
-              _c("div", { staticClass: "month title" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn float-left",
-                    on: { click: _vm.minusMonth }
-                  },
-                  [_c("i", { staticClass: "fas fa-caret-left" })]
-                ),
-                _vm._v(
-                  " \n                        " +
-                    _vm._s(_vm.selectedDate.format("MMMM YYYY")) +
-                    "\n                        "
-                ),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn  float-right",
-                    on: { click: _vm.plusMonth }
-                  },
-                  [_c("i", { staticClass: "fas fa-caret-right" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "days" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-12" },
-                    [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _vm._l(_vm.emptyDaysBeforeStart, function(n) {
-                        return _c("paiva", {
-                          key: n,
-                          attrs: { "day-number": "0" }
-                        })
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.daysInSelectedMonth, function(n) {
-                        return _c("paiva", {
-                          key: n + 100,
-                          attrs: {
-                            "day-number": n,
-                            "is-selected-date": n == _vm.selectedDay
-                          }
-                        })
-                      })
-                    ],
-                    2
-                  )
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "col-xl-9 col-lg-8 col-md-6 col-12 selectedDayContainer"
-          },
-          [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-6 col-12" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-warning btn-sm d-md-none",
-                    on: {
-                      click: function($event) {
-                        _vm.showCalendarOnMobile = !_vm.showCalendarOnMobile
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-calendar-alt" }),
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          _vm.showCalendarOnMobile ? "Piilota" : "Kalenteri"
-                        ) +
-                        " \n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-info btn-sm",
-                    attrs: { type: "button" },
-                    on: { click: _vm.minusDay }
-                  },
-                  [_vm._v("Edellinen päivä")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-info btn-sm",
-                    attrs: { type: "button" },
-                    on: { click: _vm.plusDay }
-                  },
-                  [_vm._v("Seuraava päivä")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "small-spacer" }),
-                _vm._v(" "),
-                !_vm.loading
-                  ? _c("h3", [
-                      _vm._v(
-                        _vm._s(_vm.selectedDate.format("dddd")) +
-                          " " +
-                          _vm._s(_vm.selectedDate.format("D.M.YYYY"))
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.loading
-                  ? _c("h3", { staticStyle: { color: "#adadad" } }, [
-                      _vm._v(
-                        _vm._s(_vm.selectedDate.format("dddd")) +
-                          " " +
-                          _vm._s(_vm.selectedDate.format("D.M.YYYY"))
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("h4", { attrs: { id: "dailyTotal" } }, [
-                  _vm._v(_vm._s(_vm.dailyTotal))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-6 col-12" }, [
-                _c("div", { staticClass: "small-spacer" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "d-block d-lg-none col-12" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-warning btn-sm",
-                        staticStyle: { "margin-bottom": "0" },
-                        on: {
-                          click: function($event) {
-                            _vm.showNotesOnMobile = !_vm.showNotesOnMobile
-                          }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(
-                          " " +
-                            _vm._s(
-                              _vm.showNotesOnMobile
-                                ? "Piilota"
-                                : "Päivän muistiinpanot"
-                            ) +
-                            " \n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.showNotesOnMobile,
-                        expression: "showNotesOnMobile"
-                      }
-                    ],
-                    staticClass: "muistiinpanot"
-                  },
-                  [
-                    _c("div", { staticClass: "small-spacer" }),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "small-text" }, [
-                      _vm._v(
-                        "Voit kirjata alle halutessasi esim. ranskalaisin viivoin päivän työtehtäviä."
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.notes,
-                          expression: "notes"
-                        }
-                      ],
-                      staticClass: "form-control notes-textarea",
-                      attrs: {
-                        placeholder: "Syötä muistiinpanot",
-                        name: "muistiinpanot",
-                        rows: "4"
-                      },
-                      domProps: { value: _vm.notes },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.notes = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "small-spacer" }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info btn-sm",
-                        on: { click: _vm.saveNotes }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                Tallenna\n                            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "small-spacer" })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "spacer" })
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12" }, [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              _vm._l(24, function(n) {
-                return _c("div", { key: n, staticClass: "hourIndicator" }, [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(_vm.leftPad(n - 1, 2, 0)) +
-                      "\n                        "
-                  )
-                ])
-              })
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              {
-                staticClass: "col-12 quarters",
-                class: { clicked: this.clicks == 1 }
-              },
-              [
-                _vm.loading
-                  ? _c("span", { staticClass: "disabled-overlay" })
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.quarters, function(quarter) {
-                  return _c("vartti", {
-                    directives: [
-                      {
-                        name: "tooltip",
-                        rawName: "v-tooltip",
-                        value: _vm.getTimeAndEnding(quarter.qId),
-                        expression: "getTimeAndEnding(quarter.qId)"
-                      }
-                    ],
-                    key: quarter.qId,
-                    attrs: {
-                      clicks: _vm.clicks,
-                      painted: quarter.painted,
-                      hovered: quarter.hovered ? quarter.hovered : false,
-                      deleting: quarter.deleting ? quarter.deleting : false,
-                      id: quarter.qId
-                    }
-                  })
-                })
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "small-spacer" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-block d-sm-block d-md-none" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-6",
-                  staticStyle: { "padding-right": "5px" }
-                },
-                [
-                  _c("label", [_vm._v("Alku")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.selectedStartTime,
-                          expression: "selectedStartTime"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.selectedStartTime = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    _vm._l(96, function(n) {
-                      return _c(
-                        "option",
-                        { key: n - 1, domProps: { value: n - 1 } },
-                        [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.getStartTime(n - 1)) +
-                              "\n                                "
-                          )
-                        ]
-                      )
-                    })
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-6",
-                  staticStyle: { "padding-left": "5px" }
-                },
-                [
-                  _c("label", [_vm._v("Loppu")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.selectedEndTime,
-                          expression: "selectedEndTime"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.selectedEndTime = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    _vm._l(96, function(n) {
-                      return _c(
-                        "option",
-                        { key: n - 1, domProps: { value: n - 1 } },
-                        [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.getEndTime(n - 1)) +
-                              "\n                                "
-                          )
-                        ]
-                      )
-                    })
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-8", staticStyle: { "padding-right": "0" } },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      staticStyle: { "margin-top": "12px", width: "100%" },
-                      on: { click: _vm.addPeriod }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                Lisää\n                            "
-                      )
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-4" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    staticStyle: { "margin-top": "12px", width: "100%" },
-                    on: { click: _vm.removePeriod }
-                  },
-                  [
-                    _vm._v(
-                      "\n                                Poista\n                            "
-                    )
-                  ]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-none d-md-block" }, [
-            _vm.clicks == 0 && !_vm.deleting
-              ? _c("p", [
-                  _vm._v("Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.clicks == 1 && !_vm.deleting
-              ? _c("p", [_vm._v("Valitse vielä lopetusaika.")])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.deleting && _vm.clicks == 0
-              ? _c("p", { staticStyle: { color: "red" } }, [
-                  _vm._v("Valitse poistettavan pätkän alku.")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.deleting && _vm.clicks == 1
-              ? _c("p", { staticStyle: { color: "red" } }, [
-                  _vm._v("Valitse poistettavan pätkän loppu.")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.deleting && _vm.clicks == 0
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger btn-sm",
-                    on: {
-                      click: function($event) {
-                        _vm.deleting = true
-                      }
-                    }
-                  },
-                  [_vm._v("Poista")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.deleting && _vm.clicks == 1
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger btn-sm",
-                    attrs: { disabled: "disabled" },
-                    on: {
-                      click: function($event) {
-                        _vm.deleting = true
-                      }
-                    }
-                  },
-                  [_vm._v("Poista")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.deleting
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary btn-sm",
-                    on: {
-                      click: function($event) {
-                        _vm.deleting = false
-                      }
-                    }
-                  },
-                  [_vm._v("Peruuta poistaminen")]
-                )
-              : _vm._e()
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "weekdays" }, [
-      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("MA")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("TI")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("KE")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("TO")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("PE")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("LA")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "day-of-the-week" }, [_vm._v("SU")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-none d-lg-block col-md-12" }, [
-      _c("h5", { staticStyle: { "margin-bottom": "0" } }, [
-        _vm._v("Päivän muistiinpanot")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12" }, [
-      _c("div", { staticClass: "small-spacer" }),
-      _vm._v(" "),
-      _c("h5", [_vm._v("Lisää tai poista työjakso")])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-62bd6414", module.exports)
-  }
-}
-
-/***/ }),
-/* 226 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(227)
-/* template */
-var __vue_template__ = __webpack_require__(228)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "js/components/Raportit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6e2e5d9c", Component.options)
-  } else {
-    hotAPI.reload("data-v-6e2e5d9c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 227 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__ = __webpack_require__(187);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_xlsx__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: "raportit",
-    components: {
-        'datepicker': __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker___default.a
-    },
-    data: function data() {
-        return {
-            loading: false,
-            userId: null,
-            firstDate: "",
-            secondDate: "",
-            firstDateIsBiggerThanSecond: false,
-            resultRows: [],
-            periodTotal: 0,
-            exportableResults: []
-        };
-    },
-    created: function created() {
-        /**
-         * Fetch the user ID so we can use that later
-         */
-        this.fetchUserAndSetDates();
-    },
-
-    methods: {
-        exportToExcel: function exportToExcel(format) {
-            var ws = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.json_to_sheet(this.exportableResults);
-            var wb = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.book_new();
-            __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.book_append_sheet(wb, ws, "Raportti");
-            var wbout = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.write(wb, { bookType: format, type: 'binary' });
-
-            FileSaver.saveAs(new Blob([this.s2ab(wbout)], {
-                type: "application/octet-stream"
-            }), 'tuntiraportti_' + moment(this.firstDate).format("D.M.Y") + '_' + moment(this.secondDate).format("D.M.Y") + '.' + format);
-        },
-        s2ab: function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i = 0; i != s.length; ++i) {
-                view[i] = s.charCodeAt(i) & 0xFF;
-            }return buf;
-        },
-        openAPickerIfNecessary: function openAPickerIfNecessary() {
-            if (this.secondDate == "" || this.firstDate > this.secondDate) this.$refs.endingDate.showCalendar();
-            if (this.firstDate == "" && this.secondDate != "") this.$refs.startDate.showCalendar();
-        },
-        validateSelectionsAndRunQuery: function validateSelectionsAndRunQuery() {
-            var _this = this;
-
-            if (this.firstDate > this.secondDate && this.firstDate != "" && this.secondDate != "") this.firstDateIsBiggerThanSecond = true;else {
-                this.firstDateIsBiggerThanSecond = false;
-
-                if (this.firstDate != "" && this.secondDate != "") {
-                    this.loading = true;
-
-                    axios.get("/reports", {
-                        params: {
-                            firstDate: this.firstDate,
-                            secondDate: this.secondDate,
-                            userId: this.userId
-                        }
-                    }).then(function (res) {
-                        if (res.data) {
-                            var resultTotal = 0;
-
-                            _this.exportableResults = [];
-
-                            res.data.map(function (resultRow) {
-                                resultRow.dayOfWeek = moment(resultRow.day).format("ddd");
-                                resultRow.trimmedDate = moment(resultRow.day).format("YYYY-MM-DD");
-                                resultRow.readableDate = moment(resultRow.day).format("D.M.Y");
-                                resultTotal += resultRow.dailyTotal;
-                                _this.exportableResults.push({
-                                    "Päivämäärä": resultRow.trimmedDate,
-                                    "Tunnit": resultRow.dailyTotal,
-                                    "Muistiinpanot": resultRow.notes
-                                });
-                            });
-
-                            _this.periodTotal = resultTotal;
-                            _this.resultRows = res.data;
-                            _this.loading = false;
-                        }
-                    }).catch(function (err) {
-                        console.log(err);
-                        _this.swalError("Virhe!", "Päivitä selainikkuna ja yritä hakea raportti uudelleen.");
-                    });
-                }
-            }
-        },
-        fetchUserAndSetDates: function fetchUserAndSetDates() {
-            var _this2 = this;
-
-            axios.get("/user").then(function (res) {
-                _this2.userId = res.data._id;
-                _this2.firstDate = moment().date(1).toDate();
-                _this2.secondDate = moment().toDate();
-                _this2.validateSelectionsAndRunQuery();
-            }).catch(function (err) {
-                _this2.swalError("Virhe!", "Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.");
-            });
-        },
-        swalSuccess: function swalSuccess(title, text) {
-            swal({
-                position: 'bottom-end',
-                type: 'success',
-                title: title,
-                text: text,
-                showConfirmButton: false,
-                backdrop: false,
-                width: "280px",
-                padding: "12px",
-                timer: 1500
-            });
-        },
-        swalError: function swalError(title, text) {
-            swal({
-                position: 'bottom-end',
-                type: 'error',
-                title: title,
-                text: text,
-                showConfirmButton: false,
-                backdrop: false,
-                width: "280px",
-                padding: "12px 12px 24px",
-                timer: 3000
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 228 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card raportit" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _vm._v("\n        Raportit \n        "),
-      _vm.loading
-        ? _c(
-            "span",
-            { staticStyle: { "font-size": "14px", color: "#a9dbe5" } },
-            [
-              _c("img", {
-                staticStyle: { height: "15px", "margin-bottom": "2px" },
-                attrs: { src: "/img/loading.svg" }
-              }),
-              _vm._v(" Ladataan..\n        ")
-            ]
-          )
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("p", [
-        _vm._v(
-          "Voit tarkastella tuntikertymää pidemmältä ajalta valitsemalla haluamasi ajanjakson."
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-lg-3 col-md-6 col-12" },
-          [
-            _c("label", [_vm._v("Valitse aloituspäivä")]),
-            _vm._v(" "),
-            _c("datepicker", {
-              ref: "startDate",
-              attrs: {
-                placeholder: "Klikkaa aloituspäivää",
-                "monday-first": true,
-                format: "d.M.yyyy",
-                language: "fi"
-              },
-              on: {
-                closed: function($event) {
-                  _vm.validateSelectionsAndRunQuery()
-                  _vm.openAPickerIfNecessary()
-                }
-              },
-              model: {
-                value: _vm.firstDate,
-                callback: function($$v) {
-                  _vm.firstDate = $$v
-                },
-                expression: "firstDate"
-              }
-            }),
-            _vm._v(" "),
-            _vm.firstDateIsBiggerThanSecond
-              ? _c("label", { staticStyle: { color: "red" } }, [
-                  _vm._v(
-                    "\n                    Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.\n                "
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "small-spacer" })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-3 col-md-6 col-12" },
-          [
-            _c("label", [_vm._v("Valitse lopetuspäivä")]),
-            _vm._v(" "),
-            _c("datepicker", {
-              ref: "endingDate",
-              attrs: {
-                placeholder: "Klikkaa lopetuspäivää",
-                "monday-first": true,
-                format: "d.M.yyyy",
-                language: "fi"
-              },
-              on: {
-                closed: function($event) {
-                  _vm.validateSelectionsAndRunQuery()
-                  _vm.openAPickerIfNecessary()
-                }
-              },
-              model: {
-                value: _vm.secondDate,
-                callback: function($$v) {
-                  _vm.secondDate = $$v
-                },
-                expression: "secondDate"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "small-spacer" })
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-sm",
-              attrs: { disabled: _vm.resultRows.length == 0 },
-              on: {
-                click: function($event) {
-                  _vm.exportToExcel("csv")
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "fas fa-file-excel" }),
-              _vm._v(" Vie (.csv)\n                ")
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-sm",
-              attrs: { disabled: _vm.resultRows.length == 0 },
-              on: {
-                click: function($event) {
-                  _vm.exportToExcel("xlsx")
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "fas fa-file-excel" }),
-              _vm._v(" Vie (.xlsx)\n                ")
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "small-spacer" }),
-          _vm._v(" "),
-          _c(
-            "table",
-            {
-              staticClass: "table table-hover table-sm",
-              attrs: { id: "raportti" }
-            },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.resultRows, function(result) {
-                  return _c("tr", { key: result._id }, [
-                    _c("th", [
-                      _vm._v(
-                        _vm._s(result.dayOfWeek) +
-                          " " +
-                          _vm._s(result.readableDate)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(result.notes))])
-                  ])
-                })
-              ),
-              _vm._v(" "),
-              _vm.resultRows.length != 0
-                ? _c("tfoot", [
-                    _c("tr", [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("strong", [
-                          _vm._v(
-                            _vm._s(_vm.periodTotal ? _vm.periodTotal : null)
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td")
-                    ])
-                  ])
-                : _vm._e()
-            ]
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("td", [_vm._v("Päivämäärä")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("Tunnit")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("Muistiinpanot")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("strong", [_vm._v("Yhteensä")])])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6e2e5d9c", module.exports)
-  }
-}
-
-/***/ }),
-/* 229 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(230)
-/* template */
-var __vue_template__ = __webpack_require__(231)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "js/components/subcomponents/Päivä.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5ebc838e", Component.options)
-  } else {
-    hotAPI.reload("data-v-5ebc838e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 230 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["dayNumber", "isSelectedDate"],
-    methods: {
-        selectDay: function selectDay(day) {
-            this.$parent.$emit('selectDay', day);
-        }
-    }
-});
-
-/***/ }),
-/* 231 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "day",
-      class: { empty: _vm.dayNumber == 0, active: _vm.isSelectedDate },
-      on: {
-        click: function($event) {
-          _vm.selectDay(_vm.dayNumber)
-        }
-      }
-    },
-    [_vm._v("\n    " + _vm._s(_vm.dayNumber == 0 ? " " : _vm.dayNumber) + "\n")]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5ebc838e", module.exports)
-  }
-}
-
-/***/ }),
-/* 232 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(233)
-/* template */
-var __vue_template__ = __webpack_require__(234)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "js/components/subcomponents/Vartti.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c1302008", Component.options)
-  } else {
-    hotAPI.reload("data-v-c1302008", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 233 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["painted", "hovered", "deleting", "id", "clicks"],
-    methods: {
-        quarterHovered: function quarterHovered(id) {
-            this.$parent.$emit("quarterHovered", id);
-        },
-        quarterClicked: function quarterClicked(id) {
-            this.$parent.$emit('quarterClicked', id);
-        },
-        quarterExited: function quarterExited(id) {
-            this.$parent.$emit('quarterExited', id);
-        }
-    },
-    data: function data() {
-        return {
-            "isPainted": this.painted
-        };
-    }
-});
-
-/***/ }),
-/* 234 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", {
-    staticClass: "quarterHour",
-    class: {
-      painted: _vm.painted,
-      hovered: _vm.hovered,
-      deleting: _vm.deleting
-    },
-    on: {
-      mouseover: function($event) {
-        _vm.quarterHovered(_vm.id)
-      },
-      click: function($event) {
-        _vm.quarterClicked(_vm.id)
-      },
-      mouseleave: function($event) {
-        _vm.quarterExited(_vm.id)
-      }
-    }
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-c1302008", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

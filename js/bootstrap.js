@@ -1,10 +1,10 @@
 try {
-    require('bootstrap');
+  require('bootstrap')
 } catch (e) {
-    console.log(e);
+  console.log(e)
 }
 
-window.axios = require('axios');
-window.FileSaver = require("file-saver");
+window.axios = require('axios')
+window.FileSaver = require('file-saver')
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'

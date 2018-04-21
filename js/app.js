@@ -1,35 +1,35 @@
-import "./bootstrap";
+import './bootstrap'
 
 /**
  * Vue, Vue Components and Vue plugins
  */
-import Vue from "vue";
-import VuejsDialog from "vuejs-dialog"
-import Tooltip from 'vue-directive-tooltip';
-import App from "./App.vue";
-import router from "./router";
+import Vue from 'vue'
+import VuejsDialog from 'vuejs-dialog'
+import Tooltip from 'vue-directive-tooltip'
+import App from './App.vue'
+import router from './router'
 
 Vue.use(Tooltip, {
-    delay: 0,
-    placement: 'bottom',
-    class: 'tas-tooltip'
-});
+  delay: 0,
+  placement: 'bottom',
+  class: 'tas-tooltip'
+})
 
-Vue.use(VuejsDialog);
+Vue.use(VuejsDialog)
 
 /**
  * Other tools and plugins
  */
-window.moment = require("moment");
-moment.locale("fi");
+window.moment = require('moment')
+window.moment.locale('fi')
 
-window.swal = require("sweetalert2");
+window.swal = require('sweetalert2')
 
-if (document.querySelector("#app")) {
-    new Vue({
-        el: '#app',
-        router,
-        template: '<App/>',
-        components: { App }
-    })
+if (document.querySelector('#app')) {
+  new Vue({ // eslint-disable-line no-new
+    el: '#app',
+    router,
+    template: '<App/>',
+    components: { App }
+  })
 }

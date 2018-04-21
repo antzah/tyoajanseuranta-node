@@ -8,6 +8,39 @@
                     Asetukset
                 </div>
                 <div class="card-body">
+                    <% if (userAuthorizationError.length > 0) { %>
+                        <div class="alert alert-danger"><%= userAuthorizationError %></div>
+                    <% } %>
+
+                    <% if (userAuthorizationSuccess.length > 0) { %>
+                        <div class="alert alert-success"><%= userAuthorizationSuccess %></div>
+                    <% } %>
+
+                    <% if (userAuthorizationInfo.length > 0) { %>
+                        <div class="alert alert-info"><%= userAuthorizationInfo %></div>
+                    <% } %>
+                    <h3>Anna katseluoikeudet tuntikertymiisi</h3>
+                    <p>Voit halutessasi antaa esimerkiksi esimiehellesi oikeuden tarkastella tuntikertymiäsi Raportit-sivulla. Syötä sen käyttäjän sähköpostiosoite, jolle haluat antaa katseluoikeudet.</p>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <form method="post" action="/settings/authorize-user">
+                                <div class="form-group ">
+                                    <label for="addRightsToEmail">Sähköpostiosoite</label>
+                                    <input class="form-control" type="email" name="authorizedUser" required placeholder="Esim. pomo@yritys.fi">
+                                </div>
+                                <input type="submit" class="btn btn-info" value="Lisää käyttöoikeus" />
+                            </form>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label>Lisätyt käyttöoikeudet</label>
+                            <ul>
+                                <li>Ei vielä lisättyjä oikeuksia.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <hr/>
+
                     <% if (passwordChangeError.length > 0) { %>
                         <div class="alert alert-danger"><%= passwordChangeError %></div>
                     <% } %>
