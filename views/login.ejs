@@ -12,7 +12,7 @@
                     <% if (message.length > 0) { %>
                         <div class="alert alert-danger"><%= message %></div>
                     <% } %>
-                
+
                     <form action="/login" method="post">
                         <div class="form-group">
                             <label>Sähköposti</label>
@@ -22,12 +22,12 @@
                             <label>Salasana</label>
                             <input type="password" class="form-control" name="password" required>
                         </div>
-                
+
                         <button type="submit" class="btn btn-success btn-lg">Kirjaudu</button>
                     </form>
-                
+
                     <hr>
-                
+
                     Ei vielä tiliä? <a href="/signup">Rekisteröidy</a>
                 </div>
             </div>
