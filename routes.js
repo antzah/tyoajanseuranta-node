@@ -131,6 +131,41 @@ module.exports = (app, passport) => {
     })
   })
 
+  app.get('/settings/remove-authorization/:id', isAuthenticated, (req, res) => {
+    User.findById(req.user.id, (err, user) => {
+      if (err) console.log(err)
+      let index = user.accessibleBy.indexOf(req.params.id)
+      user.accessibleBy.splice(index, 1)
+      user.save((err) => {
+        if (err) {
+          req.flash('userAuthorizationError', 'Jokin meni pieleen oikeuksia poistaessa! Yritä uudelleen.')
+          res.redirect('/settings')
+        } else {
+          User.findOne({
+            _id: req.params.id
+          }, (err, user) => {
+            if (err) {
+              req.flash('userAuthorizationError', 'Jokin meni pieleen oikeuksia poistaessa! Yritä uudelleen.')
+              res.redirect('/settings')
+            } else {
+              let index = user.hasAccessTo.indexOf(req.user.id)
+              user.hasAccessTo.splice(index, 1)
+              user.save((err) => {
+                if (err) {
+                  req.flash('userAuthorizationError', 'Jokin meni pieleen oikeuksia poistaessa! Yritä uudelleen.')
+                  res.redirect('/settings')
+                } else {
+                  req.flash('userAuthorizationSuccess', 'Käyttöoikeudet poistettu!')
+                  res.redirect('/settings')
+                }
+              })
+            }
+          })
+        }
+      })
+    })
+  })
+
   app.post('/settings/change-password', isAuthenticated, (req, res) => {
     if (
       !('oldPassword' in req.body) ||
