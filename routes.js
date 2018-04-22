@@ -6,7 +6,7 @@ var User = require('./models/user')
 
 module.exports = (app, passport) => {
   /**
-   * App logic – routes used by Vue Router
+   * Routes used by Vue Router
    */
   app.get('/', isLoggedIn, (req, res) => {
     res.render('index.ejs')
@@ -17,7 +17,7 @@ module.exports = (app, passport) => {
   })
 
   /**
-     * Login, logout, signup, password changes and resets
+     * Login, logout, signup, settings
      */
   app.get('/login', (req, res) => {
     res.render('login.ejs', { message: req.flash('loginMessage') })
@@ -57,53 +57,57 @@ module.exports = (app, passport) => {
   app.post('/settings/authorize-user', isAuthenticated, (req, res) => {
     let _id = req.user.id
     let emailThatGetsAccess = req.body.authorizedUser
-    let firstQuerySuccess = false
     let adminUserId
 
     User.findOne({
       'local.email': emailThatGetsAccess
     }, (err, user) => {
+      console.log('User 1: ', user)
       if (err || user == null) {
         req.flash('userAuthorizationError', 'Jokin meni pieleen! Syötitkö oikean sähköpostiosoitteen?')
-      } else if (user.hasAccessTo.includes(_id)) {
+        res.redirect('/settings')
+      } else if (user.hasAccessTo.indexOf(_id) !== -1) {
         req.flash('userAuthorizationInfo', 'Tällä käyttäjällä on jo oikeudet tarkastella kalenteriasi.')
+        res.redirect('/settings')
       } else {
         user.hasAccessTo.push(_id)
-        console.log('User 1:', user)
+        adminUserId = user._id
+
         user.save((err) => {
           if (err) {
             req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
+            res.redirect('/settings')
+          } else {
+            User.findOne({
+              _id
+            }, (err, user) => {
+              console.log('User 2:', user)
+              if (err || user == null) {
+                req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
+                res.redirect('/settings')
+              } else if (user.hasAccessTo.indexOf(_id) !== -1) {
+                req.flash('userAuthorizationInfo', 'Tällä käyttäjällä on jo oikeudet tarkastella kalenteriasi.')
+                res.redirect('/settings')
+              } else {
+                user.accessibleBy.push(adminUserId)
+                adminUserId = user._id
+
+                user.save((err) => {
+                  console.log(err)
+                  if (err) {
+                    req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
+                    res.redirect('/settings')
+                  } else {
+                    req.flash('userAuthorizationSuccess', 'Käyttöoikeudet lisätty!')
+                    res.redirect('/settings')
+                  }
+                })
+              }
+            })
           }
         })
       }
     })
-
-    if (firstQuerySuccess) {
-      User.findOne({
-        _id
-      }, (err, user) => {
-        console.log('User 2:', user)
-        if (err || user == null) {
-          req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
-        } else if (user.accessibleBy.includes(adminUserId)) {
-          req.flash('userAuthorizationInfo', 'Tällä käyttäjällä on jo oikeudet tarkastella kalenteriasi.')
-        } else {
-          user.accessibleBy.push(adminUserId)
-          adminUserId = user._id
-
-          user.save((err) => {
-            console.log(err)
-            if (err) {
-              req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
-            }
-
-            req.flash('userAuthorizationSuccess', 'Käyttöoikeudet lisätty!')
-          })
-        }
-      })
-    }
-
-    res.redirect('/settings')
   })
 
   app.post('/settings/change-password', isAuthenticated, (req, res) => {
