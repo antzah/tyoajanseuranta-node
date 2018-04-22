@@ -34,7 +34,13 @@
                         <div class="col-md-6 col-12">
                             <label>Lisätyt käyttöoikeudet</label>
                             <ul>
-                                <li>Ei vielä lisättyjä oikeuksia.</li>
+                                <% if (usersThatHaveAccess.length == 0) { %>
+                                    <li>Ei vielä lisättyjä oikeuksia.</li>
+                                <% } else { %>
+                                    <% usersThatHaveAccess.forEach(adminUser => { %>
+                                        <li data-id="<%= adminUser.id %>"><%= adminUser.email %></li>
+                                    <% }) %>
+                                <% } %>
                             </ul>
                         </div>
                     </div>

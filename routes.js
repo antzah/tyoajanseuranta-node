@@ -1,3 +1,4 @@
+var validateEmail = require('./js/helpers/validate-email')
 var moment = require('moment')
 moment.locale('fi')
 
@@ -45,12 +46,29 @@ module.exports = (app, passport) => {
   }))
 
   app.get('/settings', isLoggedIn, (req, res) => {
-    res.render('settings.ejs', {
-      passwordChangeSuccess: req.flash('passwordChangeSuccess'),
-      passwordChangeError: req.flash('passwordChangeError'),
-      userAuthorizationSuccess: req.flash('userAuthorizationSuccess'),
-      userAuthorizationError: req.flash('userAuthorizationError'),
-      userAuthorizationInfo: req.flash('userAuthorizationInfo')
+    User.findOne({
+      _id: req.user.id
+    }).populate(
+      'accessibleBy'
+    ).exec((err, user) => {
+      if (err) console.log(err)
+
+      let usersThatHaveAccess = []
+      user.accessibleBy.map(adminUser => {
+        usersThatHaveAccess.push({
+          email: adminUser.local.email,
+          id: adminUser.id
+        })
+      })
+
+      res.render('settings.ejs', {
+        passwordChangeSuccess: req.flash('passwordChangeSuccess'),
+        passwordChangeError: req.flash('passwordChangeError'),
+        userAuthorizationSuccess: req.flash('userAuthorizationSuccess'),
+        userAuthorizationError: req.flash('userAuthorizationError'),
+        userAuthorizationInfo: req.flash('userAuthorizationInfo'),
+        usersThatHaveAccess
+      })
     })
   })
 
@@ -62,9 +80,14 @@ module.exports = (app, passport) => {
     User.findOne({
       'local.email': emailThatGetsAccess
     }, (err, user) => {
-      console.log('User 1: ', user)
-      if (err || user == null) {
+      if (!validateEmail(emailThatGetsAccess)) {
+        req.flash('userAuthorizationError', 'Syötit virheellisen sähköpostiosoitteen.')
+        res.redirect('/settings')
+      } else if (err || user == null) {
         req.flash('userAuthorizationError', 'Jokin meni pieleen! Syötitkö oikean sähköpostiosoitteen?')
+        res.redirect('/settings')
+      } else if (user.local.email === req.user.local.email) {
+        req.flash('userAuthorizationInfo', 'Koitit lisätä käyttöoikeuden omaan kalenteriisi – tämä ei ole tarpeellista.')
         res.redirect('/settings')
       } else if (user.hasAccessTo.indexOf(_id) !== -1) {
         req.flash('userAuthorizationInfo', 'Tällä käyttäjällä on jo oikeudet tarkastella kalenteriasi.')
@@ -81,7 +104,6 @@ module.exports = (app, passport) => {
             User.findOne({
               _id
             }, (err, user) => {
-              console.log('User 2:', user)
               if (err || user == null) {
                 req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
                 res.redirect('/settings')
@@ -90,7 +112,6 @@ module.exports = (app, passport) => {
                 res.redirect('/settings')
               } else {
                 user.accessibleBy.push(adminUserId)
-                adminUserId = user._id
 
                 user.save((err) => {
                   console.log(err)
@@ -113,11 +134,11 @@ module.exports = (app, passport) => {
   app.post('/settings/change-password', isAuthenticated, (req, res) => {
     if (
       !('oldPassword' in req.body) ||
-            !('newPassword' in req.body) ||
-            !('newPasswordValidate' in req.body) ||
-            (req.body.oldPassword === '') ||
-            (req.body.newPassword === '') ||
-            (req.body.newPasswordValidate === '')
+      !('newPassword' in req.body) ||
+      !('newPasswordValidate' in req.body) ||
+      (req.body.oldPassword === '') ||
+      (req.body.newPassword === '') ||
+      (req.body.newPasswordValidate === '')
     ) {
       req.flash('passwordChangeError', 'Joitakin tietoja puuttui. Yritä uudelleen.')
       return res.redirect('/settings')
