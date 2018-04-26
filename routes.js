@@ -319,17 +319,59 @@ module.exports = (app, passport) => {
     let secondDateEnd = moment(req.query.secondDate).hour(23).minute(59).second(59)
     let userId = req.query.userId
 
-    Paiva.find({
-      user: userId,
-      day: {
-        $gte: firstDateStart,
-        $lt: secondDateEnd
+    if (
+      req.user.hasAccessTo.indexOf(userId) === -1 &&
+      req.user.id !== userId
+    ) {
+      res.status(500).send({ error: 'Not allowed' })
+    } else {
+      Paiva.find({
+        user: userId,
+        day: {
+          $gte: firstDateStart,
+          $lt: secondDateEnd
+        }
+      }).sort({
+        day: 1
+      }).exec((err, paivas) => {
+        if (err) res.status(500).send({ error: 'Something failed when querying for the report' })
+        res.json(paivas)
+      })
+    }
+  })
+
+  app.get('/viewable-users', isAuthenticated, (req, res) => {
+    User.findOne({
+      _id: req.user.id
+    }).populate(
+      'hasAccessTo'
+    ).exec((err, user) => {
+      if (err) {
+        console.log(err)
+        res.status(500).send({ error: 'Something failed when querying for the current user' })
+      } else {
+        let viewableUsers = []
+        
+        /**
+         * Push the current user to the "viewable" array first,
+         * since everybody can view their own reports
+         */
+        viewableUsers.push({
+          email: req.user.local.email,
+          id: req.user.id,
+          name: req.user.local.name
+        })
+
+        user.hasAccessTo.map(viewableUser => {
+          viewableUsers.push({
+            email: viewableUser.local.email,
+            id: viewableUser.id,
+            name: viewableUser.local.name
+          })
+        })
+
+        res.json(viewableUsers)
       }
-    }).sort({
-      day: 1
-    }).exec((err, paivas) => {
-      if (err) res.status(500).send({ error: 'Something failed when querying for the report' })
-      res.json(paivas)
     })
   })
 
@@ -337,7 +379,15 @@ module.exports = (app, passport) => {
    * Utility to fetch the current user in Vue components
    */
   app.get('/user', isAuthenticated, function (req, res) {
-    res.json(req.user)
+    res.json({
+      id: req.user.id,
+      accessibleBy: req.user.accessibleBy,
+      hasAccessTo: req.user.hasAccessTo,
+      local: {
+        email: req.user.local.email,
+        name: req.user.local.name
+      }
+    })
   })
 }
 

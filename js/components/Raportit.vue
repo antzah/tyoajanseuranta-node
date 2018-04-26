@@ -10,36 +10,56 @@
             <p>Voit tarkastella tuntikertymää pidemmältä ajalta valitsemalla haluamasi ajanjakson.</p>
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-12">
-                    <label>Valitse aloituspäivä</label>
-                    <datepicker
-                        placeholder="Klikkaa aloituspäivää"
-                        ref="startDate"
-                        :monday-first="true"
-                        :format="'d.M.yyyy'"
-                        :language="'fi'"
-                        @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary(); "
-                        v-model="firstDate"
-                    />
-                    <label
-                        v-if="firstDateIsBiggerThanSecond"
-                        style="color: red"
-                    >
-                        Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.
-                    </label>
-                    <div class="small-spacer"></div>
+                  <label>Valitse aloituspäivä</label>
+                  <datepicker
+                      placeholder="Klikkaa aloituspäivää"
+                      ref="startDate"
+                      :monday-first="true"
+                      :format="'d.M.yyyy'"
+                      :language="'fi'"
+                      @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary(); "
+                      v-model="firstDate"
+                  />
+                  <label
+                      v-if="firstDateIsBiggerThanSecond"
+                      style="color: red"
+                  >
+                      Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.
+                  </label>
+                  <div class="small-spacer"></div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
-                    <label>Valitse lopetuspäivä</label>
-                    <datepicker
-                        placeholder="Klikkaa lopetuspäivää"
-                        ref="endingDate"
-                        :monday-first="true"
-                        :format="'d.M.yyyy'"
-                        :language="'fi'"
-                        v-model="secondDate"
-                        @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary();"
-                    />
-                    <div class="small-spacer"></div>
+                  <label>Valitse lopetuspäivä</label>
+                  <datepicker
+                      placeholder="Klikkaa lopetuspäivää"
+                      ref="endingDate"
+                      :monday-first="true"
+                      :format="'d.M.yyyy'"
+                      :language="'fi'"
+                      v-model="secondDate"
+                      @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary();"
+                  />
+                  <div class="small-spacer"></div>
+                </div>
+                <div v-if='viewableUsers.length > 1' class="col-md-6 col-sm-12 col-12">
+                  <label>Valitse käyttäjä</label>
+                  <div class="selectWrapper">
+                    <select
+                      style="height: 32px; background: transparent; text-indent: 3px"
+                      class="form-control no-border"
+                      v-model="selectedUser"
+                      @change="validateSelectionsAndRunQuery"
+                    >
+                      <option
+                        v-for="viewableUser in viewableUsers"
+                        :key="viewableUser.id"
+                        :value="viewableUser"
+                      >
+                        {{ viewableUser.name }} ({{ viewableUser.email }})
+                      </option>
+                    </select>
+                  </div>
+                  <div class="small-spacer"></div>
                 </div>
             </div>
             <div class="row">
@@ -59,6 +79,9 @@
                         <i class="fas fa-file-excel"></i> Vie (.xlsx)
                     </button>
                     <div class="small-spacer"></div>
+                    <div v-if="viewableUsers.length > 1">
+                      <p>Käyttäjän {{ selectedUser.name }} ({{ selectedUser.email }}) tuntikertymät</p>
+                    </div>
                     <table id="raportti" class="table table-hover table-sm">
                         <thead>
                             <tr>
@@ -104,22 +127,30 @@ export default {
   data: function () {
     return {
       loading: false,
-      userId: null,
       firstDate: '',
       secondDate: '',
       firstDateIsBiggerThanSecond: false,
       resultRows: [],
       periodTotal: 0,
-      exportableResults: []
+      exportableResults: [],
+      viewableUsers: [],
+      selectedUser: {}
     }
   },
   created () {
-    /**
-         * Fetch the user ID so we can use that later
-         */
     this.fetchUserAndSetDates()
   },
   methods: {
+    fetchViewableUsers: function () {
+      axios.get('/viewable-users')
+        .then(res => {
+          this.viewableUsers = res.data
+        })
+        .catch(err => {
+          console.log(err)
+          this.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.')
+        })
+    },
     exportToExcel: function (format) {
       let ws = XLSX.utils.json_to_sheet(this.exportableResults)
       let wb = XLSX.utils.book_new()
@@ -128,7 +159,7 @@ export default {
 
       FileSaver.saveAs(new Blob([this.s2ab(wbout)], {
         type: 'application/octet-stream'
-      }), `tuntiraportti_${moment(this.firstDate).format('D.M.Y')}_${moment(this.secondDate).format('D.M.Y')}.${format}`)
+      }), `Käyttäjän ${this.selectedUser.name} tuntikertymät ${moment(this.firstDate).format('D.M.Y')}-${moment(this.secondDate).format('D.M.Y')}.${format}`)
     },
     s2ab: function (s) {
       var buf = new ArrayBuffer(s.length)
@@ -152,7 +183,7 @@ export default {
             params: {
               firstDate: this.firstDate,
               secondDate: this.secondDate,
-              userId: this.userId
+              userId: this.selectedUser.id
             }
           }).then(res => {
             if (res.data) {
@@ -166,6 +197,7 @@ export default {
                 resultRow.readableDate = moment(resultRow.day).format('D.M.Y')
                 resultTotal += resultRow.dailyTotal
                 this.exportableResults.push({
+                  'Viikonpäivä': resultRow.dayOfWeek,
                   'Päivämäärä': resultRow.trimmedDate,
                   'Tunnit': resultRow.dailyTotal,
                   'Muistiinpanot': resultRow.notes
@@ -186,10 +218,15 @@ export default {
     fetchUserAndSetDates: function () {
       axios.get('/user')
         .then(res => {
-          this.userId = res.data._id
+          this.selectedUser = {
+            name: res.data.local.name,
+            id: res.data.id,
+            email: res.data.local.email
+          }
           this.firstDate = moment().date(1).toDate()
           this.secondDate = moment().toDate()
           this.validateSelectionsAndRunQuery()
+          this.fetchViewableUsers()
         })
         .catch(err => {
           console.log(err)

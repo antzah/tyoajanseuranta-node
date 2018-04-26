@@ -55994,6 +55994,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* eslint no-undef: 0 */
 
@@ -56007,23 +56030,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       loading: false,
-      userId: null,
       firstDate: '',
       secondDate: '',
       firstDateIsBiggerThanSecond: false,
       resultRows: [],
       periodTotal: 0,
-      exportableResults: []
+      exportableResults: [],
+      viewableUsers: [],
+      selectedUser: {}
     };
   },
   created: function created() {
-    /**
-         * Fetch the user ID so we can use that later
-         */
     this.fetchUserAndSetDates();
   },
 
   methods: {
+    fetchViewableUsers: function fetchViewableUsers() {
+      var _this = this;
+
+      axios.get('/viewable-users').then(function (res) {
+        _this.viewableUsers = res.data;
+      }).catch(function (err) {
+        console.log(err);
+        _this.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.');
+      });
+    },
     exportToExcel: function exportToExcel(format) {
       var ws = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.json_to_sheet(this.exportableResults);
       var wb = __WEBPACK_IMPORTED_MODULE_1_xlsx___default.a.utils.book_new();
@@ -56032,7 +56063,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       FileSaver.saveAs(new Blob([this.s2ab(wbout)], {
         type: 'application/octet-stream'
-      }), 'tuntiraportti_' + moment(this.firstDate).format('D.M.Y') + '_' + moment(this.secondDate).format('D.M.Y') + '.' + format);
+      }), 'K\xE4ytt\xE4j\xE4n ' + this.selectedUser.name + ' tuntikertym\xE4t ' + moment(this.firstDate).format('D.M.Y') + '-' + moment(this.secondDate).format('D.M.Y') + '.' + format);
     },
     s2ab: function s2ab(s) {
       var buf = new ArrayBuffer(s.length);
@@ -56046,7 +56077,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (this.firstDate === '' && this.secondDate !== '') this.$refs.startDate.showCalendar();
     },
     validateSelectionsAndRunQuery: function validateSelectionsAndRunQuery() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.firstDate > this.secondDate && this.firstDate !== '' && this.secondDate !== '') this.firstDateIsBiggerThanSecond = true;else {
         this.firstDateIsBiggerThanSecond = false;
@@ -56058,48 +56089,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             params: {
               firstDate: this.firstDate,
               secondDate: this.secondDate,
-              userId: this.userId
+              userId: this.selectedUser.id
             }
           }).then(function (res) {
             if (res.data) {
               var resultTotal = 0;
 
-              _this.exportableResults = [];
+              _this2.exportableResults = [];
 
               res.data.map(function (resultRow) {
                 resultRow.dayOfWeek = moment(resultRow.day).format('ddd');
                 resultRow.trimmedDate = moment(resultRow.day).format('YYYY-MM-DD');
                 resultRow.readableDate = moment(resultRow.day).format('D.M.Y');
                 resultTotal += resultRow.dailyTotal;
-                _this.exportableResults.push({
+                _this2.exportableResults.push({
+                  'Viikonpäivä': resultRow.dayOfWeek,
                   'Päivämäärä': resultRow.trimmedDate,
                   'Tunnit': resultRow.dailyTotal,
                   'Muistiinpanot': resultRow.notes
                 });
               });
 
-              _this.periodTotal = resultTotal;
-              _this.resultRows = res.data;
-              _this.loading = false;
+              _this2.periodTotal = resultTotal;
+              _this2.resultRows = res.data;
+              _this2.loading = false;
             }
           }).catch(function (err) {
             console.log(err);
-            _this.swalError('Virhe!', 'Päivitä selainikkuna ja yritä hakea raportti uudelleen.');
+            _this2.swalError('Virhe!', 'Päivitä selainikkuna ja yritä hakea raportti uudelleen.');
           });
         }
       }
     },
     fetchUserAndSetDates: function fetchUserAndSetDates() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/user').then(function (res) {
-        _this2.userId = res.data._id;
-        _this2.firstDate = moment().date(1).toDate();
-        _this2.secondDate = moment().toDate();
-        _this2.validateSelectionsAndRunQuery();
+        _this3.selectedUser = {
+          name: res.data.local.name,
+          id: res.data.id,
+          email: res.data.local.email
+        };
+        _this3.firstDate = moment().date(1).toDate();
+        _this3.secondDate = moment().toDate();
+        _this3.validateSelectionsAndRunQuery();
+        _this3.fetchViewableUsers();
       }).catch(function (err) {
         console.log(err);
-        _this2.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.');
+        _this3.swalError('Virhe!', 'Jokin meni pieleen. Koita päivittää selainikkuna ja/tai kirjautua uudelleen sisään.');
       });
     },
     swalSuccess: function swalSuccess(title, text) {
@@ -86771,7 +86808,7 @@ var render = function() {
             _vm.firstDateIsBiggerThanSecond
               ? _c("label", { staticStyle: { color: "red" } }, [
                   _vm._v(
-                    "\n                    Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.\n                "
+                    "\n                  Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.\n              "
                   )
                 ])
               : _vm._e(),
@@ -86813,7 +86850,73 @@ var render = function() {
             _c("div", { staticClass: "small-spacer" })
           ],
           1
-        )
+        ),
+        _vm._v(" "),
+        _vm.viewableUsers.length > 1
+          ? _c("div", { staticClass: "col-md-6 col-sm-12 col-12" }, [
+              _c("label", [_vm._v("Valitse käyttäjä")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "selectWrapper" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedUser,
+                        expression: "selectedUser"
+                      }
+                    ],
+                    staticClass: "form-control no-border",
+                    staticStyle: {
+                      height: "32px",
+                      background: "transparent",
+                      "text-indent": "3px"
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedUser = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        _vm.validateSelectionsAndRunQuery
+                      ]
+                    }
+                  },
+                  _vm._l(_vm.viewableUsers, function(viewableUser) {
+                    return _c(
+                      "option",
+                      {
+                        key: viewableUser.id,
+                        domProps: { value: viewableUser }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(viewableUser.name) +
+                            " (" +
+                            _vm._s(viewableUser.email) +
+                            ")\n                  "
+                        )
+                      ]
+                    )
+                  })
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "small-spacer" })
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
@@ -86853,6 +86956,20 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "small-spacer" }),
+          _vm._v(" "),
+          _vm.viewableUsers.length > 1
+            ? _c("div", [
+                _c("p", [
+                  _vm._v(
+                    "Käyttäjän " +
+                      _vm._s(_vm.selectedUser.name) +
+                      " (" +
+                      _vm._s(_vm.selectedUser.email) +
+                      ") tuntikertymät"
+                  )
+                ])
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "table",
