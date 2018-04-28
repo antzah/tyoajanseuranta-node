@@ -20,28 +20,28 @@ module.exports = (app, passport) => {
   /**
      * Login, logout, signup, settings
      */
-  app.get('/login', (req, res) => {
+  app.get('/kirjaudu', (req, res) => {
     res.render('login.ejs', { message: req.flash('loginMessage') })
   })
 
   app.post('/login', passport.authenticate('local-login', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: '/kirjaudu',
     failureFlash: true
   }))
 
   app.get('/logout', function (req, res) {
     req.logout()
-    res.redirect('/login')
+    res.redirect('/kirjaudu')
   })
 
-  app.get('/signup', (req, res) => {
+  app.get('/rekisteroidy', (req, res) => {
     res.render('signup.ejs', { message: req.flash('signupMessage') })
   })
 
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/',
-    failureRedirect: '/signup',
+    failureRedirect: '/rekisteroidy',
     failureFlash: true
   }))
 
@@ -200,6 +200,46 @@ module.exports = (app, passport) => {
     })
   })
 
+  app.get('/kayttaja-poistettu', (req, res) => {
+    res.render('user-deleted.ejs')
+  })
+
+  app.get('/delete-user', isAuthenticated, (req, res) => {
+    User.deleteOne({
+      _id: req.user.id
+    }).exec(err => {
+      if (err) {
+        console.log(err)
+        res.redirect('/settings')
+      } else {
+        Paiva.deleteMany({
+          user: req.user.id
+        }, err => {
+          if (err) {
+            console.log(err)
+            res.redirect('/kayttaja-poistettu')
+          } else {
+            User.find({
+              hasAccessTo: req.user.id
+            }).exec((err, users) => {
+              if (err) {
+                console.log(err)
+                res.redirect('/kayttaja-poistettu')
+              } else {
+                users.forEach(user => {
+                  let index = user.hasAccessTo.indexOf(req.user.id)
+                  user.hasAccessTo.splice(index, 1)
+                  user.save()
+                })
+                res.redirect('/kayttaja-poistettu')
+              }
+            })
+          }
+        })
+      }
+    })
+  })
+
   /**
      * Calendar logic
      */
@@ -351,7 +391,7 @@ module.exports = (app, passport) => {
         res.status(500).send({ error: 'Something failed when querying for the current user' })
       } else {
         let viewableUsers = []
-        
+
         /**
          * Push the current user to the "viewable" array first,
          * since everybody can view their own reports
@@ -396,11 +436,11 @@ function isLoggedIn (req, res, next) {
     return next()
   }
 
-  res.redirect('/login')
+  res.redirect('/kirjaudu')
 }
 
 function isAuthenticated (req, res, next) {
   if (req.isAuthenticated()) return next()
 
-  res.send('Not allowed. Plz login.')
+  res.send('<a href="/kirjaudu">Kirjaudu sisään</a> jatkaaksesi.')
 }

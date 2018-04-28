@@ -247,6 +247,11 @@ h1, h2, h3, h4, h5,
   margin-top: 24px;
 }
 
+.big-spacer {
+  display: block;
+  margin-top: 48px;
+}
+
 .small-spacer {
   display: block;
   margin-top: 12px;
@@ -369,4 +374,11 @@ label {
   cursor: pointer;
   position: relative;
   top: -1px;
+}
+
+.not-active {
+  pointer-events: none;
+  cursor: not-allowed;
+  text-decoration: none;
+  color: white;
 }

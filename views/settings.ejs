@@ -19,7 +19,7 @@
                     <% if (userAuthorizationInfo.length > 0) { %>
                         <div class="alert alert-info"><%= userAuthorizationInfo %></div>
                     <% } %>
-                    <h3>Anna katseluoikeudet tuntikertymiisi</h3>
+                    <h2>Anna katseluoikeudet tuntikertymiisi</h2>
                     <p>Voit halutessasi antaa esimerkiksi esimiehellesi oikeuden tarkastella tuntikertymiäsi Raportit-sivulla. Syötä sen käyttäjän sähköpostiosoite, jolle haluat antaa katseluoikeudet. Kyseinen käyttäjä näkee sen jälkeen Raportit-sivulta myös sinun tuntikertymäsi.</p>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-12">
@@ -55,7 +55,7 @@
                         <div class="alert alert-success"><%= passwordChangeSuccess %></div>
                     <% } %>
 
-                    <h3>Vaihda salasana</h3>
+                    <h2>Vaihda salasana</h2>
                     <form action="/settings/change-password" method="post">
                         <div class="row">
                             <div class="form-group col-lg-4 col-md-12">
@@ -73,6 +73,25 @@
                         </div>
                         <input type="submit" class="btn btn-info" value="Vaihda salasana" />
                     </form>
+
+                    <hr />
+
+                    <h2>Poista käyttäjätili</h2>
+                    <p>Jos poistat käyttäjätilisi, <span style="color: red">poistamme lopullisesti kaiken sinuun liittyvän datan tietokannastamme</span>. Huomioi, että emme arkistoi tietojasi vaan tuntikertymäsi sekä mahdolliset käyttöoikeudet toisten käyttäjien kalentereihin poistuvat lopullisesti. Emme saa niitä tämän jälkeen palautettua.</p>
+                    <p>Suosittelemme ottamaan tuntikertymät talteen Excel-muotoon <a href="/raportit">Raportit</a>-sivulla ennen kuin poistat käyttäjätilisi.</p>
+                    <div class="form-check">
+                        <input id="deleteVerify" type="checkbox" class="form-check-input"  onchange="document.getElementById('deleteUser').classList.toggle('disabled')" />
+                        <label for="deleteVerify" class="form-check-label">Ymmärrän, että käyttäjäni ja tietoni poistetaan lopullisesti</label>
+                    </div>
+                    <div class="small-spacer"></div>
+                    <a
+                        id="deleteUser"
+                        href="/delete-user"
+                        class="btn btn-danger disabled"
+                        onclick="return confirm('Oletko aivan varma, että haluat poistaa käyttäjätilisi?');"
+                    >
+                        Poista käyttäjätili
+                    </a>
                 </div>
             </div>
         </div>
