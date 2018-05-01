@@ -99,6 +99,11 @@
                                 <td>{{ result.dailyTotal }}</td>
                                 <td>{{ result.notes }}</td>
                             </tr>
+                            <tr v-if="resultRows.length == 0">
+                                <td>Ei tuloksia</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
                         </tbody>
                         <tfoot v-if="resultRows.length != 0">
                             <tr>

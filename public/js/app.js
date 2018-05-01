@@ -56017,6 +56017,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* eslint no-undef: 0 */
 
@@ -86997,21 +87002,34 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.resultRows, function(result) {
-                  return _c("tr", { key: result._id }, [
-                    _c("th", [
-                      _vm._v(
-                        _vm._s(result.dayOfWeek) +
-                          " " +
-                          _vm._s(result.readableDate)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(result.notes))])
-                  ])
-                })
+                [
+                  _vm._l(_vm.resultRows, function(result) {
+                    return _c("tr", { key: result._id }, [
+                      _c("th", [
+                        _vm._v(
+                          _vm._s(result.dayOfWeek) +
+                            " " +
+                            _vm._s(result.readableDate)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(result.notes))])
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _vm.resultRows.length == 0
+                    ? _c("tr", [
+                        _c("td", [_vm._v("Ei tuloksia")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("-")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("-")])
+                      ])
+                    : _vm._e()
+                ],
+                2
               ),
               _vm._v(" "),
               _vm.resultRows.length != 0
