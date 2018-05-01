@@ -19,15 +19,15 @@ export default {
     'clicks'
   ],
   methods: {
-    quarterHovered(id) {
+    quarterHovered (id) {
       this.$parent.$emit('quarterHovered', id)
     },
-    quarterClicked(id) {
+    quarterClicked (id) {
       this.$parent.$emit('quarterClicked', id)
     },
-    quarterExited(id) {
+    quarterExited (id) {
       this.$parent.$emit('quarterExited', id)
-    },
+    }
   },
   data: function () {
     return {
