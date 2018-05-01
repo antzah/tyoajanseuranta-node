@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
 config
-public
+public/css
+public/js
 keys/*
