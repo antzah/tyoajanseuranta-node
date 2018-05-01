@@ -1,5 +1,8 @@
+var secrets = require('./secrets.js')
 var validateEmail = require('../js/helpers/validate-email')
 var LocalStrategy = require('passport-local').Strategy
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+
 var User = require('../models/user')
 
 module.exports = passport => {
@@ -49,6 +52,22 @@ module.exports = passport => {
       if (err) { return done(err) }
       if (!user) { return done(null, false, req.flash('loginMessage', 'Käyttäjää ei löytynyt.')) }
       if (!user.validPassword(password)) { return done(null, false, req.flash('loginMessage', 'Väärä salasana.')) }
+
+      return done(null, user)
+    })
+  }))
+
+  passport.use(new GoogleStrategy({
+    clientID: secrets.GOOGLE_CLIENT_ID,
+    clientSecret: secrets.GOOGLE_CLIENT_SECRET,
+    callbackURL: secrets.GOOGLE_CALLBACK_URL,
+    passReqToCallback: true
+  }, (req, accessToken, refreshToken, profile, done) => {
+    User.findOne({
+      'local.email': profile.emails[0].value
+    }, (err, user) => {
+      if (err) { return done(err) }
+      if (!user) { return done(null, false, req.flash('loginMessage', 'Käyttäjää ei löytynyt.')) }
 
       return done(null, user)
     })
