@@ -10490,3 +10490,11 @@ label {
   transition: all 0.1s linear;
 }
 
+.blue {
+  color: #2196F3;
+}
+
+.pointer {
+  cursor: pointer;
+}
+

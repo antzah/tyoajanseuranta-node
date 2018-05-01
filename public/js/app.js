@@ -86854,7 +86854,22 @@ var render = function() {
         _vm._v(" "),
         _vm.viewableUsers.length > 1
           ? _c("div", { staticClass: "col-md-6 col-sm-12 col-12" }, [
-              _c("label", [_vm._v("Valitse käyttäjä")]),
+              _c("label", [
+                _vm._v("Valitse käyttäjä "),
+                _c("i", {
+                  directives: [
+                    {
+                      name: "tooltip",
+                      rawName: "v-tooltip",
+                      value:
+                        "Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan.",
+                      expression:
+                        '"Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan."'
+                    }
+                  ],
+                  staticClass: "blue pointer fas fa-question-circle"
+                })
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "selectWrapper" }, [
                 _c(

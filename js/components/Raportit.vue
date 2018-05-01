@@ -42,7 +42,7 @@
                   <div class="small-spacer"></div>
                 </div>
                 <div v-if='viewableUsers.length > 1' class="col-md-6 col-sm-12 col-12">
-                  <label>Valitse käyttäjä</label>
+                  <label>Valitse käyttäjä <i class="blue pointer fas fa-question-circle" v-tooltip='"Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan."'></i></label>
                   <div class="selectWrapper">
                     <select
                       style="height: 32px; background: transparent; text-indent: 3px"
