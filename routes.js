@@ -1,9 +1,13 @@
-var validateEmail = require('./js/helpers/validate-email')
-var moment = require('moment')
+const validateEmail = require('./js/helpers/validate-email')
+const crypto = require('crypto')
+const async = require('async')
+const nodemailer = require('nodemailer')
+
+const moment = require('moment')
 moment.locale('fi')
 
-var Paiva = require('./models/paiva')
-var User = require('./models/user')
+const Paiva = require('./models/paiva')
+const User = require('./models/user')
 
 module.exports = (app, passport) => {
   /**
@@ -18,23 +22,12 @@ module.exports = (app, passport) => {
   })
 
   /**
-     * Login, logout, signup, settings
-     */
-
-  // GET /auth/google
-  //   Use passport.authenticate() as route middleware to authenticate the
-  //   request.  The first step in Google authentication will involve
-  //   redirecting the user to google.com.  After authorization, Google
-  //   will redirect the user back to this application at /auth/google/callback
+   * Login, logout, signup, settings
+   */
   app.get('/kirjaudu/google', passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/userinfo.email']
   }))
 
-  // GET /auth/google/callback
-  //   Use passport.authenticate() as route middleware to authenticate the
-  //   request.  If authentication fails, the user will be redirected back to the
-  //   login page.  Otherwise, the primary route function function will be called,
-  //   which, in this example, will redirect the user to the home page.
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/kirjaudu'
   }), (req, res) => {
@@ -58,6 +51,142 @@ module.exports = (app, passport) => {
 
   app.get('/rekisteroidy', (req, res) => {
     res.render('signup.ejs', { message: req.flash('signupMessage') })
+  })
+
+  app.get('/palauta-salasana', (req, res) => {
+    res.render('forgot-password.ejs', {
+      forgotPasswordError: req.flash('forgotPasswordError'),
+      forgotPasswordSuccess: req.flash('forgotPasswordSuccess')
+    })
+  })
+
+  app.post('/forgot', (req, res, next) => {
+    async.waterfall([done => {
+      crypto.randomBytes(20, (err, buf) => {
+        var token = buf.toString('hex')
+        done(err, token)
+      })
+    }, (token, done) => {
+      User.findOne({
+        'local.email': req.body.email
+      }, (err, user) => {
+        if (err) console.log(err)
+
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.')
+          return res.redirect('/palauta-salasana')
+        }
+
+        user.resetPasswordToken = token
+        user.resetPasswordExpires = Date.now() + (3600000 * 24) // 24 hours
+
+        user.save(function (err) {
+          done(err, token, user)
+        })
+      })
+    }, (token, user, done) => {
+      let smtpTransport = nodemailer.createTransport({
+        host: 'smtp.mandrillapp.com',
+        port: 587,
+        auth: {
+          user: 'Easyfinance.fi',
+          pass: 'UYznGsF_hDd7sfUZ1fDyOg'
+        }
+      })
+
+      let mailOptions = {
+        to: user.local.email,
+        from: 'noreply@easyfinance.fi',
+        subject: 'Palauta unohtunut salasana',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      }
+
+      smtpTransport.sendMail(mailOptions, (err) => {
+        if (err) console.log(err)
+        req.flash('forgotPasswordSuccess', 'Palautuslinkki lähetetty osoitteeseen ' + user.local.email + '!')
+        done(err, 'done')
+      })
+    }], err => {
+      if (err) return next(err)
+      res.redirect('/palauta-salasana')
+    })
+  })
+
+  app.get('/reset/:token', (req, res) => {
+    User.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() }
+    }, (err, user) => {
+      if (err) console.log(err)
+      if (!user) {
+        req.flash('forgotPasswordError', 'Palautuslinkki on vanhentunut. Yritä uudestaan.')
+        return res.redirect('/palauta-salasana')
+      }
+      res.render('reset-password.ejs', {
+        user: req.user,
+        resetPasswordSuccess: req.flash('resetPasswordSuccess'),
+        resetPasswordError: req.flash('resetPasswordError')
+      })
+    })
+  })
+
+  app.post('/reset/:token', (req, res) => {
+    async.waterfall([
+      done => {
+        User.findOne({
+          resetPasswordToken: req.params.token,
+          resetPasswordExpires: { $gt: Date.now() }
+        }, (err, user) => {
+          if (err) console.log(err)
+          if (!user) {
+            req.flash('error', 'Password reset token is invalid or has expired.')
+            return res.redirect('back')
+          }
+
+          user.local.password = user.generateHash(req.body.password)
+          user.resetPasswordToken = undefined
+          user.resetPasswordExpires = undefined
+
+          user.save(err => {
+            if (err) {
+              console.log(err)
+            }
+            done(err, user)
+          })
+        })
+      }, (user, done) => {
+        let smtpTransport = nodemailer.createTransport({
+          host: 'smtp.mandrillapp.com',
+          port: 587,
+          auth: {
+            user: 'Easyfinance.fi',
+            pass: 'UYznGsF_hDd7sfUZ1fDyOg'
+          }
+        })
+
+        let mailOptions = {
+          to: user.local.email,
+          from: 'noreply@easyfinance.fi',
+          subject: 'Palauta unohtunut salasana',
+          text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.local.email + ' has just been changed.\n'
+        }
+
+        smtpTransport.sendMail(mailOptions, err => {
+          if (err) console.log(err)
+          req.login(user, err => {
+            if (err) { console.log(err) }
+            done(err)
+          })
+        })
+      }
+    ], err => {
+      if (err) console.log(err)
+      res.redirect('/')
+    })
   })
 
   app.post('/signup', passport.authenticate('local-signup', {

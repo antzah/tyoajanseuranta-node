@@ -8,7 +8,9 @@ var userSchema = mongoose.Schema({
     password: String
   },
   hasAccessTo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  accessibleBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  accessibleBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 }, {
   usePushEach: true
 })
