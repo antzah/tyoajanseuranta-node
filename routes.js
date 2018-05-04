@@ -90,7 +90,7 @@ module.exports = (app, passport) => {
         port: 587,
         auth: {
           user: 'Easyfinance.fi',
-          pass: 'UYznGsF_hDd7sfUZ1fDyOg'
+          pass: 'sdsdf'
         }
       })
 
@@ -163,7 +163,7 @@ module.exports = (app, passport) => {
           port: 587,
           auth: {
             user: 'Easyfinance.fi',
-            pass: 'UYznGsF_hDd7sfUZ1fDyOg'
+            pass: 'sdsdf'
           }
         })
 
@@ -391,8 +391,8 @@ module.exports = (app, passport) => {
   })
 
   /**
-     * Calendar logic
-     */
+   * Calendar logic
+   */
   app.post('/days', isAuthenticated, (req, res) => {
     let dayStart = moment(req.body.day).hour(0).minute(0).second(0)
     let dayEnd = moment(req.body.day).hour(23).minute(59).second(59)
@@ -502,8 +502,8 @@ module.exports = (app, passport) => {
   })
 
   /**
-     * Reports logic
-     */
+   * Reports logic
+   */
   app.get('/reports', isAuthenticated, (req, res) => {
     let firstDateStart = moment(req.query.firstDate).hour(0).minute(0).second(0)
     let secondDateEnd = moment(req.query.secondDate).hour(23).minute(59).second(59)
