@@ -1,8 +1,9 @@
 const validateEmail = require('./js/helpers/validate-email')
 const crypto = require('crypto')
 const async = require('async')
-const nodemailer = require('nodemailer')
-
+const sgMail = require('@sendgrid/mail')
+const SENDGRID_API_KEY = require('./config/secrets').SENDGRID_API_KEY
+sgMail.setApiKey(SENDGRID_API_KEY)
 const moment = require('moment')
 moment.locale('fi')
 
@@ -73,7 +74,7 @@ module.exports = (app, passport) => {
         if (err) console.log(err)
 
         if (!user) {
-          req.flash('error', 'No account with that email address exists.')
+          req.flash('forgotPasswordError', `Käyttäjää sähköpostiosoitteella ${req.body.email} ei löytynyt.`)
           return res.redirect('/palauta-salasana')
         }
 
@@ -85,32 +86,23 @@ module.exports = (app, passport) => {
         })
       })
     }, (token, user, done) => {
-      let smtpTransport = nodemailer.createTransport({
-        host: 'smtp.mandrillapp.com',
-        port: 587,
-        auth: {
-          user: 'Easyfinance.fi',
-          pass: 'sdsdf'
-        }
-      })
-
-      let mailOptions = {
+      let msg = {
         to: user.local.email,
-        from: 'noreply@easyfinance.fi',
-        subject: 'Palauta unohtunut salasana',
-        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+        from: 'noreply@em3625.tuntikirjanpito.fi',
+        subject: 'Salasanan nollauslinkki',
+        text: `Voit nollata salasanasi osoitteessa http://${req.headers.host}/reset/${token}`,
+        html: `<p>Voit nollata salasanasi <a href="http://${req.headers.host}/reset/${token}">täällä</a></p>`
       }
-
-      smtpTransport.sendMail(mailOptions, (err) => {
-        if (err) console.log(err)
-        req.flash('forgotPasswordSuccess', 'Palautuslinkki lähetetty osoitteeseen ' + user.local.email + '!')
+      sgMail.send(msg).then(() => {
+        req.flash('forgotPasswordSuccess', `Palautuslinkki lähetetty osoitteeseen ${user.local.email}!`)
+        done(null, 'done')
+      }).catch(err => {
+        req.flash('forgotPasswordError', 'Hups! Jokin meni pieleen. Yritä uudelleen.')
+        console.log(err)
         done(err, 'done')
       })
     }], err => {
-      if (err) return next(err)
+      console.log(err)
       res.redirect('/palauta-salasana')
     })
   })
@@ -158,29 +150,22 @@ module.exports = (app, passport) => {
           })
         })
       }, (user, done) => {
-        let smtpTransport = nodemailer.createTransport({
-          host: 'smtp.mandrillapp.com',
-          port: 587,
-          auth: {
-            user: 'Easyfinance.fi',
-            pass: 'sdsdf'
-          }
-        })
-
-        let mailOptions = {
+        let msg = {
           to: user.local.email,
-          from: 'noreply@easyfinance.fi',
-          subject: 'Palauta unohtunut salasana',
-          text: 'Hello,\n\n' +
-          'This is a confirmation that the password for your account ' + user.local.email + ' has just been changed.\n'
+          from: 'noreply@em3625.tuntikirjanpito.fi',
+          subject: 'Salasana vaihdettu',
+          text: 'Salasanasi on vaihdettu onnistuneesti.',
+          html: '<p>Salasanasi on vaihdettu onnistuneesti.</p>'
         }
-
-        smtpTransport.sendMail(mailOptions, err => {
-          if (err) console.log(err)
+        sgMail.send(msg).then(() => {
           req.login(user, err => {
-            if (err) { console.log(err) }
+            if (err) console.log(err)
             done(err)
           })
+          done(null, 'done')
+        }).catch(err => {
+          console.log(err)
+          done(err, 'done')
         })
       }
     ], err => {
