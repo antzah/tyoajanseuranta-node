@@ -67,14 +67,14 @@
                     <button
                         @click="exportToExcel('csv')"
                         :disabled="resultRows.length == 0"
-                        class="btn btn-info btn-sm"
+                        class="btn btn-success btn-sm"
                     >
                         <i class="fas fa-file-excel"></i> Vie (.csv)
                     </button>
                     <button
                         @click="exportToExcel('xlsx')"
                         :disabled="resultRows.length == 0"
-                        class="btn btn-info btn-sm"
+                        class="btn btn-success btn-sm"
                     >
                         <i class="fas fa-file-excel"></i> Vie (.xlsx)
                     </button>

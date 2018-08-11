@@ -20,15 +20,16 @@ h1, h2, h3, h4, h5,
 
 .navbar.navbar-laravel {
   background-color: $navbar-default-bg;
-  color: white;
+  color: #d50300;
+  box-shadow: 0 1px 3px hsla(0,0%,100%,.12), 0 1px 2px rgba(0,0,0,.24);
 }
 
 .navbar.navbar-laravel .navbar-brand {
-  color: white;
+  color: #333;
 }
 
 .navbar.navbar-laravel .navbar-nav .nav-link {
-  color: white;
+  color: #333;
 }
 
 .card {
@@ -38,14 +39,14 @@ h1, h2, h3, h4, h5,
 }
 
 .card-header {
-  background-color: rgb(21, 162, 184);
-  border-radius: 2px 2px 0 0 !important;
-  color: white;
+  background-color: #d50300;
+  border-radius: 2px 2px 0 0!important;
+  color: #ffffff;
 }
 
 .navbar.navbar-laravel .navbar-toggler {
   border: 0;
-  background: #8ad0db;
+  background: #fff;
   border-radius: 2px;
   padding: 0.25rem 0.5rem;
 }
@@ -380,7 +381,7 @@ label {
   pointer-events: none;
   cursor: not-allowed;
   text-decoration: none;
-  color: white;
+  color: grey;
 }
 
 #google-login-img {
@@ -403,4 +404,8 @@ label {
 
 .pointer {
   cursor: pointer;
+}
+
+#header-logo {
+  width: 160px;
 }
