@@ -2,8 +2,7 @@ const validateEmail = require('./js/helpers/validate-email')
 const crypto = require('crypto')
 const async = require('async')
 const sgMail = require('@sendgrid/mail')
-const SENDGRID_API_KEY = require('./config/secrets').SENDGRID_API_KEY
-sgMail.setApiKey(SENDGRID_API_KEY)
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const moment = require('moment')
 moment.locale('fi')
 

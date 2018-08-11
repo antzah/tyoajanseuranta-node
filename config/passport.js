@@ -1,4 +1,3 @@
-var secrets = require('./secrets.js')
 var validateEmail = require('../js/helpers/validate-email')
 var LocalStrategy = require('passport-local').Strategy
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
@@ -58,9 +57,9 @@ module.exports = passport => {
   }))
 
   passport.use(new GoogleStrategy({
-    clientID: secrets.GOOGLE_CLIENT_ID,
-    clientSecret: secrets.GOOGLE_CLIENT_SECRET,
-    callbackURL: secrets.GOOGLE_CALLBACK_URL,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL,
     passReqToCallback: true
   }, (req, accessToken, refreshToken, profile, done) => {
     User.findOne({

@@ -1,3 +1,9 @@
+/**
+ * Note! The database.js file is not referenced anymore, env variables are now used instead.
+ * SO: instead of making a database.js file, declare these variables as env vars, ex.
+ * export DB_URL=yoururl
+ */
+
 module.exports = {
-    'url' : 'mongodb://username:password@localhost/tyoajanseuranta'
+    'DB_URL' : 'mongodb://username:password@localhost/tyoajanseuranta'
 };

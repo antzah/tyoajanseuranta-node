@@ -12,11 +12,8 @@ var bodyParser = require('body-parser')
 var session = require('express-session')
 var helmet = require('helmet')
 
-var configDB = require('./config/database.js')
-var secrets = require('./config/secrets.js')
-
 mongoose.Promise = global.Promise
-mongoose.connect(configDB.url, {
+mongoose.connect(process.env.DB_URL, {
   keepAlive: true,
   reconnectTries: Number.MAX_VALUE,
   useMongoClient: true
@@ -37,7 +34,7 @@ app.set('view engine', 'ejs')
 
 app.use(session({
   name: 'tasc',
-  secret: secrets.secret,
+  secret: process.env.SECRET,
   resave: true,
   saveUninitialized: false
 }))
