@@ -51166,7 +51166,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   mode: 'history',
-  base: '/',
+  base: '/sovellus/',
   routes: [{
     path: '/',
     name: 'Kalenteri',
@@ -54593,7 +54593,7 @@ for (var i = 0; i < 96; i++) {
 
         _this.updateDailyTotal();
 
-        axios.post('/days', {
+        axios.post('/sovellus/days', {
           quarters: _this.quarters,
           day: _this.selectedDate,
           dailyTotal: _this.dailyTotalAsDecimal,
@@ -54633,7 +54633,7 @@ for (var i = 0; i < 96; i++) {
 
         _this2.updateDailyTotal();
 
-        axios.post('/days', {
+        axios.post('/sovellus/days', {
           quarters: _this2.quarters,
           day: _this2.selectedDate,
           dailyTotal: _this2.dailyTotalAsDecimal,
@@ -54670,7 +54670,7 @@ for (var i = 0; i < 96; i++) {
     fetchUser: function fetchUser() {
       var _this3 = this;
 
-      axios.get('/user').then(function (res) {
+      axios.get('/sovellus/user').then(function (res) {
         _this3.userId = res.data._id;
       }).catch(function (err) {
         console.log(err);
@@ -54688,7 +54688,7 @@ for (var i = 0; i < 96; i++) {
       selectedDate = selectedDate.format();
       this.loading = true;
 
-      axios.get('/days', {
+      axios.get('/sovellus/days', {
         params: { selectedDate: selectedDate }
       }).then(function (res) {
         if (res.data) {
@@ -54714,7 +54714,7 @@ for (var i = 0; i < 96; i++) {
     saveNotes: function saveNotes() {
       var _this5 = this;
 
-      axios.post('/notes', {
+      axios.post('/sovellus/notes', {
         day: this.selectedDate,
         notes: this.notes,
         quarters: this.quarters,
@@ -54920,7 +54920,7 @@ for (var i = 0; i < 96; i++) {
         _this7.loading = true;
         _this7.updateDailyTotal();
 
-        axios.post('/days', {
+        axios.post('/sovellus/days', {
           quarters: _this7.quarters,
           day: _this7.selectedDate,
           dailyTotal: _this7.dailyTotalAsDecimal,
@@ -56053,7 +56053,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchViewableUsers: function fetchViewableUsers() {
       var _this = this;
 
-      axios.get('/viewable-users').then(function (res) {
+      axios.get('/sovellus/viewable-users').then(function (res) {
         _this.viewableUsers = res.data;
       }).catch(function (err) {
         console.log(err);
@@ -56090,7 +56090,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (this.firstDate !== '' && this.secondDate !== '') {
           this.loading = true;
 
-          axios.get('/reports', {
+          axios.get('/sovellus/reports', {
             params: {
               firstDate: this.firstDate,
               secondDate: this.secondDate,
@@ -56129,7 +56129,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     fetchUserAndSetDates: function fetchUserAndSetDates() {
       var _this3 = this;
 
-      axios.get('/user').then(function (res) {
+      axios.get('/sovellus/user').then(function (res) {
         _this3.selectedUser = {
           name: res.data.local.name,
           id: res.data.id,

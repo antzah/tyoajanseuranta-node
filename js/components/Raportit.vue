@@ -147,7 +147,7 @@ export default {
   },
   methods: {
     fetchViewableUsers: function () {
-      axios.get('/viewable-users')
+      axios.get('/sovellus/viewable-users')
         .then(res => {
           this.viewableUsers = res.data
         })
@@ -184,7 +184,7 @@ export default {
         if (this.firstDate !== '' && this.secondDate !== '') {
           this.loading = true
 
-          axios.get('/reports', {
+          axios.get('/sovellus/reports', {
             params: {
               firstDate: this.firstDate,
               secondDate: this.secondDate,
@@ -221,7 +221,7 @@ export default {
       }
     },
     fetchUserAndSetDates: function () {
-      axios.get('/user')
+      axios.get('/sovellus/user')
         .then(res => {
           this.selectedUser = {
             name: res.data.local.name,

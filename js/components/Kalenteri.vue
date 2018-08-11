@@ -334,7 +334,7 @@ export default {
 
           this.updateDailyTotal()
 
-          axios.post('/days', {
+          axios.post('/sovellus/days', {
             quarters: this.quarters,
             day: this.selectedDate,
             dailyTotal: this.dailyTotalAsDecimal,
@@ -376,7 +376,7 @@ export default {
 
           this.updateDailyTotal()
 
-          axios.post('/days', {
+          axios.post('/sovellus/days', {
             quarters: this.quarters,
             day: this.selectedDate,
             dailyTotal: this.dailyTotalAsDecimal,
@@ -412,7 +412,7 @@ export default {
       this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal)
     },
     fetchUser: function () {
-      axios.get('/user')
+      axios.get('/sovellus/user')
         .then(res => {
           this.userId = res.data._id
         })
@@ -430,7 +430,7 @@ export default {
       selectedDate = selectedDate.format()
       this.loading = true
 
-      axios.get('/days', {
+      axios.get('/sovellus/days', {
         params: { selectedDate }
       }).then(res => {
         if (res.data) {
@@ -454,7 +454,7 @@ export default {
       })
     },
     saveNotes: function () {
-      axios.post('/notes', {
+      axios.post('/sovellus/notes', {
         day: this.selectedDate,
         notes: this.notes,
         quarters: this.quarters,
@@ -660,7 +660,7 @@ export default {
         this.loading = true
         this.updateDailyTotal()
 
-        axios.post('/days', {
+        axios.post('/sovellus/days', {
           quarters: this.quarters,
           day: this.selectedDate,
           dailyTotal: this.dailyTotalAsDecimal,

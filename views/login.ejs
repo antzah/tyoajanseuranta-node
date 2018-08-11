@@ -13,7 +13,7 @@
                         <div class="alert alert-danger"><%= message %></div>
                     <% } %>
 
-                    <form action="/login" method="post">
+                    <form action="/sovellus/login" method="post">
                         <div class="form-group">
                             <label>Sähköposti</label>
                             <input type="text" class="form-control" name="email" required>
@@ -28,18 +28,18 @@
 
                     <div class="spacer"></div>
 
-                    <p class="small">Unohditko salasanasi? Palauta se <a href="/palauta-salasana">täällä</a></p>
+                    <p class="small">Unohditko salasanasi? Palauta se <a href="/sovellus/palauta-salasana">täällä</a></p>
 
                     <div class="spacer"></div>
 
                     <p class="small">Voit myös käyttää kätevää Google-kirjautumista, jos olet luonut tilin Gmail-sähköpostin kautta.</p>
-                    <a href="/kirjaudu/google">
+                    <a href="/sovellus/kirjaudu/google">
                         <img id="google-login-img" src="/img/kirjaudu-fin.png" alt="Kirjaudu Google-tilillä">
                     </a>
 
                     <div class="spacer"></div>
 
-                    Ei vielä tiliä? <a href="/rekisteroidy">Rekisteröidy tästä</a>
+                    Ei vielä tiliä? <a href="/sovellus/rekisteroidy">Rekisteröidy tästä</a>
                 </div>
             </div>
         </div>

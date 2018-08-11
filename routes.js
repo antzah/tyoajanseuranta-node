@@ -13,54 +13,54 @@ module.exports = (app, passport) => {
   /**
    * Routes used by Vue Router
    */
-  app.get('/', isLoggedIn, (req, res) => {
+  app.get('/sovellus/', isLoggedIn, (req, res) => {
     res.render('index.ejs')
   })
 
-  app.get('/raportit', isLoggedIn, (req, res) => {
+  app.get('/sovellus/raportit', isLoggedIn, (req, res) => {
     res.render('index.ejs')
   })
 
   /**
-   * Login, logout, signup, settings
+   * Login, logout, signup, asetukset
    */
-  app.get('/kirjaudu/google', passport.authenticate('google', {
+  app.get('/sovellus/kirjaudu/google', passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/userinfo.email']
   }))
 
   app.get('/auth/google/callback', passport.authenticate('google', {
-    failureRedirect: '/kirjaudu'
+    failureRedirect: '/sovellus/kirjaudu'
   }), (req, res) => {
-    res.redirect('/')
+    res.redirect('/sovellus/')
   })
 
-  app.get('/kirjaudu', (req, res) => {
+  app.get('/sovellus/kirjaudu', (req, res) => {
     res.render('login.ejs', { message: req.flash('loginMessage') })
   })
 
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/',
-    failureRedirect: '/kirjaudu',
+  app.post('/sovellus/login', passport.authenticate('local-login', {
+    successRedirect: '/sovellus/',
+    failureRedirect: '/sovellus/kirjaudu',
     failureFlash: true
   }))
 
-  app.get('/logout', function (req, res) {
+  app.get('/sovellus/logout', function (req, res) {
     req.logout()
-    res.redirect('/kirjaudu')
+    res.redirect('/sovellus/kirjaudu')
   })
 
-  app.get('/rekisteroidy', (req, res) => {
+  app.get('/sovellus/rekisteroidy', (req, res) => {
     res.render('signup.ejs', { message: req.flash('signupMessage') })
   })
 
-  app.get('/palauta-salasana', (req, res) => {
+  app.get('/sovellus/palauta-salasana', (req, res) => {
     res.render('forgot-password.ejs', {
       forgotPasswordError: req.flash('forgotPasswordError'),
       forgotPasswordSuccess: req.flash('forgotPasswordSuccess')
     })
   })
 
-  app.post('/forgot', (req, res, next) => {
+  app.post('/sovellus/forgot', (req, res, next) => {
     async.waterfall([done => {
       crypto.randomBytes(20, (err, buf) => {
         var token = buf.toString('hex')
@@ -74,7 +74,7 @@ module.exports = (app, passport) => {
 
         if (!user) {
           req.flash('forgotPasswordError', `Käyttäjää sähköpostiosoitteella ${req.body.email} ei löytynyt.`)
-          return res.redirect('/palauta-salasana')
+          return res.redirect('/sovellus/palauta-salasana')
         }
 
         user.resetPasswordToken = token
@@ -89,8 +89,8 @@ module.exports = (app, passport) => {
         to: user.local.email,
         from: 'noreply@em3625.tuntikirjanpito.fi',
         subject: 'Salasanan nollauslinkki',
-        text: `Voit nollata salasanasi osoitteessa http://${req.headers.host}/reset/${token}`,
-        html: `<p>Voit nollata salasanasi <a href="http://${req.headers.host}/reset/${token}">täällä</a></p>`
+        text: `Voit nollata salasanasi osoitteessa http://${req.headers.host}/sovellus/reset/${token}`,
+        html: `<p>Voit nollata salasanasi <a href="http://${req.headers.host}/sovellus/reset/${token}">täällä</a></p>`
       }
       sgMail.send(msg).then(() => {
         req.flash('forgotPasswordSuccess', `Palautuslinkki lähetetty osoitteeseen ${user.local.email}!`)
@@ -102,11 +102,11 @@ module.exports = (app, passport) => {
       })
     }], err => {
       console.log(err)
-      res.redirect('/palauta-salasana')
+      res.redirect('/sovellus/palauta-salasana')
     })
   })
 
-  app.get('/reset/:token', (req, res) => {
+  app.get('/sovellus/reset/:token', (req, res) => {
     User.findOne({
       resetPasswordToken: req.params.token,
       resetPasswordExpires: { $gt: Date.now() }
@@ -114,7 +114,7 @@ module.exports = (app, passport) => {
       if (err) console.log(err)
       if (!user) {
         req.flash('forgotPasswordError', 'Palautuslinkki on vanhentunut. Yritä uudestaan.')
-        return res.redirect('/palauta-salasana')
+        return res.redirect('/sovellus/palauta-salasana')
       }
       res.render('reset-password.ejs', {
         user: req.user,
@@ -124,7 +124,7 @@ module.exports = (app, passport) => {
     })
   })
 
-  app.post('/reset/:token', (req, res) => {
+  app.post('/sovellus/reset/:token', (req, res) => {
     async.waterfall([
       done => {
         User.findOne({
@@ -169,17 +169,17 @@ module.exports = (app, passport) => {
       }
     ], err => {
       if (err) console.log(err)
-      res.redirect('/')
+      res.redirect('/sovellus/')
     })
   })
 
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/',
-    failureRedirect: '/rekisteroidy',
+  app.post('/sovellus/signup', passport.authenticate('local-signup', {
+    successRedirect: '/sovellus/',
+    failureRedirect: '/sovellus/rekisteroidy',
     failureFlash: true
   }))
 
-  app.get('/settings', isLoggedIn, (req, res) => {
+  app.get('/sovellus/asetukset', isLoggedIn, (req, res) => {
     User.findOne({
       _id: req.user.id
     }).populate(
@@ -195,7 +195,7 @@ module.exports = (app, passport) => {
         })
       })
 
-      res.render('settings.ejs', {
+      res.render('asetukset.ejs', {
         passwordChangeSuccess: req.flash('passwordChangeSuccess'),
         passwordChangeError: req.flash('passwordChangeError'),
         userAuthorizationSuccess: req.flash('userAuthorizationSuccess'),
@@ -206,7 +206,7 @@ module.exports = (app, passport) => {
     })
   })
 
-  app.post('/settings/authorize-user', isAuthenticated, (req, res) => {
+  app.post('/sovellus/asetukset/authorize-user', isAuthenticated, (req, res) => {
     let _id = req.user.id
     let emailThatGetsAccess = req.body.authorizedUser
     let adminUserId
@@ -216,16 +216,16 @@ module.exports = (app, passport) => {
     }, (err, user) => {
       if (!validateEmail(emailThatGetsAccess)) {
         req.flash('userAuthorizationError', 'Syötit virheellisen sähköpostiosoitteen.')
-        res.redirect('/settings')
+        res.redirect('/sovellus/asetukset')
       } else if (err || user == null) {
         req.flash('userAuthorizationError', 'Jokin meni pieleen! Syötitkö oikean sähköpostiosoitteen?')
-        res.redirect('/settings')
+        res.redirect('/sovellus/asetukset')
       } else if (user.local.email === req.user.local.email) {
         req.flash('userAuthorizationInfo', 'Koitit lisätä käyttöoikeuden omaan kalenteriisi – tämä ei ole tarpeellista.')
-        res.redirect('/settings')
+        res.redirect('/sovellus/asetukset')
       } else if (user.hasAccessTo.indexOf(_id) !== -1) {
         req.flash('userAuthorizationInfo', 'Tällä käyttäjällä on jo oikeudet tarkastella kalenteriasi.')
-        res.redirect('/settings')
+        res.redirect('/sovellus/asetukset')
       } else {
         user.hasAccessTo.push(_id)
         adminUserId = user._id
@@ -233,17 +233,17 @@ module.exports = (app, passport) => {
         user.save((err) => {
           if (err) {
             req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
-            res.redirect('/settings')
+            res.redirect('/sovellus/asetukset')
           } else {
             User.findOne({
               _id
             }, (err, user) => {
               if (err || user == null) {
                 req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
-                res.redirect('/settings')
+                res.redirect('/sovellus/asetukset')
               } else if (user.hasAccessTo.indexOf(_id) !== -1) {
                 req.flash('userAuthorizationInfo', 'Tällä käyttäjällä on jo oikeudet tarkastella kalenteriasi.')
-                res.redirect('/settings')
+                res.redirect('/sovellus/asetukset')
               } else {
                 user.accessibleBy.push(adminUserId)
 
@@ -251,10 +251,10 @@ module.exports = (app, passport) => {
                   console.log(err)
                   if (err) {
                     req.flash('userAuthorizationError', 'Jokin meni pieleen! Yritä uudelleen.')
-                    res.redirect('/settings')
+                    res.redirect('/sovellus/asetukset')
                   } else {
                     req.flash('userAuthorizationSuccess', 'Käyttöoikeudet lisätty!')
-                    res.redirect('/settings')
+                    res.redirect('/sovellus/asetukset')
                   }
                 })
               }
@@ -265,7 +265,7 @@ module.exports = (app, passport) => {
     })
   })
 
-  app.get('/settings/remove-authorization/:id', isAuthenticated, (req, res) => {
+  app.get('/sovellus/asetukset/remove-authorization/:id', isAuthenticated, (req, res) => {
     User.findById(req.user.id, (err, user) => {
       if (err) console.log(err)
       let index = user.accessibleBy.indexOf(req.params.id)
@@ -273,24 +273,24 @@ module.exports = (app, passport) => {
       user.save((err) => {
         if (err) {
           req.flash('userAuthorizationError', 'Jokin meni pieleen oikeuksia poistaessa! Yritä uudelleen.')
-          res.redirect('/settings')
+          res.redirect('/sovellus/asetukset')
         } else {
           User.findOne({
             _id: req.params.id
           }, (err, user) => {
             if (err) {
               req.flash('userAuthorizationError', 'Jokin meni pieleen oikeuksia poistaessa! Yritä uudelleen.')
-              res.redirect('/settings')
+              res.redirect('/sovellus/asetukset')
             } else {
               let index = user.hasAccessTo.indexOf(req.user.id)
               user.hasAccessTo.splice(index, 1)
               user.save((err) => {
                 if (err) {
                   req.flash('userAuthorizationError', 'Jokin meni pieleen oikeuksia poistaessa! Yritä uudelleen.')
-                  res.redirect('/settings')
+                  res.redirect('/sovellus/asetukset')
                 } else {
                   req.flash('userAuthorizationSuccess', 'Käyttöoikeudet poistettu!')
-                  res.redirect('/settings')
+                  res.redirect('/sovellus/asetukset')
                 }
               })
             }
@@ -300,7 +300,7 @@ module.exports = (app, passport) => {
     })
   })
 
-  app.post('/settings/change-password', isAuthenticated, (req, res) => {
+  app.post('/sovellus/asetukset/change-password', isAuthenticated, (req, res) => {
     if (
       !('oldPassword' in req.body) ||
       !('newPassword' in req.body) ||
@@ -310,7 +310,7 @@ module.exports = (app, passport) => {
       (req.body.newPasswordValidate === '')
     ) {
       req.flash('passwordChangeError', 'Joitakin tietoja puuttui. Yritä uudelleen.')
-      return res.redirect('/settings')
+      return res.redirect('/sovellus/asetukset')
     }
     User.findById(req.user.id, (err, user) => {
       if (err) {
@@ -330,42 +330,42 @@ module.exports = (app, passport) => {
         }
       }
 
-      res.redirect('/settings')
+      res.redirect('/sovellus/asetukset')
     })
   })
 
-  app.get('/kayttaja-poistettu', (req, res) => {
+  app.get('/sovellus/kayttaja-poistettu', (req, res) => {
     res.render('user-deleted.ejs')
   })
 
-  app.get('/delete-user', isAuthenticated, (req, res) => {
+  app.get('/sovellus/delete-user', isAuthenticated, (req, res) => {
     User.deleteOne({
       _id: req.user.id
     }).exec(err => {
       if (err) {
         console.log(err)
-        res.redirect('/settings')
+        res.redirect('/sovellus/asetukset')
       } else {
         Paiva.deleteMany({
           user: req.user.id
         }, err => {
           if (err) {
             console.log(err)
-            res.redirect('/kayttaja-poistettu')
+            res.redirect('/sovellus/kayttaja-poistettu')
           } else {
             User.find({
               hasAccessTo: req.user.id
             }).exec((err, users) => {
               if (err) {
                 console.log(err)
-                res.redirect('/kayttaja-poistettu')
+                res.redirect('/sovellus/kayttaja-poistettu')
               } else {
                 users.forEach(user => {
                   let index = user.hasAccessTo.indexOf(req.user.id)
                   user.hasAccessTo.splice(index, 1)
                   user.save()
                 })
-                res.redirect('/kayttaja-poistettu')
+                res.redirect('/sovellus/kayttaja-poistettu')
               }
             })
           }
@@ -377,7 +377,7 @@ module.exports = (app, passport) => {
   /**
    * Calendar logic
    */
-  app.post('/days', isAuthenticated, (req, res) => {
+  app.post('/sovellus/days', isAuthenticated, (req, res) => {
     let dayStart = moment(req.body.day).hour(0).minute(0).second(0)
     let dayEnd = moment(req.body.day).hour(23).minute(59).second(59)
 
@@ -402,7 +402,7 @@ module.exports = (app, passport) => {
     })
   })
 
-  app.post('/dailytotal', isAuthenticated, (req, res) => {
+  app.post('/sovellus/dailytotal', isAuthenticated, (req, res) => {
     let dayStart = moment(req.body.day).hour(0).minute(0).second(0)
     let dayEnd = moment(req.body.day).hour(23).minute(59).second(59)
 
@@ -423,7 +423,7 @@ module.exports = (app, passport) => {
     })
   })
 
-  app.get('/days', isAuthenticated, (req, res) => {
+  app.get('/sovellus/days', isAuthenticated, (req, res) => {
     if (!req.query.selectedDate) {
       res.status(500).send({ error: 'No day parameter provided.' })
     } else {
@@ -461,7 +461,7 @@ module.exports = (app, passport) => {
     }
   })
 
-  app.post('/notes', isAuthenticated, (req, res) => {
+  app.post('/sovellus/notes', isAuthenticated, (req, res) => {
     let dayStart = moment(req.body.day).hour(0).minute(0).second(0)
     let dayEnd = moment(req.body.day).hour(23).minute(59).second(59)
 
@@ -488,7 +488,7 @@ module.exports = (app, passport) => {
   /**
    * Reports logic
    */
-  app.get('/reports', isAuthenticated, (req, res) => {
+  app.get('/sovellus/reports', isAuthenticated, (req, res) => {
     let firstDateStart = moment(req.query.firstDate).hour(0).minute(0).second(0)
     let secondDateEnd = moment(req.query.secondDate).hour(23).minute(59).second(59)
     let userId = req.query.userId
@@ -514,7 +514,7 @@ module.exports = (app, passport) => {
     }
   })
 
-  app.get('/viewable-users', isAuthenticated, (req, res) => {
+  app.get('/sovellus/viewable-users', isAuthenticated, (req, res) => {
     User.findOne({
       _id: req.user.id
     }).populate(
@@ -552,7 +552,7 @@ module.exports = (app, passport) => {
   /**
    * Utility to fetch the current user in Vue components
    */
-  app.get('/user', isAuthenticated, function (req, res) {
+  app.get('/sovellus/user', isAuthenticated, function (req, res) {
     res.json({
       id: req.user.id,
       accessibleBy: req.user.accessibleBy,
@@ -570,11 +570,11 @@ function isLoggedIn (req, res, next) {
     return next()
   }
 
-  res.redirect('/kirjaudu')
+  res.redirect('/sovellus/kirjaudu')
 }
 
 function isAuthenticated (req, res, next) {
   if (req.isAuthenticated()) return next()
 
-  res.send('<a href="/kirjaudu">Kirjaudu sisään</a> jatkaaksesi.')
+  res.send('<a href="/sovellus/kirjaudu">Kirjaudu sisään</a> jatkaaksesi.')
 }
