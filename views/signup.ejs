@@ -1,9 +1,9 @@
+<% metaTitle = "Rekisteröidy ilmaiseksi – Tuntikirjanpito.fi" %>
 <% include ./header %>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
-            <div class="spacer"></div>
             <div class="card card-default">
                 <div class="card-header">
                     <i class="fa fa-user"></i> Rekisteröidy
@@ -27,7 +27,13 @@
                             <label>Salasana</label>
                             <input type="password" class="form-control" name="password" required>
                         </div>
-
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="ehdot" required>
+                                Hyväksyn <a href="/ehdot-ja-saannot" id="ehdot-link" target="_blank">ehdot ja säännöt</a>
+                            </label>
+                        </div>
+                        <div class="spacer"></div>
                         <button type="submit" class="btn btn-success btn-lg">Rekisteröidy</button>
                     </form>
 
