@@ -45,20 +45,8 @@
                     <% if (isLoggedIn) { %>
                         <li><a <% if (currentUrl == '/sovellus/') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/">Kalenteri</a></li>
                         <li><a <% if (currentUrl == '/sovellus/raportit') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/raportit">Raportit</a></li>
-                        <li class="navbar-desktop-divider"></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <%= name %>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/sovellus/asetukset">
-                                    Asetukset
-                                </a>
-                                <a class="dropdown-item" href="/sovellus/logout">
-                                    Kirjaudu ulos
-                                </a>
-                            </div>
-                        </li>
+                        <li><a <% if (currentUrl == '/sovellus/asetukset') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/asetukset">Asetukset</a></li>
+                        <li><a <% if (currentUrl == '/sovellus/logout') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/logout">Kirjaudu ulos</a></li>
                     <% } %>
                     <% if (!isLoggedIn) { %>
                         <li><a <% if (currentUrl == '/sovellus/kirjaudu') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/kirjaudu">Kirjaudu sisään</a></li>
