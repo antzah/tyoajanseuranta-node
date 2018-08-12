@@ -237,10 +237,10 @@ hr {
                         </div>
                     </div>
                     <div class="d-none d-md-block">
-                        <p v-if="clicks == 0 && !deleting">Lisää pätkä klikkaamalla aloitus- ja lopetusaikaa.</p>
+                        <p v-if="clicks == 0 && !deleting">Lisää jakso klikkaamalla aloitus- ja lopetusaikaa.</p>
                         <p v-if="clicks == 1 && !deleting">Valitse vielä lopetusaika.</p>
-                        <p v-if="deleting && clicks == 0" style="color: red">Valitse poistettavan pätkän alku.</p>
-                        <p v-if="deleting && clicks == 1" style="color: red">Valitse poistettavan pätkän loppu.</p>
+                        <p v-if="deleting && clicks == 0" style="color: red">Valitse poistettavan jakson alku.</p>
+                        <p v-if="deleting && clicks == 1" style="color: red">Valitse poistettavan jakson loppu.</p>
                         <button v-if="!deleting && clicks == 0" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
                         <button disabled="disabled" v-if="!deleting && clicks == 1" class="btn btn-danger btn-sm" @click="deleting = true">Poista</button>
                         <button v-if="deleting" class="btn btn-secondary btn-sm" @click="deleting = false">Peruuta poistaminen</button>

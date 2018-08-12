@@ -52,6 +52,7 @@ function variablesHelper (req, res, next) {
 
   rl.name = (req.isAuthenticated()) ? req.user.local.name : 'Vieras'
   rl.isLoggedIn = req.isAuthenticated()
+  rl.currentUrl = req.originalUrl
 
   next()
 }

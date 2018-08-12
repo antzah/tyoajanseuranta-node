@@ -11,6 +11,17 @@ const User = require('./models/user')
 
 module.exports = (app, passport) => {
   /**
+   * Static 'public' pages
+   */
+  app.get('/', (req, res) => {
+    res.render('home.ejs')
+  })
+
+  app.get('/ehdot-ja-saannot', (req, res) => {
+    res.render('ehdot-ja-saannot.ejs')
+  })
+
+  /**
    * Routes used by Vue Router
    */
   app.get('/sovellus/', isLoggedIn, (req, res) => {
