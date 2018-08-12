@@ -31,6 +31,7 @@ module.exports = passport => {
           newUser.local.name = req.body.name
           newUser.local.email = email
           newUser.local.password = newUser.generateHash(password)
+          newUser.registrationDateUTC0 = new Date()
 
           newUser.save(err => {
             if (err) throw err

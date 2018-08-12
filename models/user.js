@@ -7,6 +7,7 @@ var userSchema = mongoose.Schema({
     email: String,
     password: String
   },
+  registrationDateUTC0: Date,
   hasAccessTo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   accessibleBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   resetPasswordToken: String,
