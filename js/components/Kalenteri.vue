@@ -57,12 +57,6 @@ hr {
 
 <template>
     <div class="card">
-        <div class="card-header">
-            Kalenteri
-            <span v-if="loading" style="font-size: 14px;color: #a9dbe5;">
-                <img src="/img/loading.svg" style="height: 15px;margin-bottom: 2px;"> Ladataan..
-            </span>
-        </div>
         <div class="card-body">
             <div class="row calendar-wrapper">
                 <div class="col-lg-4 col-xl-3 col-md-6 col-12">
@@ -115,6 +109,9 @@ hr {
                             <h3 v-if="!loading">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                             <h3 v-if="loading" style="color: #adadad">{{ selectedDate.format("dddd") }} {{ selectedDate.format("D.M.YYYY") }}</h3>
                             <h4 id="dailyTotal">{{ dailyTotal }}</h4>
+                            <span v-if="loading" style="font-size: 14px;color: #a9dbe5;">
+                                <img src="/img/loading.svg" style="height: 15px;margin-bottom: 2px;"> Ladataan..
+                            </span>
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="small-spacer"></div>

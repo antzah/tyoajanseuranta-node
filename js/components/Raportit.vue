@@ -1,11 +1,5 @@
 <template>
     <div class="card raportit">
-        <div class="card-header">
-            Raportit
-            <span v-if="loading" style="font-size: 14px;color: #a9dbe5;">
-                <img src="/img/loading.svg" style="height: 15px; margin-bottom: 2px;"> Ladataan..
-            </span>
-        </div>
         <div class="card-body">
             <p>Voit tarkastella tuntikertymää pidemmältä ajalta valitsemalla haluamasi ajanjakson.</p>
             <div class="row">
@@ -39,6 +33,11 @@
                       v-model="secondDate"
                       @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary();"
                   />
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                  <span v-if="loading" style="font-size: 14px;color: #a9dbe5;">
+                      <img src="/img/loading.svg" style="height: 15px; margin-bottom: 2px;"> Ladataan..
+                  </span>
                   <div class="small-spacer"></div>
                 </div>
                 <div v-if='viewableUsers.length > 1' class="col-md-6 col-sm-12 col-12">
