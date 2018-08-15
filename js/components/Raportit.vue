@@ -35,7 +35,7 @@
                   />
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
-                  <span v-if="loading" style="font-size: 14px;color: #a9dbe5;">
+                  <span v-if="loading" style="font-size: 14px;color: rgb(220, 96, 87);">
                       <img src="/img/loading.svg" style="height: 15px; margin-bottom: 2px;"> Ladataan..
                   </span>
                   <div class="small-spacer"></div>

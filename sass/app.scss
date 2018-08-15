@@ -164,12 +164,12 @@ h1, h2, h3, h4, h5 {
 
 /* Saturday */
 .calendar .day:nth-child(7n) {
-  background: rgba(138, 208, 219, 0.7490196078431373);
+  background: rgb(255, 230, 228);
 }
 
 /* Sunday */
-.calendar .day:nth-child(7n+1) {
-  background: #7cc4d0;
+.calendar .day:nth-child(7n+1) {    
+  background: #e7ada9;
 }
 
 .calendar .day.empty {
@@ -426,4 +426,8 @@ label {
 
 #header-logo {
   width: 160px;
+}
+
+.red {
+  color: red;
 }
