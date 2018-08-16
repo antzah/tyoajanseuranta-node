@@ -14,7 +14,7 @@ module.exports = (app, passport) => {
    * Static 'public' pages
    */
   app.get('/', (req, res) => {
-    res.render('home.ejs')
+    res.render('home.ejs', { message: req.flash('signupMessage') })
   })
 
   app.get('/ehdot-ja-saannot', (req, res) => {

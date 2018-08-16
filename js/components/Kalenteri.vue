@@ -18,10 +18,6 @@
     border-radius: 1px;
 }
 
-.card {
-    margin-bottom: 16px;
-}
-
 hr {
     border-top: 1px solid rgba(204, 204, 204, 0.32);
 }
@@ -257,6 +253,7 @@ hr {
 import leftPad from 'left-pad'
 import päivä from './subcomponents/Päivä.vue'
 import vartti from './subcomponents/Vartti.vue'
+import decimalHoursToString from '../helpers/decimal-hours-to-string'
 
 function emptyDaysBeforeStart (month, year) {
   var day = moment(new Date(year, month, 1))
@@ -396,17 +393,11 @@ export default {
           console.log('Delete aborted')
         })
     },
-    /**
-         * https://stackoverflow.com/questions/33769178/moment-js-decimals-into-time-format
-         */
-    decimalHoursToString: function (hours) {
-      return ('' + Math.floor(hours) % 24).slice(-2) + 'h ' + ((hours % 1) * 60 + '0').slice(0, 2) + 'min'
-    },
     updateDailyTotal: function () {
       var dailyTotalAsDecimal = 0
       this.quarters.map(quarter => (quarter.painted) ? dailyTotalAsDecimal += 0.25 : null)
       this.dailyTotalAsDecimal = dailyTotalAsDecimal
-      this.dailyTotal = this.decimalHoursToString(dailyTotalAsDecimal)
+      this.dailyTotal = decimalHoursToString(dailyTotalAsDecimal)
     },
     fetchUser: function () {
       axios.get('/sovellus/user')

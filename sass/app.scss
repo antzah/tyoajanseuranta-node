@@ -379,8 +379,10 @@ label {
   }
 }
 
-.centered {
-  text-align: center;
+@media (min-width: 600px) {
+  .centered {
+    text-align: center;
+  }
 }
 
 .no-border {
@@ -429,5 +431,32 @@ label {
 }
 
 .red {
-  color: red;
+  color: #d50001;
+}
+
+.footer {
+  background: white;
+  border-top: 2px solid rgba(0,0,0,.1);
+  border-bottom: 2px solid rgba(0,0,0,.1);
+  padding: 16px 0;
+}
+
+.card {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.section {
+  padding: 3% 0 2.8%;
+}
+
+.home-1 {
+  background-image: url(/img/test-bg1.png);
+  background-size: cover;
+  background-position: bottom right;
+  min-height: 60vh;
+}
+
+p.big {
+  font-size: 1.2rem;
 }
