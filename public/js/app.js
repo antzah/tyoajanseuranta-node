@@ -56061,6 +56061,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* eslint no-undef: 0 */
 
@@ -56146,6 +56158,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           }).then(function (res) {
             if (res.data) {
               var resultTotal = 0;
+              var paivatyoTotal = 0;
+              var iltatyoTotal = 0;
+              var yotyoTotal = 0;
 
               _this2.exportableResults = [];
 
@@ -56157,15 +56172,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 resultRow.iltatyo = _this2.returnHoursBetweenPeriods(resultRow.quarters, _this2.iltatyoAlku, _this2.iltatyoLoppu);
                 resultRow.yotyo = _this2.returnHoursBetweenPeriods(resultRow.quarters, _this2.iltatyoLoppu, _this2.yotyoLoppu);
                 resultTotal += resultRow.dailyTotal;
+                paivatyoTotal += resultRow.paivatyo;
+                iltatyoTotal += resultRow.iltatyo;
+                yotyoTotal += resultRow.yotyo;
                 _this2.exportableResults.push({
                   'Viikonpäivä': resultRow.dayOfWeek,
                   'Päivämäärä': resultRow.trimmedDate,
-                  'Tunnit': resultRow.dailyTotal,
+                  'Tunnit yht.': resultRow.dailyTotal,
+                  'Päivätyö': resultRow.paivatyo,
+                  'Iltatyö': resultRow.iltatyo,
+                  'Yötyö': resultRow.yotyo,
                   'Muistiinpanot': resultRow.notes
                 });
               });
 
               _this2.periodTotal = resultTotal;
+              _this2.paivatyoTotal = paivatyoTotal;
+              _this2.iltatyoTotal = iltatyoTotal;
+              _this2.yotyoTotal = yotyoTotal;
               _this2.resultRows = res.data;
               _this2.loading = false;
             }
@@ -87067,7 +87091,15 @@ var render = function() {
                 )
               ])
             })
-          )
+          ),
+          _vm._v(" "),
+          _vm.iltatyoAlku > _vm.iltatyoLoppu
+            ? _c("label", { staticStyle: { color: "red" } }, [
+                _vm._v(
+                  "\n                Iltatyön aloitusaika ei voi olla myöhäisempi kuin loppumisaika.\n            "
+                )
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-2 col-md-4 col-12" }, [
@@ -87187,6 +87219,14 @@ var render = function() {
             })
           ),
           _vm._v(" "),
+          _vm.yotyoLoppu > _vm.iltatyoAlku
+            ? _c("label", { staticStyle: { color: "red" } }, [
+                _vm._v(
+                  "\n                Yötyön loppumisaika ei voi olla myöhäisempi kuin iltatyön alkamisaika.\n            "
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "spacer" })
         ])
       ]),
@@ -87247,6 +87287,12 @@ var render = function() {
             "table",
             {
               staticClass: "table table-hover table-sm",
+              style: [
+                _vm.yotyoLoppu > _vm.iltatyoAlku ||
+                _vm.iltatyoAlku > _vm.iltatyoLoppu
+                  ? { color: "red" }
+                  : null
+              ],
               attrs: { id: "raportti" }
             },
             [
@@ -87292,7 +87338,7 @@ var render = function() {
                 [
                   _vm._l(_vm.resultRows, function(result) {
                     return _c("tr", { key: result._id }, [
-                      _c("th", [
+                      _c("td", [
                         _vm._v(
                           _vm._s(result.dayOfWeek) +
                             " " +
@@ -87341,7 +87387,7 @@ var render = function() {
                       _c("td", [
                         _c("strong", [
                           _vm._v(
-                            _vm._s(_vm.periodTotal ? _vm.periodTotal : null)
+                            _vm._s(_vm.paivatyoTotal ? _vm.paivatyoTotal : null)
                           )
                         ])
                       ]),
@@ -87349,16 +87395,14 @@ var render = function() {
                       _c("td", [
                         _c("strong", [
                           _vm._v(
-                            _vm._s(_vm.periodTotal ? _vm.periodTotal : null)
+                            _vm._s(_vm.iltatyoTotal ? _vm.iltatyoTotal : null)
                           )
                         ])
                       ]),
                       _vm._v(" "),
                       _c("td", [
                         _c("strong", [
-                          _vm._v(
-                            _vm._s(_vm.periodTotal ? _vm.periodTotal : null)
-                          )
+                          _vm._v(_vm._s(_vm.yotyoTotal ? _vm.yotyoTotal : null))
                         ])
                       ]),
                       _vm._v(" "),

@@ -72,6 +72,12 @@
                     {{ decimalHoursToHhMm(((n-1)/4)) }}
                   </option>
                 </select>
+                <label
+                    v-if="iltatyoAlku > iltatyoLoppu"
+                    style="color: red"
+                >
+                    Iltatyön aloitusaika ei voi olla myöhäisempi kuin loppumisaika.
+                </label>
               </div>
               <div class="col-lg-2 col-md-4 col-12">
                 <label for="iltatyoLoppu">Iltatyöajan loppu</label>
@@ -88,6 +94,12 @@
                     {{ decimalHoursToHhMm(((n-1)/4)) }}
                   </option>
                 </select>
+                <label
+                    v-if="yotyoLoppu > iltatyoAlku"
+                    style="color: red"
+                >
+                    Yötyön loppumisaika ei voi olla myöhäisempi kuin iltatyön alkamisaika.
+                </label>
                 <div class="spacer"></div>
               </div>
             </div>
@@ -111,7 +123,7 @@
                     <div v-if="viewableUsers.length > 1">
                       <p>Käyttäjän {{ selectedUser.name }} ({{ selectedUser.email }}) tuntikertymät</p>
                     </div>
-                    <table id="raportti" class="table table-hover table-sm">
+                    <table v-bind:style="[((yotyoLoppu > iltatyoAlku) || (iltatyoAlku > iltatyoLoppu)) ? {color: 'red'} : null]" id="raportti" class="table table-hover table-sm">
                         <thead>
                             <tr>
                                 <td>Päivämäärä</td>
@@ -127,7 +139,7 @@
                                 v-for="result in resultRows"
                                 :key="result._id"
                             >
-                                <th>{{ result.dayOfWeek }} {{ result.readableDate }}</th>
+                                <td>{{ result.dayOfWeek }} {{ result.readableDate }}</td>
                                 <td>{{ result.dailyTotal }}</td>
                                 <td>{{ result.paivatyo }}</td>
                                 <td>{{ result.iltatyo }}</td>
@@ -144,9 +156,9 @@
                             <tr>
                                 <td><strong>Yhteensä</strong></td>
                                 <td><strong>{{ (periodTotal) ? periodTotal : null }}</strong></td>
-                                <td><strong>{{ (periodTotal) ? periodTotal : null }}</strong></td>
-                                <td><strong>{{ (periodTotal) ? periodTotal : null }}</strong></td>
-                                <td><strong>{{ (periodTotal) ? periodTotal : null }}</strong></td>
+                                <td><strong>{{ (paivatyoTotal) ? paivatyoTotal : null }}</strong></td>
+                                <td><strong>{{ (iltatyoTotal) ? iltatyoTotal : null }}</strong></td>
+                                <td><strong>{{ (yotyoTotal) ? yotyoTotal : null }}</strong></td>
                                 <td></td>
                             </tr>
                         </tfoot>
@@ -239,6 +251,9 @@ export default {
           }).then(res => {
             if (res.data) {
               let resultTotal = 0
+              let paivatyoTotal = 0
+              let iltatyoTotal = 0
+              let yotyoTotal = 0
 
               this.exportableResults = []
 
@@ -250,15 +265,24 @@ export default {
                 resultRow.iltatyo = this.returnHoursBetweenPeriods(resultRow.quarters, this.iltatyoAlku, this.iltatyoLoppu)
                 resultRow.yotyo = this.returnHoursBetweenPeriods(resultRow.quarters, this.iltatyoLoppu, this.yotyoLoppu)
                 resultTotal += resultRow.dailyTotal
+                paivatyoTotal += resultRow.paivatyo
+                iltatyoTotal += resultRow.iltatyo
+                yotyoTotal += resultRow.yotyo
                 this.exportableResults.push({
                   'Viikonpäivä': resultRow.dayOfWeek,
                   'Päivämäärä': resultRow.trimmedDate,
-                  'Tunnit': resultRow.dailyTotal,
+                  'Tunnit yht.': resultRow.dailyTotal,
+                  'Päivätyö': resultRow.paivatyo,
+                  'Iltatyö': resultRow.iltatyo,
+                  'Yötyö': resultRow.yotyo,
                   'Muistiinpanot': resultRow.notes
                 })
               })
 
               this.periodTotal = resultTotal
+              this.paivatyoTotal = paivatyoTotal
+              this.iltatyoTotal = iltatyoTotal
+              this.yotyoTotal = yotyoTotal
               this.resultRows = res.data
               this.loading = false
             }
