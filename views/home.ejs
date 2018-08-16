@@ -1,8 +1,56 @@
 <% metaTitle = "Ilmainen työajanseuranta – Selkeä tuntikirjanpito – Kirjaa tunnit helposti!" %>
 <% include ./header %>
 
-<div class="container">
-    <h2>Koti</h2>
+<div class="home-1 section">
+    <div class="container">
+        <h1 class="centered">Järkevä, yksinkertainen, <span class="red">ILMAINEN</span> työajanseuranta!</h1>
+        <div class="big-spacer"></div>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <h4 class="red">Miksi tehdä tuntikirjanpidosta rakettitiedettä?</h4>
+                <h2>Kirjaa tuntisi ylös helposti ja nopeasti!</h2>
+                <p class="big">Kokeile netin ehkäpä simppeleintä ja toimivinta tuntiseurantasovellusta, palvelu on 100&nbsp;% ilmainen!</p>
+                <p class="big">Ei enää säätöä exceleiden ja kömpelöiden verkkopalveluiden kanssa – pari klikkausta riittää.</p>
+                <p class="big"><strong>Rekisteröidy ja kokeile heti!</strong></p>
+                <div class="spacer"></div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="card" style="margin-top: 0">
+                    <div class="card-header">
+                        Rekisteröidy ilmaiseksi
+                    </div>
+                    <div class="card-body">
+                        <% if (message.length > 0) { %>
+                            <div class="alert alert-danger"><%= message %></div>
+                        <% } %>
+    
+                        <form action="/sovellus/signup" method="post">
+                            <div class="form-group">
+                                <label>Nimi</label>
+                                <input placeholder="Syötä nimesi" type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Sähköposti</label>
+                                <input placeholder="Syötä sähköpostiosoitteesi" type="email" class="form-control" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Salasana</label>
+                                <input placeholder="Keksi itsellesi hyvä ja turvallinen salasana" type="password" class="form-control" name="password" required>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="ehdot" required>
+                                    Hyväksyn <a href="/ehdot-ja-saannot" id="ehdot-link" target="_blank">ehdot ja säännöt</a>
+                                </label>
+                            </div>
+                            <div class="spacer"></div>
+                            <button type="submit" class="btn btn-success btn-lg">Rekisteröidy ja aloita</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <% include ./footer %>
