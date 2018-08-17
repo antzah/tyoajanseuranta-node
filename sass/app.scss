@@ -1,6 +1,6 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:600|Oxygen:300,500,700');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:600|Oxygen:300,500,700');
 
 // Variables
 @import "variables";
@@ -10,6 +10,7 @@
 
 @import 'fontawesome-all.min.css';
 @import "~vue-directive-tooltip/src/css/index.scss";
+@import '~aos/dist/aos.css';
 
 h1, h2, h3, h4, h5,
 .title,
@@ -72,6 +73,11 @@ h1, h2, h3, h4, h5 {
 
 .btn {
   border-radius: 1px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 @media (max-width: 767px) {
@@ -447,16 +453,85 @@ label {
 }
 
 .section {
-  padding: 3% 0 2.8%;
+  padding: 4% 0 4%;
+}
+
+@media (max-width: 500px) {
+  .section {
+    padding: 24px 0;
+  }
 }
 
 .home-1 {
   background-image: url(/img/test-bg1.png);
   background-size: cover;
-  background-position: bottom right;
-  min-height: 60vh;
+  color: white;
+}
+
+.home-1 .check {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 24px;
+}
+
+.home-1 .check .fas {
+  font-size: 32px;
+  position: relative;
+  top: 4px;
+  margin-right: 6px;
+}
+
+@media (max-width: 550px) {
+  .home-1 .check {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 12px;
+  }
+  
+  .home-1 .check .fas {
+    font-size: 24px;
+    position: relative;
+    top: 3px;
+    margin-right: 6px;
+  }
+}
+
+.home-1 .card {
+  color: #333
+}
+
+.home-1 .card-header {
+  border-radius: 0 !important;
 }
 
 p.big {
   font-size: 1.2rem;
+}
+
+.yellow {
+  color: #ffeb3b;
+}
+
+.shadowed {
+  text-shadow: 3px 3px rgba(0,0,0,0.15);
+}
+
+.home-loader {
+  position: absolute;
+  left: 0;
+  text-align: center;
+  right: 0;
+}
+
+.home-2 {
+  background: white;
+}
+
+.home-2 img {    
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.home-2 p {
+  max-width: 600px;
+  margin: 0 auto 24px;
 }

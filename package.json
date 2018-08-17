@@ -34,6 +34,7 @@
     },
     "dependencies": {
         "@sendgrid/mail": "^6.2.1",
+        "aos": "^3.0.0-beta.4",
         "async": "^2.6.0",
         "bcrypt-nodejs": "latest",
         "body-parser": "~1.15.2",

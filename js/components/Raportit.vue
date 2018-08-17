@@ -6,63 +6,43 @@
         <div class="card-body">
             <p>Voit tarkastella tuntikertymää pidemmältä ajalta valitsemalla haluamasi ajanjakson.</p>
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                  <label>Valitse aloituspäivä</label>
-                  <datepicker
-                      placeholder="Klikkaa aloituspäivää"
-                      ref="startDate"
-                      :monday-first="true"
-                      :format="'d.M.yyyy'"
-                      :language="'fi'"
-                      @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary(); "
-                      v-model="firstDate"
-                  />
-                  <label
-                      v-if="firstDateIsBiggerThanSecond"
-                      style="color: red"
-                  >
-                      Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.
-                  </label>
-                  <div class="small-spacer"></div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                  <label>Valitse lopetuspäivä</label>
-                  <datepicker
-                      placeholder="Klikkaa lopetuspäivää"
-                      ref="endingDate"
-                      :monday-first="true"
-                      :format="'d.M.yyyy'"
-                      :language="'fi'"
-                      v-model="secondDate"
-                      @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary();"
-                  />
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                  <span v-if="loading" style="font-size: 14px;color: rgb(220, 96, 87);">
-                      <img src="/img/loading.svg" style="height: 15px; margin-bottom: 2px;"> Ladataan..
-                  </span>
-                  <div class="small-spacer"></div>
-                </div>
-                <div v-if='viewableUsers.length > 1' class="col-md-6 col-sm-12 col-12">
-                  <label>Valitse käyttäjä <i class="blue pointer fas fa-question-circle" v-tooltip='"Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan."'></i></label>
-                  <div class="selectWrapper">
-                    <select
-                      style="height: 32px; background: transparent; text-indent: 3px"
-                      class="form-control no-border"
-                      v-model="selectedUser"
-                      @change="validateSelectionsAndRunQuery"
-                    >
-                      <option
-                        v-for="viewableUser in viewableUsers"
-                        :key="viewableUser.id"
-                        :value="viewableUser"
-                      >
-                        {{ viewableUser.name }} ({{ viewableUser.email }})
-                      </option>
-                    </select>
-                  </div>
-                  <div class="small-spacer"></div>
-                </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                <label>Valitse aloituspäivä</label>
+                <datepicker
+                    placeholder="Klikkaa aloituspäivää"
+                    ref="startDate"
+                    :monday-first="true"
+                    :format="'d.M.yyyy'"
+                    :language="'fi'"
+                    @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary(); "
+                    v-model="firstDate"
+                />
+                <label
+                    v-if="firstDateIsBiggerThanSecond"
+                    style="color: red"
+                >
+                    Aloituspäivä ei voi olla myöhäisempi kuin lopetuspäivä.
+                </label>
+                <div class="small-spacer"></div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                <label>Valitse lopetuspäivä</label>
+                <datepicker
+                    placeholder="Klikkaa lopetuspäivää"
+                    ref="endingDate"
+                    :monday-first="true"
+                    :format="'d.M.yyyy'"
+                    :language="'fi'"
+                    v-model="secondDate"
+                    @closed="validateSelectionsAndRunQuery(); openAPickerIfNecessary();"
+                />
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                <span v-if="loading" style="font-size: 14px;color: rgb(220, 96, 87);">
+                    <img src="/img/loading.svg" style="height: 15px; margin-bottom: 2px;"> Ladataan..
+                </span>
+                <div class="small-spacer"></div>
+              </div>
             </div>
             <div class="row">
               <div class="col-lg-2 col-md-4 col-12">
@@ -101,6 +81,26 @@
                     Yötyön loppumisaika ei voi olla myöhäisempi kuin iltatyön alkamisaika.
                 </label>
                 <div class="spacer"></div>
+              </div>
+              <div v-if='viewableUsers.length > 1' class="col-md-6 col-sm-12 col-12">
+                <label>Valitse käyttäjä <i class="blue pointer fas fa-question-circle" v-tooltip='"Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan."'></i></label>
+                <div class="selectWrapper">
+                  <select
+                    style="height: 32px; background: transparent; text-indent: 3px"
+                    class="form-control no-border"
+                    v-model="selectedUser"
+                    @change="validateSelectionsAndRunQuery"
+                  >
+                    <option
+                      v-for="viewableUser in viewableUsers"
+                      :key="viewableUser.id"
+                      :value="viewableUser"
+                    >
+                      {{ viewableUser.name }} ({{ viewableUser.email }})
+                    </option>
+                  </select>
+                </div>
+                <div class="small-spacer"></div>
               </div>
             </div>
             <div class="row">

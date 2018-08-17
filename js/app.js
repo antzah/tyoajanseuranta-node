@@ -22,6 +22,8 @@ Vue.use(VuejsDialog)
  */
 window.moment = require('moment')
 window.moment.locale('fi')
+window.AOS = require('AOS')
+window.AOS.init()
 
 window.swal = require('sweetalert2')
 
@@ -33,3 +35,8 @@ if (document.querySelector('#app')) {
     components: { App }
   })
 }
+
+/**
+ * Hide the home landing page spinner when stuff has been loaded
+ */
+document.querySelector('.home-loader').style.display = 'none'
