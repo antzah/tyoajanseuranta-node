@@ -5,11 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <% if (metaTitle && metaTitle != '') { %>
-        <title><%= metaTitle %></title>
-    <% } else { %>
-        <title>Tuntikirjanpito.fi</title>
-    <% } %>
+    <title><%= metaTitle %></title>
+    <meta property="og:title" content="<%= metaTitle %>">
+
+    <meta name="description" content="<%= metaDesc %>">
+    <meta property="og:description" content="<%= metaDesc %>">
+
+    <meta property="og:image" content="/img/meta-img.png">
+    <meta property="og:url" content="<%= currentUrl %>">
 
     <link href="/css/app.css" rel="stylesheet">
 
