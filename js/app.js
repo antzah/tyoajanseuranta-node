@@ -39,4 +39,4 @@ if (document.querySelector('#app')) {
 /**
  * Hide the home landing page spinner when stuff has been loaded
  */
-document.querySelector('.home-loader').style.display = 'none'
+if (document.querySelector('.home-loader')) document.querySelector('.home-loader').style.display = 'none'
