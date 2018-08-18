@@ -1,6 +1,23 @@
 var express = require('express')
+var minifyHTML = require('express-minify-html')
+var compression = require('compression')
 var app = express()
 var port = process.env.PORT || 3000
+
+app.use(compression())
+
+app.use(minifyHTML({
+  override: true,
+  exception_url: false,
+  htmlMinifier: {
+    removeComments: true,
+    collapseWhitespace: true,
+    collapseBooleanAttributes: true,
+    removeAttributeQuotes: true,
+    removeEmptyAttributes: true,
+    minifyJS: true
+  }
+}))
 
 var mongoose = require('mongoose')
 var passport = require('passport')
