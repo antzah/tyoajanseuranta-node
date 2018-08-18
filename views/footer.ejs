@@ -1,6 +1,20 @@
 <div class="footer">
     <div class="container">
         Tuntikirjanpito.fi 2018.
+        <br>
+        <br><% if (isLoggedIn) { %>Olet kirjautunut sisään nimellä <%= name %>.<% } %>
+        <br>
+        <br><a href="/">Etusivu</a>
+        <% if (isLoggedIn) { %>
+            <br><a href="/sovellus">Kalenteri</a>
+            <br><a href="/sovellus/raportit">Raportit</a>
+            <br><a href="/sovellus/asetukset">Asetukset</a>
+            <br><a href="/sovellus/logout">Kirjaudu ulos</a>
+        <% } else { %>
+            <br><a href="/sovellus/kirjaudu">Kirjaudu sisään</a> 
+            <br><a href="/sovellus/rekisteroidy">Rekisteröidy</a>       
+        <% } %>
+        <br><a href="/ehdot-ja-saannot">Ehdot ja säännöt</a>
     </div>
 </div>
 <script src="/js/app.js"></script>

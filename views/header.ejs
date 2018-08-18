@@ -51,8 +51,7 @@
                         <li><a <% if (currentUrl == '/sovellus/asetukset') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/asetukset">Asetukset</a></li>
                         <li class="navbar-desktop-divider"></li>
                         <li><a <% if (currentUrl == '/sovellus/logout') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/logout"><i class="red fas fa-sign-out-alt"></i> Kirjaudu ulos</a></li>
-                    <% } %>
-                    <% if (!isLoggedIn) { %>
+                    <% } else { %>
                         <li><a <% if (currentUrl == '/sovellus/kirjaudu') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/kirjaudu">Kirjaudu sisään</a></li>
                         <li><a <% if (currentUrl == '/sovellus/rekisteroidy') { %> class="nav-link current" <% } else { %> class="nav-link" <% } %> href="/sovellus/rekisteroidy">Rekisteröidy</a></li>
                     <% } %>

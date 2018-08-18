@@ -1,1 +1,8 @@
 Sitemap: https://tuntikirjanpito.fi/sitemap.xml
+User-agent: *
+Disallow: /sovellus/
+Disallow: /sovellus/logout
+Disallow: /sovellus/raportit
+Disallow: /sovellus/asetukset
+Allow: /sovellus/kirjaudu
+Allow: /sovellus/rekisteroidy
