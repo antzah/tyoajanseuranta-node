@@ -56131,6 +56131,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* eslint no-undef: 0 */
 
@@ -87367,6 +87370,8 @@ var render = function() {
             [
               _c("thead", [
                 _c("tr", [
+                  _c("td"),
+                  _vm._v(" "),
                   _c("td", [_vm._v("Päivämäärä")]),
                   _vm._v(" "),
                   _c("td", [_vm._v("Tunnit yht.")]),
@@ -87377,7 +87382,7 @@ var render = function() {
                         _vm._s(_vm.decimalHoursToHhMm(_vm.yotyoLoppu / 4)) +
                         "–" +
                         _vm._s(_vm.decimalHoursToHhMm(_vm.iltatyoAlku / 4)) +
-                        "\n                            "
+                        "\n                        "
                     )
                   ]),
                   _c("td", [
@@ -87386,7 +87391,7 @@ var render = function() {
                         _vm._s(_vm.decimalHoursToHhMm(_vm.iltatyoAlku / 4)) +
                         "–" +
                         _vm._s(_vm.decimalHoursToHhMm(_vm.iltatyoLoppu / 4)) +
-                        "\n                            "
+                        "\n                        "
                     )
                   ]),
                   _c("td", [
@@ -87395,7 +87400,7 @@ var render = function() {
                         _vm._s(_vm.decimalHoursToHhMm(_vm.iltatyoLoppu / 4)) +
                         "–" +
                         _vm._s(_vm.decimalHoursToHhMm(_vm.yotyoLoppu / 4)) +
-                        "\n                            "
+                        "\n                        "
                     )
                   ]),
                   _c("td", [_vm._v("Muistiinpanot")])
@@ -87407,13 +87412,9 @@ var render = function() {
                 [
                   _vm._l(_vm.resultRows, function(result) {
                     return _c("tr", { key: result._id }, [
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(result.dayOfWeek) +
-                            " " +
-                            _vm._s(result.readableDate)
-                        )
-                      ]),
+                      _c("td", [_vm._v(_vm._s(result.dayOfWeek) + " ")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(result.readableDate))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(result.dailyTotal))]),
                       _vm._v(" "),
@@ -87443,36 +87444,26 @@ var render = function() {
               _vm.resultRows.length != 0
                 ? _c("tfoot", [
                     _c("tr", [
-                      _vm._m(0),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
                       _vm._v(" "),
                       _c("td", [
-                        _c("strong", [
-                          _vm._v(
-                            _vm._s(_vm.periodTotal ? _vm.periodTotal : null)
-                          )
-                        ])
+                        _vm._v(_vm._s(_vm.periodTotal ? _vm.periodTotal : 0))
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        _c("strong", [
-                          _vm._v(
-                            _vm._s(_vm.paivatyoTotal ? _vm.paivatyoTotal : null)
-                          )
-                        ])
+                        _vm._v(
+                          _vm._s(_vm.paivatyoTotal ? _vm.paivatyoTotal : 0)
+                        )
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        _c("strong", [
-                          _vm._v(
-                            _vm._s(_vm.iltatyoTotal ? _vm.iltatyoTotal : null)
-                          )
-                        ])
+                        _vm._v(_vm._s(_vm.iltatyoTotal ? _vm.iltatyoTotal : 0))
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        _c("strong", [
-                          _vm._v(_vm._s(_vm.yotyoTotal ? _vm.yotyoTotal : null))
-                        ])
+                        _vm._v(_vm._s(_vm.yotyoTotal ? _vm.yotyoTotal : 0))
                       ]),
                       _vm._v(" "),
                       _c("td")
@@ -87486,14 +87477,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("strong", [_vm._v("Yhteensä")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

@@ -10366,6 +10366,11 @@ img {
   margin-top: 48px;
 }
 
+.huge-spacer {
+  display: block;
+  margin-top: 80px;
+}
+
 .small-spacer {
   display: block;
   margin-top: 12px;
@@ -10560,6 +10565,7 @@ label {
 }
 
 .home-1 {
+  background-color: #bd0c0c;
   background-image: url(/img/test-bg1.png);
   background-size: cover;
   color: white;
