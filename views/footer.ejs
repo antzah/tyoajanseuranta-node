@@ -2,8 +2,7 @@
     <div class="container">
         Tuntikirjanpito.fi 2018.
         <br>
-        <br><% if (isLoggedIn) { %>Olet kirjautunut sisään nimellä <%= name %>.<% } %>
-        <br>
+        <% if (isLoggedIn) { %><br> Olet kirjautunut sisään nimellä <%= name %>.<br><% } %>
         <br><a href="/">Etusivu</a>
         <% if (isLoggedIn) { %>
             <br><a href="/sovellus">Kalenteri</a>
