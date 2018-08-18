@@ -125,42 +125,45 @@
                     </div>
                     <table v-bind:style="[((yotyoLoppu > iltatyoAlku) || (iltatyoAlku > iltatyoLoppu)) ? {color: 'red'} : null]" id="raportti" class="table table-hover table-sm">
                         <thead>
-                            <tr>
-                                <td>Päivämäärä</td>
-                                <td>Tunnit yht.</td>
-                                <td>Päivätyö {{ decimalHoursToHhMm( yotyoLoppu / 4 ) }}–{{ decimalHoursToHhMm( iltatyoAlku / 4 ) }}
-                                <td>Iltatyö {{ decimalHoursToHhMm( iltatyoAlku / 4 ) }}–{{ decimalHoursToHhMm( iltatyoLoppu / 4 ) }}
-                                <td>Yötyö {{ decimalHoursToHhMm( iltatyoLoppu / 4 ) }}–{{ decimalHoursToHhMm( yotyoLoppu / 4 ) }}
-                                <td>Muistiinpanot</td>
-                            </tr>
+                          <tr>
+                            <td></td>
+                            <td>Päivämäärä</td>
+                            <td>Tunnit yht.</td>
+                            <td>Päivätyö {{ decimalHoursToHhMm( yotyoLoppu / 4 ) }}–{{ decimalHoursToHhMm( iltatyoAlku / 4 ) }}
+                            <td>Iltatyö {{ decimalHoursToHhMm( iltatyoAlku / 4 ) }}–{{ decimalHoursToHhMm( iltatyoLoppu / 4 ) }}
+                            <td>Yötyö {{ decimalHoursToHhMm( iltatyoLoppu / 4 ) }}–{{ decimalHoursToHhMm( yotyoLoppu / 4 ) }}
+                            <td>Muistiinpanot</td>
+                          </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                v-for="result in resultRows"
-                                :key="result._id"
-                            >
-                                <td>{{ result.dayOfWeek }} {{ result.readableDate }}</td>
-                                <td>{{ result.dailyTotal }}</td>
-                                <td>{{ result.paivatyo }}</td>
-                                <td>{{ result.iltatyo }}</td>
-                                <td>{{ result.yotyo }}</td>
-                                <td>{{ result.notes }}</td>
-                            </tr>
-                            <tr v-if="resultRows.length == 0">
-                                <td>Ei tuloksia</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
+                          <tr
+                              v-for="result in resultRows"
+                              :key="result._id"
+                          >
+                            <td>{{ result.dayOfWeek }} </td>
+                            <td>{{ result.readableDate }}</td>
+                            <td>{{ result.dailyTotal }}</td>
+                            <td>{{ result.paivatyo }}</td>
+                            <td>{{ result.iltatyo }}</td>
+                            <td>{{ result.yotyo }}</td>
+                            <td>{{ result.notes }}</td>
+                          </tr>
+                          <tr v-if="resultRows.length == 0">
+                            <td>Ei tuloksia</td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
                         </tbody>
                         <tfoot v-if="resultRows.length != 0">
-                            <tr>
-                                <td><strong>Yhteensä</strong></td>
-                                <td><strong>{{ (periodTotal) ? periodTotal : null }}</strong></td>
-                                <td><strong>{{ (paivatyoTotal) ? paivatyoTotal : null }}</strong></td>
-                                <td><strong>{{ (iltatyoTotal) ? iltatyoTotal : null }}</strong></td>
-                                <td><strong>{{ (yotyoTotal) ? yotyoTotal : null }}</strong></td>
-                                <td></td>
-                            </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td>{{ (periodTotal) ? periodTotal : 0 }}</td>
+                            <td>{{ (paivatyoTotal) ? paivatyoTotal : 0 }}</td>
+                            <td>{{ (iltatyoTotal) ? iltatyoTotal : 0 }}</td>
+                            <td>{{ (yotyoTotal) ? yotyoTotal : 0 }}</td>
+                            <td></td>
+                          </tr>
                         </tfoot>
                     </table>
                 </div>
