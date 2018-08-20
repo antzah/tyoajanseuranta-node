@@ -92127,7 +92127,7 @@ if (typeof window !== 'undefined' && window.Sweetalert2){  window.swal = window.
 /* 209 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleBuildError: Module build failed: \n}\n^\n      Invalid CSS after \"}\": expected 1 selector or at-rule, was \"<<<<<<< HEAD\"\n      in /Users/anssi/Sites/tyoajanseuranta-node/sass/app.scss (line 547, column 2)\n    at runLoaders (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /Users/anssi/Sites/tyoajanseuranta-node/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /Users/anssi/Sites/tyoajanseuranta-node/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.done [as callback] (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/neo-async/async.js:7974:18)\n    at options.error (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/node-sass/lib/index.js:294:32)");
 
 /***/ })
 /******/ ]);

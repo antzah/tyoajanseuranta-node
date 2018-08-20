@@ -542,10 +542,15 @@ p.big {
   margin: 0 auto 24px;
 }
 
-.footer a {
+a {
   color: #d21a1b
 }
 
+<<<<<<< HEAD
 .app-container .card {
   min-height: 425px;
+=======
+.section p:last-of-type {
+  margin-bottom: 0;
+>>>>>>> content
 }
