@@ -57926,6 +57926,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_xlsx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_xlsx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_decimal_hours_to_hhmm__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_decimal_hours_to_hhmm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__helpers_decimal_hours_to_hhmm__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_decimal_hours_to_string__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_decimal_hours_to_string___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__helpers_decimal_hours_to_string__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -58106,6 +58128,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'raportit',
   components: {
@@ -58127,7 +58150,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       selectedUser: {},
       iltatyoAlku: 72,
       iltatyoLoppu: 88,
-      yotyoLoppu: 24
+      yotyoLoppu: 24,
+      paivittainenTyoaika: 30,
+      ylityoTotal: 0
     };
   },
   created: function created() {
@@ -58136,6 +58161,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     decimalHoursToHhMm: __WEBPACK_IMPORTED_MODULE_2__helpers_decimal_hours_to_hhmm___default.a,
+    decimalHoursToString: __WEBPACK_IMPORTED_MODULE_3__helpers_decimal_hours_to_string___default.a,
     fetchViewableUsers: function fetchViewableUsers() {
       var _this = this;
 
@@ -58188,6 +58214,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               var paivatyoTotal = 0;
               var iltatyoTotal = 0;
               var yotyoTotal = 0;
+              var ylityoTotal = 0;
 
               _this2.exportableResults = [];
 
@@ -58198,10 +58225,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 resultRow.paivatyo = _this2.returnHoursBetweenPeriods(resultRow.quarters, _this2.yotyoLoppu, _this2.iltatyoAlku);
                 resultRow.iltatyo = _this2.returnHoursBetweenPeriods(resultRow.quarters, _this2.iltatyoAlku, _this2.iltatyoLoppu);
                 resultRow.yotyo = _this2.returnHoursBetweenPeriods(resultRow.quarters, _this2.iltatyoLoppu, _this2.yotyoLoppu);
+                resultRow.ylityo = resultRow.dailyTotal - _this2.paivittainenTyoaika / 4 > 0 ? resultRow.dailyTotal - _this2.paivittainenTyoaika / 4 : null;
+
                 resultTotal += resultRow.dailyTotal;
                 paivatyoTotal += resultRow.paivatyo;
                 iltatyoTotal += resultRow.iltatyo;
                 yotyoTotal += resultRow.yotyo;
+                ylityoTotal += resultRow.ylityo;
+
                 _this2.exportableResults.push({
                   'Viikonpäivä': resultRow.dayOfWeek,
                   'Päivämäärä': resultRow.trimmedDate,
@@ -58209,6 +58240,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                   'Päivätyö': resultRow.paivatyo,
                   'Iltatyö': resultRow.iltatyo,
                   'Yötyö': resultRow.yotyo,
+                  'Ylityö': resultRow.ylityo,
                   'Muistiinpanot': resultRow.notes
                 });
               });
@@ -58217,6 +58249,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
               _this2.paivatyoTotal = paivatyoTotal;
               _this2.iltatyoTotal = iltatyoTotal;
               _this2.yotyoTotal = yotyoTotal;
+              _this2.ylityoTotal = ylityoTotal;
               _this2.resultRows = res.data;
               _this2.loading = false;
             }
@@ -87788,268 +87821,355 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-lg-2 col-md-4 col-12" }, [
-          _c("label", { attrs: { for: "iltatyoAlku" } }, [
-            _vm._v("Iltatyöajan alku")
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.iltatyoAlku,
-                  expression: "iltatyoAlku"
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "iltatyoAlku" } }, [
+              _vm._v("Iltatyöajan alku")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.iltatyoAlku,
+                    expression: "iltatyoAlku"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "iltatyoAlku", id: "iltatyoAlku" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.iltatyoAlku = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.validateSelectionsAndRunQuery
+                  ]
                 }
-              ],
-              staticClass: "form-control",
-              attrs: { name: "iltatyoAlku", id: "iltatyoAlku" },
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.iltatyoAlku = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  _vm.validateSelectionsAndRunQuery
-                ]
-              }
-            },
-            _vm._l(97, function(n) {
-              return _c("option", { key: n, domProps: { value: n - 1 } }, [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.decimalHoursToHhMm((n - 1) / 4)) +
-                    "\n              "
-                )
-              ])
-            })
-          ),
-          _vm._v(" "),
-          _vm.iltatyoAlku > _vm.iltatyoLoppu
-            ? _c("label", { staticStyle: { color: "red" } }, [
-                _vm._v(
-                  "\n                Iltatyön aloitusaika ei voi olla myöhäisempi kuin loppumisaika.\n            "
-                )
-              ])
-            : _vm._e()
+              },
+              _vm._l(97, function(n) {
+                return _c("option", { key: n, domProps: { value: n - 1 } }, [
+                  _vm._v(
+                    "\n                  " +
+                      _vm._s(_vm.decimalHoursToHhMm((n - 1) / 4)) +
+                      "\n                "
+                  )
+                ])
+              })
+            ),
+            _vm._v(" "),
+            _vm.iltatyoAlku > _vm.iltatyoLoppu
+              ? _c("label", { staticStyle: { color: "red" } }, [
+                  _vm._v(
+                    "\n                  Iltatyön aloitusaika ei voi olla myöhäisempi kuin loppumisaika.\n              "
+                  )
+                ])
+              : _vm._e()
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-2 col-md-4 col-12" }, [
-          _c("label", { attrs: { for: "iltatyoLoppu" } }, [
-            _vm._v("Iltatyöajan loppu")
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.iltatyoLoppu,
-                  expression: "iltatyoLoppu"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { name: "iltatyoLoppu", id: "iltatyoLoppu" },
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.iltatyoLoppu = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  _vm.validateSelectionsAndRunQuery
-                ]
-              }
-            },
-            _vm._l(97, function(n) {
-              return _c(
-                "option",
-                {
-                  key: n,
-                  domProps: {
-                    value: n - 1,
-                    selected: n == 89 ? "selected" : false
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "iltatyoLoppu" } }, [
+              _vm._v("Iltatyöajan loppu")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.iltatyoLoppu,
+                    expression: "iltatyoLoppu"
                   }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.decimalHoursToHhMm((n - 1) / 4)) +
-                      "\n              "
-                  )
-                ]
-              )
-            })
-          )
+                ],
+                staticClass: "form-control",
+                attrs: { name: "iltatyoLoppu", id: "iltatyoLoppu" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.iltatyoLoppu = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.validateSelectionsAndRunQuery
+                  ]
+                }
+              },
+              _vm._l(97, function(n) {
+                return _c(
+                  "option",
+                  {
+                    key: n,
+                    domProps: {
+                      value: n - 1,
+                      selected: n == 89 ? "selected" : false
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                  " +
+                        _vm._s(_vm.decimalHoursToHhMm((n - 1) / 4)) +
+                        "\n                "
+                    )
+                  ]
+                )
+              })
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-2 col-md-4 col-12" }, [
-          _c("label", { attrs: { for: "yotyoLoppu" } }, [
-            _vm._v("Yötyöajan loppu")
-          ]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.yotyoLoppu,
-                  expression: "yotyoLoppu"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { name: "yotyoLoppu", id: "yotyoLoppu" },
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.yotyoLoppu = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  _vm.validateSelectionsAndRunQuery
-                ]
-              }
-            },
-            _vm._l(97, function(n) {
-              return _c(
-                "option",
-                {
-                  key: n,
-                  domProps: {
-                    value: n - 1,
-                    selected: n == 25 ? "selected" : false
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "yotyoLoppu" } }, [
+              _vm._v("Yötyöajan loppu")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.yotyoLoppu,
+                    expression: "yotyoLoppu"
                   }
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.decimalHoursToHhMm((n - 1) / 4)) +
-                      "\n              "
-                  )
-                ]
-              )
-            })
-          ),
-          _vm._v(" "),
-          _vm.yotyoLoppu > _vm.iltatyoAlku
-            ? _c("label", { staticStyle: { color: "red" } }, [
-                _vm._v(
-                  "\n                Yötyön loppumisaika ei voi olla myöhäisempi kuin iltatyön alkamisaika.\n            "
+                ],
+                staticClass: "form-control",
+                attrs: { name: "yotyoLoppu", id: "yotyoLoppu" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.yotyoLoppu = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.validateSelectionsAndRunQuery
+                  ]
+                }
+              },
+              _vm._l(97, function(n) {
+                return _c(
+                  "option",
+                  {
+                    key: n,
+                    domProps: {
+                      value: n - 1,
+                      selected: n == 25 ? "selected" : false
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                  " +
+                        _vm._s(_vm.decimalHoursToHhMm((n - 1) / 4)) +
+                        "\n                "
+                    )
+                  ]
                 )
-              ])
-            : _vm._e(),
+              })
+            ),
+            _vm._v(" "),
+            _vm.yotyoLoppu > _vm.iltatyoAlku
+              ? _c("label", { staticStyle: { color: "red" } }, [
+                  _vm._v(
+                    "\n                  Yötyön loppumisaika ei voi olla myöhäisempi kuin iltatyön alkamisaika.\n              "
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-md-4 col-12" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "label",
+              {
+                directives: [
+                  {
+                    name: "tooltip",
+                    rawName: "v-tooltip",
+                    value:
+                      "Sopimusten mukainen säännöllinen työaika per päivä. Yleensä 7,5h ilman lounastaukoa tai 8h lounastauon kanssa. Muista täten varmistaa, tuleeko organisaatiossanne merkata myös lounasajat kalenteriin, jotta raportin ylityölukemat pitävät paikkansa.",
+                    expression:
+                      "'Sopimusten mukainen säännöllinen työaika per päivä. Yleensä 7,5h ilman lounastaukoa tai 8h lounastauon kanssa. Muista täten varmistaa, tuleeko organisaatiossanne merkata myös lounasajat kalenteriin, jotta raportin ylityölukemat pitävät paikkansa.'"
+                  }
+                ],
+                attrs: { for: "paivittainenTyoaika" }
+              },
+              [
+                _vm._v("Päivittäinen työaika "),
+                _c("i", { staticClass: "red fas fa-question-circle" })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.paivittainenTyoaika,
+                    expression: "paivittainenTyoaika"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  name: "paivittainenTyoaika",
+                  id: "paivittainenTyoaika"
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.paivittainenTyoaika = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.validateSelectionsAndRunQuery
+                  ]
+                }
+              },
+              _vm._l(96, function(n) {
+                return _c(
+                  "option",
+                  {
+                    key: n,
+                    domProps: {
+                      value: n - 1,
+                      selected: n == 25 ? "selected" : false
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                  " +
+                        _vm._s(_vm.decimalHoursToString((n - 1) / 4)) +
+                        "\n                "
+                    )
+                  ]
+                )
+              })
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "spacer" })
         ]),
         _vm._v(" "),
         _vm.viewableUsers.length > 1
           ? _c("div", { staticClass: "col-md-6 col-sm-12 col-12" }, [
-              _c("label", [
-                _vm._v("Valitse käyttäjä "),
-                _c("i", {
-                  directives: [
-                    {
-                      name: "tooltip",
-                      rawName: "v-tooltip",
-                      value:
-                        "Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan.",
-                      expression:
-                        '"Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan."'
-                    }
-                  ],
-                  staticClass: "blue pointer fas fa-question-circle"
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "selectWrapper" }, [
-                _c(
-                  "select",
-                  {
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [
+                  _vm._v("Valitse käyttäjä "),
+                  _c("i", {
                     directives: [
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedUser,
-                        expression: "selectedUser"
+                        name: "tooltip",
+                        rawName: "v-tooltip",
+                        value:
+                          "Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan.",
+                        expression:
+                          '"Jos näet tässä valikossa toisia käyttäjiä, he ovat antaneet sinulle oikeuden tarkastella raporttejaan."'
                       }
                     ],
-                    staticClass: "form-control no-border",
-                    staticStyle: {
-                      height: "32px",
-                      background: "transparent",
-                      "text-indent": "3px"
-                    },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.selectedUser = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        _vm.validateSelectionsAndRunQuery
-                      ]
-                    }
-                  },
-                  _vm._l(_vm.viewableUsers, function(viewableUser) {
-                    return _c(
-                      "option",
-                      {
-                        key: viewableUser.id,
-                        domProps: { value: viewableUser }
-                      },
-                      [
-                        _vm._v(
-                          "\n                  " +
-                            _vm._s(viewableUser.name) +
-                            " (" +
-                            _vm._s(viewableUser.email) +
-                            ")\n                "
-                        )
-                      ]
-                    )
+                    staticClass: "blue pointer fas fa-question-circle"
                   })
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "small-spacer" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "selectWrapper" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedUser,
+                          expression: "selectedUser"
+                        }
+                      ],
+                      staticClass: "form-control no-border",
+                      staticStyle: {
+                        height: "32px",
+                        background: "transparent",
+                        "text-indent": "3px"
+                      },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedUser = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          _vm.validateSelectionsAndRunQuery
+                        ]
+                      }
+                    },
+                    _vm._l(_vm.viewableUsers, function(viewableUser) {
+                      return _c(
+                        "option",
+                        {
+                          key: viewableUser.id,
+                          domProps: { value: viewableUser }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(viewableUser.name) +
+                              " (" +
+                              _vm._s(viewableUser.email) +
+                              ")\n                  "
+                          )
+                        ]
+                      )
+                    })
+                  )
+                ])
+              ])
             ])
           : _vm._e()
       ]),
@@ -88154,6 +88274,8 @@ var render = function() {
                         "\n                        "
                     )
                   ]),
+                  _c("td", [_vm._v("Ylityö")]),
+                  _vm._v(" "),
                   _c("td", [_vm._v("Muistiinpanot")])
                 ])
               ]),
@@ -88174,6 +88296,8 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(result.iltatyo))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(result.yotyo))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(result.ylityo))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(result.notes))])
                     ])
@@ -88215,6 +88339,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(_vm.yotyoTotal ? _vm.yotyoTotal : 0))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm.ylityoTotal ? _vm.ylityoTotal : 0))
                       ]),
                       _vm._v(" "),
                       _c("td")
@@ -92127,7 +92255,7 @@ if (typeof window !== 'undefined' && window.Sweetalert2){  window.swal = window.
 /* 209 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \n}\n^\n      Invalid CSS after \"}\": expected 1 selector or at-rule, was \"<<<<<<< HEAD\"\n      in /Users/anssi/Sites/tyoajanseuranta-node/sass/app.scss (line 547, column 2)\n    at runLoaders (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /Users/anssi/Sites/tyoajanseuranta-node/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /Users/anssi/Sites/tyoajanseuranta-node/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.done [as callback] (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/neo-async/async.js:7974:18)\n    at options.error (/Users/anssi/Sites/tyoajanseuranta-node/node_modules/node-sass/lib/index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
