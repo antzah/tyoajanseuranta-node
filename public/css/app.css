@@ -11129,3 +11129,11 @@ a {
   margin-bottom: 0;
 }
 
+@media (max-width: 500px) {
+  .table-sm th,
+  .table-sm td {
+    padding: 0.1rem;
+    font-size: 8.5px;
+  }
+}
+
