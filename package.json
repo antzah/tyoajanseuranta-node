@@ -4,6 +4,7 @@
     "description": "Työajanseurantasovellus. Harjoitusprojekti.",
     "main": "index.js",
     "scripts": {
+        "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run production",
         "push": "git push | git push heroku master",
         "start": "node index.js",
         "dev": "npm run development",

@@ -373,7 +373,7 @@ export default {
     },
     returnHoursBetweenPeriods: function (allQuarters, startingQuarter, endingQuarter) {
       let totalHoursBetweenPeriods = 0
-      
+
       /**
        * Päivä- ja iltatyö
        */
@@ -381,8 +381,8 @@ export default {
         for (let i = startingQuarter; i < endingQuarter; i++) {
           if (allQuarters[i].painted) totalHoursBetweenPeriods += 0.25
         }
-      } 
-      
+      }
+
       /**
        * Yötyö (kun pitää laskea sekä illan että aamuyön pätkät, esim. 22-24 ja 00-06)
        */
