@@ -22,7 +22,7 @@ Vue.use(VuejsDialog)
  */
 window.moment = require('moment')
 window.moment.locale('fi')
-window.AOS = require('AOS')
+window.AOS = require('aos')
 window.AOS.init()
 
 window.swal = require('sweetalert2')
